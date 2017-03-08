@@ -168,14 +168,18 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
 
+        //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        CorkTeck\Providers\AppServiceProvider::class,
+        CorkTeck\Providers\AuthServiceProvider::class,
+        // CorkTeck\Providers\BroadcastServiceProvider::class,
+        CorkTeck\Providers\EventServiceProvider::class,
+        CorkTeck\Providers\RouteServiceProvider::class,
 
     ],
 
@@ -225,7 +229,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];
