@@ -180,6 +180,7 @@ return [
         // CorkTeck\Providers\BroadcastServiceProvider::class,
         CorkTeck\Providers\EventServiceProvider::class,
         CorkTeck\Providers\RouteServiceProvider::class,
+        CorkTeck\Providers\RepositoryServiceProvider::class,
 
     ],
 

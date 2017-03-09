@@ -18,3 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::group(['prefix' => 'admin', 'as' => 'admim.', 'middleware' => 'auth'], function(){
+    Route::resource('classes', 'ClassesController');
+});
+
+
