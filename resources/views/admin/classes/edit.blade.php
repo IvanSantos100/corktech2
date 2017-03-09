@@ -12,7 +12,8 @@
             @include('codeeduuser::users._form')
 
             {!! Html::openFormGroup() !!}
-            {!! Button::primary('Salvar usuários')->submit() !!}
+            {!! form::submit('Salvar usuários') !!}
+
             {!! Html::closeFormGroup() !!}
 
             {!! Form::close() !!}

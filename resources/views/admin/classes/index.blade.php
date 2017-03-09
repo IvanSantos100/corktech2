@@ -29,8 +29,9 @@
                                 <li><a href="{{ route('admim.classes.edit', ['classe' => $classe->id]) }}">Editar</a></li>
                                 <li>|</li>
                                 <li>
-
-                                    Excluir</li>
+                                    {!! Form::model(['route' => ['admim.classes.destroy', 'classe' => $classe->id], 'id' => $classe->id, 'method' => 'DELETE', 'style' => 'display:nome']).
+                                    Form::close() !!}
+                                </li>
                             </ul>
 
                         </td>

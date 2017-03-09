@@ -54,34 +54,10 @@ class ClassesController extends Controller
      */
     public function store(ClassesCreateRequest $request)
     {
-
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-
-            $class = $this->repository->create($request->all());
-
-            $response = [
-                'message' => 'Classes created.',
-                'data'    => $class->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        $this->repository->create($request->all());
+        $url = $request->get('redirect_to', route('cadmin.classes.index'));
+        $request->session()->flash('message', 'Classe cadastrado com sucesso.');
+        return redirect()->to($url);
     }
 
 
@@ -127,7 +103,7 @@ class ClassesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  ClassesUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      */
@@ -142,7 +118,7 @@ class ClassesController extends Controller
 
             $response = [
                 'message' => 'Classes updated.',
-                'data'    => $class->toArray(),
+                'data' => $class->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -156,7 +132,7 @@ class ClassesController extends Controller
             if ($request->wantsJson()) {
 
                 return response()->json([
-                    'error'   => true,
+                    'error' => true,
                     'message' => $e->getMessageBag()
                 ]);
             }

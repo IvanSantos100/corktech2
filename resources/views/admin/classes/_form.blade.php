@@ -1,13 +1,31 @@
 {!! Form::hidden('redirect_to', URL::previous()) !!}
 
-{!! Html::openFormGroup('name', $errors) !!}
-{!! Form::label('name', 'Nome', ['class' => 'control-label']) !!}
-{!! Form::text('name', null, ['class' => 'form-control']) !!}
-{!! Form::error('name', $errors) !!}
+{!! Html::openFormGroup('tamanho', $errors) !!}
+{!! Form::label('tamanho', 'Tamanho', ['class' => 'control-label']) !!}
+{!! Form::text('tamanho', null, ['class' => 'form-control']) !!}
+{!! Form::error('tamanho', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
-{!! Html::openFormGroup('email', $errors) !!}
-{!! Form::label('email', 'E-mail', ['class' => 'control-label']) !!}
-{!! Form::text('email', null, ['class' => 'form-control']) !!}
-{!! Form::error('email', $errors) !!}
+{!! Html::openFormGroup('espessura', $errors) !!}
+{!! Form::label('espessura', 'Espessura', ['class' => 'control-label']) !!}
+{!! Form::text('espessura', null, ['class' => 'form-control']) !!}
+{!! Form::error('espessura', $errors) !!}
+{!! Html::closeFormGroup() !!}
+
+{!! Html::openFormGroup('atacado', $errors) !!}
+{!! Form::label('atacado', 'Atacado', ['class' => 'control-label']) !!}
+{!! Form::text('atacado', null, ['class' => 'form-control']) !!}
+{!! Form::error('atacado', $errors) !!}
+{!! Html::closeFormGroup() !!}
+
+{!! Html::openFormGroup('varejo', $errors) !!}
+{!! Form::label('varejo', 'Varejo', ['class' => 'control-label']) !!}
+{!! Form::text('varejo', null, ['class' => 'form-control']) !!}
+{!! Form::error('varejo', $errors) !!}
+{!! Html::closeFormGroup() !!}
+
+{!! Html::openFormGroup('granel', $errors) !!}
+{!! Form::label('granel', 'Granel', ['class' => 'control-label']) !!}
+{!! Form::text('granel', null, ['class' => 'form-control']) !!}
+{!! Form::error('granel', $errors) !!}
 {!! Html::closeFormGroup() !!}
