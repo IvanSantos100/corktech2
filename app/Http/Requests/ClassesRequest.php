@@ -4,16 +4,17 @@ namespace CorkTeck\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassesUpdateRequest extends FormRequest
+class ClassesRequest extends FormRequest
 {
     /**
+     *
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,11 @@ class ClassesUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'tamanho' => "required|max:20",
+            'espessura' => "required|max:20",
+            'atacado' => "required|max:20",
+            'varejo' => "required|max:20",
+            'granel' => "required|max:20",
         ];
     }
 }

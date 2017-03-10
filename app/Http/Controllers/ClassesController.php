@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use CorkTeck\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use CorkTeck\Http\Requests\ClassesCreateRequest;
-use CorkTeck\Http\Requests\ClassesUpdateRequest;
+use CorkTeck\Http\Requests\ClassesRequest;
 use CorkTeck\Repositories\ClassesRepository;
 
 
@@ -48,14 +47,14 @@ class ClassesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ClassesCreateRequest $request
+     * @param  ClassesRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(ClassesCreateRequest $request)
+    public function store(ClassesRequest $request)
     {
         $this->repository->create($request->all());
-        $url = $request->get('redirect_to', route('cadmin.classes.index'));
+        $url = $request->get('redirect_to', route('admin.classes.index'));
         $request->session()->flash('message', 'Classe cadastrado com sucesso.');
         return redirect()->to($url);
     }
@@ -102,12 +101,12 @@ class ClassesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  ClassesUpdateRequest $request
+     * @param  ClassesRequest $request
      * @param  string $id
      *
      * @return Response
      */
-    public function update(ClassesUpdateRequest $request, $id)
+    public function update(ClassesRequest $request, $id)
     {
 
         try {
