@@ -34,3 +34,11 @@ $factory->define(CorkTeck\Models\Classe::class, function (Faker\Generator $faker
         'granel'=> rand(1,50),
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(CorkTeck\Models\Estampa::class, function (Faker\Generator $faker) {
+
+    return [
+        'descricao' => $faker->sentence(2),
+    ];
+});

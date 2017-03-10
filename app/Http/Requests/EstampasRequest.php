@@ -4,7 +4,7 @@ namespace CorkTeck\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EstampasUpdateRequest extends FormRequest
+class EstampasRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class EstampasUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class EstampasUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'descricao' => "required|max:50",
         ];
     }
 }

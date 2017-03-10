@@ -8,31 +8,31 @@
                 <div class="panel-body">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="email">Tamanho:</label>
+                            <label class="control-label col-sm-2">Tamanho:</label>
                             <div class="col-sm-10">
                                 {{ $classe->tamanho }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="email">Espessura:</label>
+                            <label class="control-label col-sm-2">Espessura:</label>
                             <div class="col-sm-10">
                                 {{ $classe->espessura }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="email">Atacado:</label>
+                            <label class="control-label col-sm-2">Atacado:</label>
                             <div class="col-sm-10">
                                 {{ $classe->atacado }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="email">Varejo:</label>
+                            <label class="control-label col-sm-2">Varejo:</label>
                             <div class="col-sm-10">
                                 {{ $classe->varejo }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="email">Granel:</label>
+                            <label class="control-label col-sm-2">Granel:</label>
                             <div class="col-sm-10">
                                 {{ $classe->granel }}
                             </div>

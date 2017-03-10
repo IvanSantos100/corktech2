@@ -48,6 +48,11 @@
                             <a href="{{ url('admin/classes') }}">Classes </a>
                         </li>
                     </div>
+                    <div class="nav navbar-nav">
+                        <li>
+                            <a href="{{ url('admin/estampas') }}">Estampas </a>
+                        </li>
+                    </div>
                     @endif
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">

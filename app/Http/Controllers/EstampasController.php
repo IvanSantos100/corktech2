@@ -2,15 +2,8 @@
 
 namespace CorkTeck\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use CorkTeck\Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
-use CorkTeck\Http\Requests\EstampasCreateRequest;
-use CorkTeck\Http\Requests\EstampasUpdateRequest;
+use CorkTeck\Http\Requests\EstampasRequest;
 use CorkTeck\Repositories\EstampasRepository;
-use CorkTeck\Validators\EstampasValidator;
 
 
 class EstampasController extends Controller
@@ -21,15 +14,10 @@ class EstampasController extends Controller
      */
     protected $repository;
 
-    /**
-     * @var EstampasValidator
-     */
-    protected $validator;
 
-    public function __construct(EstampasRepository $repository, EstampasValidator $validator)
+    public function __construct(EstampasRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
     }
 
 
@@ -41,55 +29,31 @@ class EstampasController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $estampas = $this->repository->all();
+        $estampas = $this->repository->paginate(10);
 
-        if (request()->wantsJson()) {
 
-            return response()->json([
-                'data' => $estampas,
-            ]);
-        }
+        return view('admin.estampas.index', compact('estampas'));
+    }
 
-        return view('estampas.index', compact('estampas'));
+    public function create()
+    {
+        return view('admin.estampas.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  EstampasCreateRequest $request
+     * @param  EstampasRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(EstampasCreateRequest $request)
+    public function store(EstampasRequest $request)
     {
+        $this->repository->create($request->all());
+        $url = $request->get('redirect_to', route('admin.estampas.index'));
+        $request->session()->flash('message', 'Estampa cadastrado com sucesso.');
 
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-
-            $estampa = $this->repository->create($request->all());
-
-            $response = [
-                'message' => 'Estampas created.',
-                'data'    => $estampa->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return redirect()->to($url);
     }
 
 
@@ -104,14 +68,7 @@ class EstampasController extends Controller
     {
         $estampa = $this->repository->find($id);
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $estampa,
-            ]);
-        }
-
-        return view('estampas.show', compact('estampa'));
+        return view('admin.estampas.show', compact('estampa'));
     }
 
 
@@ -127,7 +84,7 @@ class EstampasController extends Controller
 
         $estampa = $this->repository->find($id);
 
-        return view('estampas.edit', compact('estampa'));
+        return view('admin.estampas.edit', compact('estampa'));
     }
 
 
@@ -139,38 +96,13 @@ class EstampasController extends Controller
      *
      * @return Response
      */
-    public function update(EstampasUpdateRequest $request, $id)
+    public function update(EstampasRequest $request, $id)
     {
+        $this->repository->update($request->all(), $id);
+        $url = $request->get('redirect_to', route('admin.estampas.index'));
+        $request->session()->flash('message', 'Estampa cadastrado com sucesso.');
 
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $estampa = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Estampas updated.',
-                'data'    => $estampa->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return redirect()->to($url);
     }
 
 
@@ -183,16 +115,9 @@ class EstampasController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $this->repository->delete($id);
+        \Session::flash('message', 'Estampas excluída com sucesso.');
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => 'Estampas deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
-
-        return redirect()->back()->with('message', 'Estampas deleted.');
+        return redirect('admin/estampas');
     }
 }
