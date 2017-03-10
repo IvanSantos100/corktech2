@@ -81,6 +81,24 @@
             </div>
         </nav>
 
+        @if(Session::has('message'))
+            <div class="container">
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {!! Session::get('message') !!}
+                </div>
+            </div>
+        @endif
+
+        @if(Session::has('error'))
+            <div class="container">
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {!! Session::get('error') !!}
+                </div>
+            </div>
+        @endif
+
         @yield('content')
     </div>
 

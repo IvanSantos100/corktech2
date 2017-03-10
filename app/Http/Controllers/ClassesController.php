@@ -34,7 +34,7 @@ class ClassesController extends Controller
     {
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $classes = $this->repository->paginate(15);
+        $classes = $this->repository->paginate(10);
 
         return view('admin.classes.index', compact('classes'));
     }
@@ -56,6 +56,7 @@ class ClassesController extends Controller
         $this->repository->create($request->all());
         $url = $request->get('redirect_to', route('admin.classes.index'));
         $request->session()->flash('message', 'Classe cadastrado com sucesso.');
+
         return redirect()->to($url);
     }
 
@@ -69,16 +70,9 @@ class ClassesController extends Controller
      */
     public function show($id)
     {
-        $class = $this->repository->find($id);
+        $classe = $this->repository->find($id);
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $class,
-            ]);
-        }
-
-        return view('classes.show', compact('class'));
+        return view('admin.classes.show', compact('classe'));
     }
 
 
@@ -91,10 +85,9 @@ class ClassesController extends Controller
      */
     public function edit($id)
     {
+        $classe = $this->repository->find($id);
 
-        $class = $this->repository->find($id);
-
-        return view('classes.edit', compact('class'));
+        return view('admin.classes.edit', compact('classe'));
     }
 
 
@@ -109,35 +102,11 @@ class ClassesController extends Controller
     public function update(ClassesRequest $request, $id)
     {
 
-        try {
+        $this->repository->update($request->all(), $id);
+        $url = $request->get('redirect_to', route('admin.classes.index'));
+        $request->session()->flash('message', 'Classe atualizada com sucesso.');
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $class = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Classes updated.',
-                'data' => $class->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error' => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return redirect()->to($url);
     }
 
 
@@ -150,16 +119,9 @@ class ClassesController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $this->repository->delete($id);
+        \Session::flash('message', 'Classe excluída com sucesso.');
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => 'Classes deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
-
-        return redirect()->back()->with('message', 'Classes deleted.');
+        return redirect('admin/classes');
     }
 }

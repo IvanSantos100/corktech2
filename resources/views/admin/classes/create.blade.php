@@ -3,18 +3,20 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <h3>Criar Classe</h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">Criar Classe</div>
+                <div class="panel-body">
+                    {!! Form::open(['route' => 'admin.classes.store', 'class' => 'form']) !!}
 
-            {!! Form::open(['route' => 'admim.classes.store', 'class' => 'form']) !!}
+                    @include('admin.classes._form')
 
-            @include('admin.classes._form')
+                    {!! Html::openFormGroup() !!}
+                    {!! form::submit('Criar classe', ['class' => 'btn btn-primary']) !!}
+                    {!! Html::closeFormGroup() !!}
 
-            {!! Html::openFormGroup() !!}
-            {!! form::submit('Criar classe', ['class' => 'btn btn-primary']) !!}
-            {!! Html::closeFormGroup() !!}
-
-            {!! Form::close() !!}
-
+                    {!! Form::close() !!}
+                </div>
+            </div>
         </div>
     </div>
 @endsection

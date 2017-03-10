@@ -3,20 +3,22 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <h3>Editar Usuários</h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">Editar Classe</div>
+                <div class="panel-body">
+                    {!! Form::model($classe,[
+                    'route' => ['admin.classes.update' , 'class' => $classe->id],
+                    'class' => 'form', 'method' => 'PUT']) !!}
 
-            {!! Form::model($user,[
-                'route' => ['codeeduuser.users.update' , 'user' => $user->id],
-                'class' => 'form', 'method' => 'PUT']) !!}
+                    @include('admin.classes._form')
 
-            @include('codeeduuser::users._form')
+                    {!! Html::openFormGroup() !!}
+                    {!! form::submit('Salvar classe', ['class' => 'btn btn-primary']) !!}
+                    {!! Html::closeFormGroup() !!}
 
-            {!! Html::openFormGroup() !!}
-            {!! form::submit('Salvar usuários') !!}
-
-            {!! Html::closeFormGroup() !!}
-
-            {!! Form::close() !!}
+                    {!! Form::close() !!}
+                </div>
+            </div>
         </div>
     </div>
 @endsection
