@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index');
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function(){
     Route::resource('classes', 'ClassesController');
     Route::resource('estampas', 'EstampasController');
+    Route::resource('tipoprodutos', 'TipoProdutosController');
 });
 
 

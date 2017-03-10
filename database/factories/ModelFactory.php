@@ -42,3 +42,11 @@ $factory->define(CorkTeck\Models\Estampa::class, function (Faker\Generator $fake
         'descricao' => $faker->sentence(2),
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(CorkTeck\Models\TipoProduto::class, function (Faker\Generator $faker) {
+
+    return [
+        'descricao' => $faker->sentence(2),
+    ];
+});
