@@ -15,8 +15,18 @@ class CreateProdutosTable extends Migration
 	{
 		Schema::create('produtos', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('descricao',100);
+            $table->string('descricao',50);
             $table->float('preco');
+
+            $table->integer('estampa_id')->unsigned();
+            $table->foreign('estampa_id')->references('id')->on('estampas');
+
+            $table->integer('classe_id')->unsigned();
+            $table->foreign('classe_id')->references('id')->on('classes');
+
+            $table->integer('tipoproduto_id')->unsigned();
+            $table->foreign('tipoproduto_id')->references('id')->on('tipo_produtos');
+
             $table->timestamps();
 		});
 	}

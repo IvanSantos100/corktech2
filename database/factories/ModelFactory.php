@@ -50,3 +50,15 @@ $factory->define(CorkTeck\Models\TipoProduto::class, function (Faker\Generator $
         'descricao' => $faker->sentence(2),
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(CorkTeck\Models\Produto::class, function (Faker\Generator $faker) {
+
+    return [
+        'descricao' => $faker->sentence(2),
+        'preco' => $faker->randomFloat(2,10,100),
+        'estampa_id' => rand(1,20),
+        'classe_id' => rand(1,20),
+        'tipoproduto_id' => rand(1,20),
+    ];
+});
