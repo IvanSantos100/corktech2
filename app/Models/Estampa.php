@@ -16,4 +16,9 @@ class Estampa extends Model implements Transformable
         'descricao'
     ];
 
+    public function produtos()
+    {
+        return $this->hasMany('CorkTeck\Models\Produto', 'estampa_id', 'id');
+    }
+
 }

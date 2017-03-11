@@ -28,7 +28,7 @@ class ProdutosRequest extends FormRequest
             'preco' => "required|numeric",
             'estampa_id' => "exists:estampas,id",
             'classe_id' => "exists:classes,id",
-            'tipoproduto_id' => "exists:tipoprodutos,id",
+            'tipoproduto_id' => "exists:tipo_produtos,id",
         ];
     }
 }

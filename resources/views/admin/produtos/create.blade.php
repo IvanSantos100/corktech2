@@ -4,14 +4,14 @@
     <div class="container">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Criar tipo produto</div>
+                <div class="panel-heading">Criar produto</div>
                 <div class="panel-body">
-                    {!! Form::open(['route' => 'admin.tipoprodutos.store', 'class' => 'form']) !!}
+                    {!! Form::open(['route' => 'admin.produtos.store', 'class' => 'form']) !!}
 
-                    @include('admin.tipoprodutos._form')
+                    @include('admin.produtos._form')
 
                     {!! Html::openFormGroup() !!}
-                    {!! form::submit('Criar tipo produto', ['class' => 'btn btn-primary']) !!}
+                    {!! form::submit('Criar produto', ['class' => 'btn btn-primary']) !!}
                     {!! Html::closeFormGroup() !!}
 
                     {!! Form::close() !!}

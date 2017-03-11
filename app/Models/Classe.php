@@ -20,4 +20,9 @@ class Classe extends Model implements Transformable
         'granel',
     ];
 
+    public function produtos()
+    {
+        return $this->hasMany('CorkTeck\Models\Produto', 'estampa_id', 'id');
+    }
+
 }

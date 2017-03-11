@@ -18,14 +18,18 @@
                             <th>Descrição</th>
                             <th>Preço</th>
                             <th>Estampa</th>
+                            <th>Tipo produto</th>
+                            <th>Classe</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($produtos as $produto)
                             <tr>
-                                <td class="col-md-3">{{ $produto->descricao}}</td>
-                                <td class="col-md-3">{{ $produto->preco}}</td>
-                                <td class="col-md-3">{{ $produto->estampas}}</td>
+                                <td class="col-md-2">{{ $produto->descricao}}</td>
+                                <td class="col-md-2">{{ $produto->preco}}</td>
+                                <td class="col-md-2">{{ $produto->estampas->descricao}}</td>
+                                <td class="col-md-2">{{ $produto->tipoprodutos->descricao}}</td>
+                                <td class="col-md-2">{{ $produto->classes->tamanho}}</td>
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>

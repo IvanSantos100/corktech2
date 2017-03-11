@@ -4,16 +4,16 @@
     <div class="container">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Editar tipo produto</div>
+                <div class="panel-heading">Editar produto</div>
                 <div class="panel-body">
-                    {!! Form::model($tipoproduto,[
-                    'route' => ['admin.tipoprodutos.update' , 'class' => $tipoproduto->id],
+                    {!! Form::model($produto,[
+                    'route' => ['admin.produtos.update' , 'class' => $produto->id],
                     'class' => 'form', 'method' => 'PUT']) !!}
 
-                    @include('admin.tipoprodutos._form')
+                    @include('admin.produtos._form')
 
                     {!! Html::openFormGroup() !!}
-                    {!! form::submit('Salvar tipo produto', ['class' => 'btn btn-primary']) !!}
+                    {!! form::submit('Salvar produto', ['class' => 'btn btn-primary']) !!}
                     {!! Html::closeFormGroup() !!}
 
                     {!! Form::close() !!}

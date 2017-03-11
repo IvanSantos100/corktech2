@@ -3,7 +3,10 @@
 namespace CorkTeck\Http\Controllers;
 
 use CorkTeck\Http\Requests\ProdutosRequest;
+use CorkTeck\Repositories\ClassesRepository;
+use CorkTeck\Repositories\EstampasRepository;
 use CorkTeck\Repositories\ProdutosRepository;
+use CorkTeck\Repositories\TipoProdutosRepository;
 
 
 class ProdutosController extends Controller
@@ -13,11 +16,30 @@ class ProdutosController extends Controller
      * @var ProdutosRepository
      */
     protected $repository;
+    /**
+     * @var EstampasRepository
+     */
+    private $estampasRepository;
+    /**
+     * @var ClassesRepository
+     */
+    private $classesRepository;
+    /**
+     * @var TipoProdutosRepository
+     */
+    private $tipoProdutosRepository;
 
 
-    public function __construct(ProdutosRepository $repository)
-    {
+    public function __construct(
+        ProdutosRepository $repository,
+        EstampasRepository $estampasRepository,
+        ClassesRepository $classesRepository,
+        TipoProdutosRepository $tipoProdutosRepository
+    ){
         $this->repository = $repository;
+        $this->estampasRepository = $estampasRepository;
+        $this->classesRepository = $classesRepository;
+        $this->tipoProdutosRepository = $tipoProdutosRepository;
     }
 
 
@@ -36,7 +58,11 @@ class ProdutosController extends Controller
 
     public function create()
     {
-        return view('admin.produtos.create');
+        $estampas = $this->estampasRepository->pluck('descricao', 'id');
+        $classes = $this->classesRepository->pluck('tamanho', 'id');
+        $tipoprodutos = $this->tipoProdutosRepository->pluck('descricao', 'id');
+
+        return view('admin.produtos.create', compact('estampas', 'classes', 'tipoprodutos') );
     }
 
     /**
@@ -50,7 +76,7 @@ class ProdutosController extends Controller
     {
         $this->repository->create($request->all());
         $url = $request->get('redirect_to', route('admin.produtos.index'));
-        $request->session()->flash('message', ' de produto cadastrado com sucesso.');
+        $request->session()->flash('message', 'Produto cadastrado com sucesso.');
 
         return redirect()->to($url);
     }
@@ -80,17 +106,19 @@ class ProdutosController extends Controller
      */
     public function edit($id)
     {
-
         $produto = $this->repository->find($id);
+        $estampas = $this->estampasRepository->pluck('descricao', 'id');
+        $classes = $this->classesRepository->pluck('tamanho', 'id');
+        $tipoprodutos = $this->tipoProdutosRepository->pluck('descricao', 'id');
 
-        return view('admin.produtos.edit', compact('produto'));
+        return view('admin.produtos.edit', compact('produto', 'estampas', 'classes', 'tipoprodutos'));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  ProdutosUpdateRequest $request
+     * @param  ProdutosRequest $request
      * @param  string            $id
      *
      * @return Response
