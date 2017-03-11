@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::resource('classes', 'ClassesController');
     Route::resource('estampas', 'EstampasController');
     Route::resource('tipoprodutos', 'TipoProdutosController');
+    Route::resource('produtos', 'ProdutosController');
 });
 
 

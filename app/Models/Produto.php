@@ -20,4 +20,19 @@ class Produto extends Model implements Transformable
         'tipoproduto_id',
     ];
 
+    public function estampas()
+    {
+        return $this->belongsTo('CorkTeck\Models\Estampa');
+    }
+
+    public function classes()
+    {
+        return $this->belongsTo(Classe::class);
+    }
+
+    public function tipoprodutos()
+    {
+        return $this->belongsTo(TipoProduto::class);
+    }
+
 }

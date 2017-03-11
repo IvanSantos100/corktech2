@@ -4,7 +4,7 @@ namespace CorkTeck\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use CorkTeck\Repositories\ProdutoRepository;
+use CorkTeck\Repositories\ProdutosRepository;
 use CorkTeck\Models\Produto;
 use CorkTeck\Validators\ProductValidator;
 
@@ -12,7 +12,7 @@ use CorkTeck\Validators\ProductValidator;
  * Class ProductRepositoryEloquent
  * @package namespace CorkTeck\Repositories;
  */
-class ProdutoRepositoryEloquent extends BaseRepository implements ProdutoRepository
+class ProdutosRepositoryEloquent extends BaseRepository implements ProdutosRepository
 {
     /**
      * Specify Model class name
