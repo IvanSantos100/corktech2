@@ -32,6 +32,10 @@ class CentroDistribuicoesController extends Controller
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $centrodistribuicoes = $this->repository->paginate(10);
 
+        $centrodistribuicoes->each(function ($item, $key) {
+            $item->tipo = $this->opcao($item->tipo);
+        });
+
         return view('admin.centrodistribuicoes.index', compact('centrodistribuicoes'));
     }
 
@@ -68,6 +72,9 @@ class CentroDistribuicoesController extends Controller
     {
         $centrodistribuicao = $this->repository->find($id);
 
+        $centrodistribuicao->tipo = $this->opcao($centrodistribuicao->tipo);
+
+
         return view('admin.centrodistribuicoes.show', compact('centrodistribuicao'));
     }
 
@@ -83,7 +90,8 @@ class CentroDistribuicoesController extends Controller
     {
         $centrodistribuicao = $this->repository->find($id);
 
-        return view('admin.centrodistribuicoes.edit', compact('centrodistribuicao'));
+        $opcao = [1 => 'Nacional', 2 => 'Distribuidora', 3 => 'Revenda'];
+        return view('admin.centrodistribuicoes.edit', compact('centrodistribuicao', 'opcao'));
     }
 
 
@@ -123,5 +131,14 @@ class CentroDistribuicoesController extends Controller
         }
 
         return redirect('admin/centrodistribuicoes');
+    }
+
+    private function opcao($p)
+    {
+        switch ($p){
+            case 1 : return 'Nacional'; break;
+            case 2 : return 'Distribuidora'; break;
+            case 3 : return 'Revenda';
+        }
     }
 }

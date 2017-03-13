@@ -16,7 +16,7 @@ class CreateCentroDistribuicaoesTable extends Migration
         Schema::create('centro_distribuicoes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descricao');
-            $table->enum('tipo', [ 'Nacional', 'Distribuidora', 'Revenda']);
+            $table->enum('tipo', [ 1, 2, 3]); // 1 => Nacional , 2 => Distribuidora, 3 => Revenda
             $table->integer('prazo_fabrica');
             $table->integer('prazo_nacional');
             $table->integer('prazo_regional');

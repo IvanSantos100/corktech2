@@ -11,26 +11,26 @@ class CentroDistribuicoesTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {    // 1 => nacional, 2 => distribuidora, 3 => revenda
+    {
         factory(CentroDistribuicao::class, 1)->create([
-            'descricao' => 'nacional',
-            'tipo' => 'Nacional',
+            'descricao' => 'Nacional',
+            'tipo' => 1,
             'prazo_fabrica' => 30,
             'prazo_nacional' => 15,
             'prazo_regional' => 2,
             'valor_base' => 500,
         ]);
         factory(CentroDistribuicao::class, 1)->create([
-            'descricao' => 'distribuidora',
-            'tipo' => 'Distribuidora',
+            'descricao' => 'Distribuidora',
+            'tipo' => 2,
             'prazo_fabrica' => 30,
             'prazo_nacional' => 15,
             'prazo_regional' => 2,
             'valor_base' => 500,
         ]);
         factory(CentroDistribuicao::class, 1)->create([
-            'descricao' => 'revenda',
-            'tipo' => 'Revenda',
+            'descricao' => 'Revenda',
+            'tipo' => 3,
             'prazo_fabrica' => 30,
             'prazo_nacional' => 15,
             'prazo_regional' => 2,

@@ -68,11 +68,22 @@ $factory->define(CorkTeck\Models\Produto::class, function (Faker\Generator $fake
 $factory->define(CorkTeck\Models\CentroDistribuicao::class, function (Faker\Generator $faker) {
 
     return [
-        'descricao' => 'nacional',
-        'tipo' => 'Nacional',
+        'descricao' => 'Nacional',
+        'tipo' => 1,
         'prazo_fabrica' => 30,
         'prazo_nacional' => 15,
         'prazo_regional' => 2,
         'valor_base' => 500,
+    ];
+});
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(CorkTeck\Models\Estoque::class, function (Faker\Generator $faker) {
+
+    return [
+        'lote' => rand(111111111, 999999999),
+        'valor' => $faker->randomFloat(2,10,100),
+        'centrodistribuicao_id' => rand(1,3),
+        'produto_id' => rand(1,100),
     ];
 });
