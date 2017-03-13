@@ -4,7 +4,7 @@ namespace CorkTeck\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassesRequest extends FormRequest
+class CentroDistribuicoesRequest extends FormRequest
 {
     /**
      *
@@ -26,11 +26,11 @@ class ClassesRequest extends FormRequest
     {
         return [
             'descricao' => "required|max:50",
-            'tamanho' => "required|max:20",
-            'espessura' => "required|numeric",
-            'atacado' => "required|numeric",
-            'varejo' => "required|numeric",
-            'granel' => "required|numeric",
+            'tipo' => "required",
+            'prazo_fabrica' => "required|numeric",
+            'prazo_nacional' => "required|numeric",
+            'prazo_regional' => "required|numeric",
+            'valor_base' => "required|numeric",
         ];
     }
 }

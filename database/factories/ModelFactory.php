@@ -27,6 +27,7 @@ $factory->define(CorkTeck\Models\User::class, function (Faker\Generator $faker) 
 $factory->define(CorkTeck\Models\Classe::class, function (Faker\Generator $faker) {
 
     return [
+        'descricao' => $faker->sentence(2),
         'tamanho' => rand(1,50).' X '.rand(1,50),
         'espessura' => rand(1,100),
         'atacado' => rand(1,50),
@@ -60,5 +61,18 @@ $factory->define(CorkTeck\Models\Produto::class, function (Faker\Generator $fake
         'estampa_id' => rand(1,20),
         'classe_id' => rand(1,20),
         'tipoproduto_id' => rand(1,20),
+    ];
+});
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(CorkTeck\Models\CentroDistribuicao::class, function (Faker\Generator $faker) {
+
+    return [
+        'descricao' => 'nacional',
+        'tipo' => 'Nacional',
+        'prazo_fabrica' => 30,
+        'prazo_nacional' => 15,
+        'prazo_regional' => 2,
+        'valor_base' => 500,
     ];
 });

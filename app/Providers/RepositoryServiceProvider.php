@@ -27,6 +27,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\CorkTeck\Repositories\ClassesRepository::class, \CorkTeck\Repositories\ClassesRepositoryEloquent::class);
         $this->app->bind(\CorkTeck\Repositories\EstampasRepository::class, \CorkTeck\Repositories\EstampasRepositoryEloquent::class);
         $this->app->bind(\CorkTeck\Repositories\TipoProdutosRepository::class, \CorkTeck\Repositories\TipoProdutosRepositoryEloquent::class);
+        $this->app->bind(\CorkTeck\Repositories\CentroDistribuicoesRepository::class, \CorkTeck\Repositories\CentroDistribuicoesRepositoryEloquent::class);
         //:end-bindings:
     }
 }

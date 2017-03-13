@@ -1,5 +1,11 @@
 {!! Form::hidden('redirect_to', URL::previous()) !!}
 
+{!! Html::openFormGroup('descricao', $errors) !!}
+{!! Form::label('descricao', 'Descrição', ['class' => 'control-label']) !!}
+{!! Form::text('descricao', null, ['class' => 'form-control']) !!}
+{!! Form::error('descricao', $errors) !!}
+{!! Html::closeFormGroup() !!}
+
 {!! Html::openFormGroup('tamanho', $errors) !!}
 {!! Form::label('tamanho', 'Tamanho', ['class' => 'control-label']) !!}
 {!! Form::text('tamanho', null, ['class' => 'form-control']) !!}

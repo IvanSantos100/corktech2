@@ -119,8 +119,12 @@ class ClassesController extends Controller
      */
     public function destroy($id)
     {
-        $this->repository->delete($id);
-        \Session::flash('message', 'Classe excluída com sucesso.');
+        try {
+            $this->repository->delete($id);
+            \Session::flash('message', 'Classe excluída com sucesso.');
+        }catch (QueryException $ex){
+            \Session::flash('error', 'Classe não pode ser excluido. Ele está relacionado com outro registro .');
+        }
 
         return redirect('admin/classes');
     }
