@@ -13,12 +13,12 @@ class CentroDistribuicao extends Model implements Transformable
     protected $table = 'centro_distribuicoes';
 
     protected $fillable = [
-        'lote',
-        'valor',
-        'centrodistribuicao_id',
-        'centrodistribuicao_id',
-        'produto_id',
-        'produto_id',
+        'descricao',
+        'tipo',
+        'prazo_fabrica',
+        'prazo_nacional',
+        'prazo_regional',
+        'valor_base',
     ];
 
 }

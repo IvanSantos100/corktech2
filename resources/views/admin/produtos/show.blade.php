@@ -34,7 +34,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Classe:</label>
                             <div class="col-sm-10">
-                                {{ $produto->classes->tamanho }}
+                                {{ $produto->classes->descricao }}
                             </div>
                         </div>
                     </form>

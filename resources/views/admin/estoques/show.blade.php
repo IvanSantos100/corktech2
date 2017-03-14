@@ -4,52 +4,41 @@
     <div class="container">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Visualizar centro distribuição</div>
+                <div class="panel-heading">Visualizar estoque</div>
                 <div class="panel-body">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" >Descrição:</label>
+                            <label class="control-label col-sm-2" >Produtos:</label>
                             <div class="col-sm-10">
-                                {{ $centrodistribuicao->descricao}}
+                                {{ $estoque->produtos->descricao}}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" >Descrição:</label>
+                            <label class="control-label col-sm-2" >Centro distribuição:</label>
                             <div class="col-sm-10">
-                                {{ $centrodistribuicao->tipo}}
+                                {{ $estoque->centroDistribuicoes->descricao}}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" >Descrição:</label>
+                            <label class="control-label col-sm-2" >Lote:</label>
                             <div class="col-sm-10">
-                                {{ $centrodistribuicao->prazo_fabrica}}
+                                {{ $estoque->lote}}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" >Descrição:</label>
+                            <label class="control-label col-sm-2" >Valor:</label>
                             <div class="col-sm-10">
-                                {{ $centrodistribuicao->prazo_nacional}}
+                                {{ $estoque->valor}}
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" >Descrição:</label>
-                            <div class="col-sm-10">
-                                {{ $centrodistribuicao->prazo_regional}}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" >Descrição:</label>
-                            <div class="col-sm-10">
-                                {{ $centrodistribuicao->valor_base}}
-                            </div>
-                        </div>
+
                     </form>
                     <div class="alert alert-danger">
                         Deseja realmente excluir?.
                     </div>
                     <div>
-                        {!! Form::open(['route' => ['admin.centrodistribuicoes.destroy', 'centrodistribuicao' => $centrodistribuicao->id], 'id' => $centrodistribuicao->id, 'method' => 'DELETE']) !!}
-                        <a href="{{ route('admin.centrodistribuicoes.index') }}" class="btn btn-success">Voltar</a>
+                        {!! Form::open(['route' => ['admin.estoques.destroy', 'estoque' => $estoque->id], 'id' => $estoque->id, 'method' => 'DELETE']) !!}
+                        <a href="{{ route('admin.estoques.index') }}" class="btn btn-success">Voltar</a>
                         {!! Form::submit('Excluir', ['class' => 'btn btn-danger']) !!}
                         {!! Form::close() !!}
                     </div>

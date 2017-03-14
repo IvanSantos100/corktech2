@@ -13,12 +13,19 @@ class Estoque extends Model implements Transformable
     protected $table = 'estoques';
 
     protected $fillable = [
-        'descricao',
-        'tipo',
-        'prazo_fabrica',
-        'prazo_nacional',
-        'prazo_regional',
-        'valor_base'
+        'lote',
+        'valor',
+        'centrodistribuicao_id',
+        'produto_id',
     ];
+
+    public function centroDistribuicoes()
+    {
+        return $this->belongsTo(CentroDistribuicao::class, 'centrodistribuicao_id', 'id');
+    }
+    public function produtos()
+    {
+        return $this->belongsTo(Produto::class, 'produto_id', 'id');
+    }
 
 }

@@ -4,14 +4,14 @@
     <div class="container">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Criar centro distribuicao</div>
+                <div class="panel-heading">Criar estoque</div>
                 <div class="panel-body">
-                    {!! Form::open(['route' => 'admin.centrodistribuicoes.store', 'class' => 'form']) !!}
+                    {!! Form::open(['route' => 'admin.estoques.store', 'class' => 'form']) !!}
 
-                    @include('admin.centrodistribuicoes._form')
+                    @include('admin.estoques._form')
 
                     {!! Html::openFormGroup() !!}
-                    {!! form::submit('Criar centro distribuicao', ['class' => 'btn btn-primary']) !!}
+                    {!! form::submit('Criar estoque', ['class' => 'btn btn-primary']) !!}
                     {!! Html::closeFormGroup() !!}
 
                     {!! Form::close() !!}

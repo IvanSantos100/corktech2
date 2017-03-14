@@ -15,6 +15,7 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
+                            <th >Descrição</th>
                             <th >Tamanho</th>
                             <th >Espessura</th>
                             <th >Atacado</th>
@@ -25,10 +26,11 @@
                         <tbody>
                         @foreach($classes as $classe)
                             <tr>
-                                <td class="col-md-3">{{ $classe->tamanho}}</td>
+                                <td class="col-md-3">{{ $classe->descricao}}</td>
+                                <td class="col-md-2">{{ $classe->tamanho}}</td>
                                 <td class="col-md-2">{{ $classe->espessura}}</td>
-                                <td class="col-md-2">{{ $classe->atacado}}</td>
-                                <td class="col-md-2">{{ $classe->varejo}}</td>
+                                <td class="col-md-1">{{ $classe->atacado}}</td>
+                                <td class="col-md-1">{{ $classe->varejo}}</td>
                                 <td class="col-md-1">{{ $classe->granel}}</td>
                                 <td class="col-md-2">
                                     <ul class="list-inline">

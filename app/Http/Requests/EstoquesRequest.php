@@ -26,8 +26,8 @@ class EstoquesRequest extends FormRequest
     {
         return [
             'lote' => "required|max:30",
-            'valor'> "required|numeric",
-            'centrodistribuicao_id' => "exists:centrodistribuicoes,id",
+            'valor' => "required|numeric",
+            'centrodistribuicao_id' => "exists:centro_distribuicoes,id",
             'produto_id' => "exists:produtos,id",
         ];
     }

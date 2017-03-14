@@ -29,7 +29,7 @@
                                 <td class="col-md-2">{{ $produto->preco}}</td>
                                 <td class="col-md-2">{{ $produto->estampas->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->tipoprodutos->descricao}}</td>
-                                <td class="col-md-2">{{ $produto->classes->tamanho}}</td>
+                                <td class="col-md-2">{{ $produto->classes->descricao}}</td>
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>

@@ -4,16 +4,16 @@
     <div class="container">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Editar centro distribuição</div>
+                <div class="panel-heading">Editar estoque</div>
                 <div class="panel-body">
-                    {!! Form::model($centrodistribuicao,[
-                    'route' => ['admin.centrodistribuicoes.update' , 'class' => $centrodistribuicao->id],
+                    {!! Form::model($estoque,[
+                    'route' => ['admin.estoques.update' , 'class' => $estoque->id],
                     'class' => 'form', 'method' => 'PUT']) !!}
 
-                    @include('admin.centrodistribuicoes._form')
+                    @include('admin.estoques._form')
 
                     {!! Html::openFormGroup() !!}
-                    {!! form::submit('Salvar centro distribuição', ['class' => 'btn btn-primary']) !!}
+                    {!! form::submit('Salvar estoque', ['class' => 'btn btn-primary']) !!}
                     {!! Html::closeFormGroup() !!}
 
                     {!! Form::close() !!}

@@ -3,7 +3,9 @@
 namespace CorkTeck\Http\Controllers;
 
 use CorkTeck\Http\Requests\EstoquesRequest;
+use CorkTeck\Repositories\CentroDistribuicoesRepository;
 use CorkTeck\Repositories\EstoquesRepository;
+use CorkTeck\Repositories\ProdutosRepository;
 use Illuminate\Database\QueryException;
 
 
@@ -14,10 +16,23 @@ class EstoquesController extends Controller
      * @var EstoquesRepository
      */
     protected $repository;
+    /**
+     * @var ProdutosRepository
+     */
+    private $produtosRepository;
+    /**
+     * @var CentroDistribuicoesRepository
+     */
+    private $centroDistribuicoesRepository;
 
-    public function __construct(EstoquesRepository $repository)
-    {
+    public function __construct(
+        EstoquesRepository $repository,
+        ProdutosRepository $produtosRepository,
+        CentroDistribuicoesRepository $centroDistribuicoesRepository
+    ) {
         $this->repository = $repository;
+        $this->produtosRepository = $produtosRepository;
+        $this->centroDistribuicoesRepository = $centroDistribuicoesRepository;
     }
 
 
@@ -37,7 +52,10 @@ class EstoquesController extends Controller
 
     public function create()
     {
-        return view('admin.estoques.create');
+        $produtos = $this->produtosRepository->pluck('descricao', 'id');
+        $centrodistribuicoes = $this->centroDistribuicoesRepository->pluck('descricao', 'id');
+
+        return view('admin.estoques.create', compact('produtos', 'centrodistribuicoes'));
     }
 
     /**
@@ -82,8 +100,10 @@ class EstoquesController extends Controller
     public function edit($id)
     {
         $estoque = $this->repository->find($id);
+        $produtos = $this->produtosRepository->pluck('descricao', 'id');
+        $centrodistribuicoes = $this->centroDistribuicoesRepository->pluck('descricao', 'id');
 
-        return view('admin.estoques.edit', compact('estoque'));
+        return view('admin.estoques.edit', compact('estoque', 'produtos', 'centrodistribuicoes' ));
     }
 
 

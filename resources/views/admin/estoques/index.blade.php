@@ -15,19 +15,19 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
+                            <th>Produto</th>
+                            <th>Centro distribuição</th>
                             <th>Lote</th>
                             <th>Valor</th>
-                            <th>Centro distribuição</th>
-                            <th>Produto</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($estoques as $estoque)
                             <tr>
-                                <td class="col-md-3">{{ $estoque->lote}}</td>
-                                <td class="col-md-3">{{ $estoque->valor}}</td>
-                                <td class="col-md-1">{{ $estoque->centrodistribuicao_id}}</td>
-                                <td class="col-md-1">{{ $estoque->produto_id}}</td>
+                                <td class="col-md-3">{{ $estoque->produtos->descricao}}</td>
+                                <td class="col-md-3">{{ $estoque->centroDistribuicoes->descricao}}</td>
+                                <td class="col-md-2">{{ $estoque->lote}}</td>
+                                <td class="col-md-2">{{ $estoque->valor}}</td>
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>

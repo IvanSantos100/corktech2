@@ -8,6 +8,12 @@
                 <div class="panel-body">
                     <form class="form-horizontal">
                         <div class="form-group">
+                            <label class="control-label col-sm-2">Descrição:</label>
+                            <div class="col-sm-10">
+                                {{ $classe->descricao }}
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-sm-2">Tamanho:</label>
                             <div class="col-sm-10">
                                 {{ $classe->tamanho }}
