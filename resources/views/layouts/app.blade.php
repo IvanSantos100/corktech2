@@ -45,33 +45,20 @@
                 <!-- Left Side Of Navbar -->
                 @if(Auth::check())
                     <div class="nav navbar-nav">
-                        <li>
-                            <a href="{{ url('admin/classes') }}">Classes </a>
-                        </li>
-                    </div>
-                    <div class="nav navbar-nav">
-                        <li>
-                            <a href="{{ url('admin/estampas') }}">Estampas </a>
-                        </li>
-                    </div>
-                    <div class="nav navbar-nav">
-                        <li>
-                            <a href="{{ url('admin/tipoprodutos') }}">Tipo produto </a>
-                        </li>
-                    </div>
-                    <div class="nav navbar-nav">
-                        <li>
-                            <a href="{{ url('admin/produtos') }}">Produtos </a>
-                        </li>
-                    </div>
-                    <div class="nav navbar-nav">
-                        <li>
-                            <a href="{{ url('admin/centrodistribuicoes') }}">Centro distribuições </a>
-                        </li>
-                    </div>
-                    <div class="nav navbar-nav">
-                        <li>
-                            <a href="{{ url('admin/estoques') }}">Estoques </a>
+                        <li><a href="{{ url('admin/cleintes') }}">Clientes</a></li>
+                        <li><a href="{{ url('admin/pedidos') }}">Pedidos</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Estoque <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li> <a href="{{ url('admin/classes') }}">Classes </a></li>
+                                <li><a href="{{ url('admin/estampas') }}">Estampas </a></li>
+                                <li><a href="{{ url('admin/tipoprodutos') }}">Tipo produto </a></li>
+                                <li><a href="{{ url('admin/centrodistribuicoes') }}">Centro distribuições </a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="{{ url('admin/produtos') }}">Produtos </a></li>
+                                <li><a href="{{ url('admin/estoques') }}">Estoques </a></li>
+                                <li role="separator" class="divider"></li>
+                            </ul>
                         </li>
                     </div>
                 @endif

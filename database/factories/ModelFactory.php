@@ -87,3 +87,22 @@ $factory->define(CorkTeck\Models\Estoque::class, function (Faker\Generator $fake
         'produto_id' => rand(1,100),
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(CorkTeck\Models\Cliente::class, function (Faker\Generator $faker) {
+
+    return [
+        'tipo',
+        'Nome',
+        'documento',
+        'endereco',
+        'bairro',
+        'cidade',
+        'UF',
+        'CEP',
+        'senha',
+        'responsável',
+        'fone' => 123456,
+        'celular' => 123456,
+    ];
+});

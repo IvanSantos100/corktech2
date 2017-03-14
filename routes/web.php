@@ -26,6 +26,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::resource('produtos', 'ProdutosController');
     Route::resource('centrodistribuicoes', 'CentroDistribuicoesController');
     Route::resource('estoques', 'EstoquesController');
+    Route::resource('clientes', 'ClientesController');
+    Route::resource('pedidos', 'PedidossController');
 });
 
 

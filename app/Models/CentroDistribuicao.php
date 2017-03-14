@@ -21,4 +21,9 @@ class CentroDistribuicao extends Model implements Transformable
         'valor_base',
     ];
 
+    public function produtos()
+    {
+        return $this->hasMany('CorkTeck\Models\Produto', 'estampa_id', 'id');
+    }
+
 }
