@@ -2,18 +2,26 @@
 
 namespace CorkTeck\Models;
 
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
+use \Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContracts;
 
-class User extends Authenticatable
+
+class User extends Model implements AuthenticatableContracts, CanResetPasswordContracts
 {
-    use Notifiable;
+    use Notifiable, Authenticatable, CanResetPassword;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+    protected $table = 'users';
+
+
     protected $fillable = [
         'name', 'email', 'password',
     ];
