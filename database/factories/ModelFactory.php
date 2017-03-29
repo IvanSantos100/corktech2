@@ -106,3 +106,20 @@ $factory->define(CorkTeck\Models\Cliente::class, function (Faker\Generator $fake
         'celular' => 123456,
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(CorkTeck\Models\Pedido::class, function (Faker\Generator $faker) {
+
+    return [
+        'tipo' => rand(1,3),
+        'status' => rand(1,2),
+        'valor_base' => $faker->randomFloat(2,10,100),
+        'desconto' => $faker->randomFloat(2,10,100),
+        'forma_pagamento' => rand(1,2),
+        'date_confirmacao' => $faker->date('Y-m_d'),
+        'obs' => $faker->sentence(),
+        'origem_id' => rand(1,3),
+        'destino_id' => rand(1,3),
+        'cliente_id' => rand(1,20),
+    ];
+});

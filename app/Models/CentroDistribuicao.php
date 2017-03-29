@@ -26,4 +26,14 @@ class CentroDistribuicao extends Model implements Transformable
         return $this->hasMany('CorkTeck\Models\Produto', 'estampa_id', 'id');
     }
 
+    public function origens()
+    {
+        return $this->hasMany(Pedido::class, 'origem_id', 'id');
+    }
+
+    public function destinos()
+    {
+        return $this->hasMany(Pedido::class, 'destino_id', 'id');
+    }
+
 }

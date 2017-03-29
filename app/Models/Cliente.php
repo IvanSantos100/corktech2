@@ -32,4 +32,9 @@ class Cliente extends Model implements Transformable
         return $this->belongsTo('CorkTeck\Models\Estampa', 'estampa_id', 'id');
     }
 
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class, 'cliente_id', 'id');
+    }
+
 }
