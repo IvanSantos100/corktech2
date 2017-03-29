@@ -14,15 +14,15 @@ class Cliente extends Model implements Transformable
 
     protected $fillable = [
         'tipo', //fisica ou jurídica
-        'Nome',
+        'nome',
         'documento',
         'endereco',
         'bairro',
         'cidade',
-        'UF',
-        'CEP',
+        'uf',
+        'cep',
         'senha',
-        'responsável',
+        'responsavel',
         'fone',
         'celular',
     ];

@@ -45,7 +45,7 @@
                 <!-- Left Side Of Navbar -->
                 @if(Auth::check())
                     <div class="nav navbar-nav">
-                        <li><a href="{{ url('admin/cleintes') }}">Clientes</a></li>
+                        <li><a href="{{ url('admin/clientes') }}">Clientes</a></li>
                         <li><a href="{{ url('admin/pedidos') }}">Pedidos</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Estoque <span class="caret"></span></a>

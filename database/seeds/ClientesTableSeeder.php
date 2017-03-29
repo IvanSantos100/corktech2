@@ -12,6 +12,6 @@ class ClientesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\CorkTeck\Models\Classe::class, 20)->create();
+        factory(\CorkTeck\Models\Cliente::class, 20)->create();
     }
 }

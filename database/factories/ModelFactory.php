@@ -92,16 +92,16 @@ $factory->define(CorkTeck\Models\Estoque::class, function (Faker\Generator $fake
 $factory->define(CorkTeck\Models\Cliente::class, function (Faker\Generator $faker) {
 
     return [
-        'tipo',
-        'Nome',
-        'documento',
-        'endereco',
-        'bairro',
-        'cidade',
-        'UF',
-        'CEP',
-        'senha',
-        'responsável',
+        'tipo' => rand(1,2),
+        'nome' => $faker->name,
+        'documento' => rand(1111, 9999),
+        'endereco' =>$faker->address,
+        'bairro' => 'teste',
+        'cidade' => $faker->city,
+        'UF' => $faker->name,
+        'CEP' =>rand(111111,9999999),
+        'senha' => bcrypt('secret'),
+        'responsavel' => $faker->name,
         'fone' => 123456,
         'celular' => 123456,
     ];

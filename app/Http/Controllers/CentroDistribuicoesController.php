@@ -41,7 +41,8 @@ class CentroDistribuicoesController extends Controller
 
     public function create()
     {
-        return view('admin.centrodistribuicoes.create');
+        $opcao = [1 => 'Nacional', 2 => 'Distribuidora', 3 => 'Revenda'];
+        return view('admin.centrodistribuicoes.create', compact('opcao'));
     }
 
     /**
