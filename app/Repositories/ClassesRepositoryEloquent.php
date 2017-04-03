@@ -17,6 +17,11 @@ class ClassesRepositoryEloquent extends BaseRepository implements ClassesReposit
      *
      * @return string
      */
+    protected $fieldSearchable = [
+        'tamanho' => 'like',
+        'espessura' => 'like'
+    ];
+
     public function model()
     {
         return Classe::class;

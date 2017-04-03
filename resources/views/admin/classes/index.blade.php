@@ -12,6 +12,14 @@
                     <div>
                        <a class="btn btn-primary" href="{{route('admin.classes.create')}}">Nova classe</a>
                     </div>
+                    <br>
+                    <div>
+                        {!! Form::model([], ['class'=>'form-inline', 'method'=> 'GET'])!!}
+                        {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
+                        {!! Form::text('search', null, ['class' => 'form-control']) !!}
+                        {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
+                        {!! Form::close()!!}
+                    </div>
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>

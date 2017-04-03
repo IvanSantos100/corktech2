@@ -17,6 +17,13 @@ class ClientesRepositoryEloquent extends BaseRepository implements ClientesRepos
      *
      * @return string
      */
+    protected $fieldSearchable = [
+        'tipo' => 'like',
+        'nome' => 'like',
+        'documento' => 'like',
+        'responsavel' => 'like'
+    ];
+
     public function model()
     {
         return Cliente::class;

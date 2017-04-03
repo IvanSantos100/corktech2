@@ -19,6 +19,10 @@ class EstampasRepositoryEloquent extends BaseRepository implements EstampasRepos
      *
      * @return string
      */
+    protected $fieldSearchable = [
+        'descricao' => 'like'
+    ];
+
     public function model()
     {
         return Estampa::class;

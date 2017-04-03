@@ -17,6 +17,13 @@ class EstoquesRepositoryEloquent extends BaseRepository implements EstoquesRepos
      *
      * @return string
      */
+    protected $fieldSearchable = [
+        'lote' => 'like',
+        'centroDistribuicoes.descricao' => 'like',
+        'produtos.descricao' => 'like'
+    ];
+
+
     public function model()
     {
         return Estoque::class;

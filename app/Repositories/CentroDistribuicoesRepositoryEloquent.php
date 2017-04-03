@@ -17,6 +17,11 @@ class CentroDistribuicoesRepositoryEloquent extends BaseRepository implements Ce
      *
      * @return string
      */
+    protected $fieldSearchable = [
+        'descricao' => 'like',
+        'tipo' => 'like'
+    ];
+
     public function model()
     {
         return CentroDistribuicao::class;
