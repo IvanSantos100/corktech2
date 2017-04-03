@@ -17,8 +17,8 @@ class CreatePedidosTable extends Migration
             $table->increments('id');
             $table->enum('tipo', [1, 2, 3]);  //1 = entrada, 2 = movimentação e 3 = saída
             $table->enum('status', [1, 2]);
-            $table->float('valor_base');
-            $table->float('desconto');
+            $table->float('valor_base')->nullable();
+            $table->float('desconto')->nullable();
             $table->enum('forma_pagamento', [1, 2]);
             $table->text('obs');
 

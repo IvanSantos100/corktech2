@@ -123,3 +123,15 @@ $factory->define(CorkTeck\Models\Pedido::class, function (Faker\Generator $faker
         'cliente_id' => rand(1,20),
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(CorkTeck\Models\ItemPedido::class, function (Faker\Generator $faker) {
+
+    return [
+        'pedido_id' => rand(1,100),
+        'produto_id' => rand(1,100),
+        'quantidade' => rand(1,100),
+        'preco' => $faker->randomFloat(2,10,100),
+        'prazoentrega' => $faker->date('Y-m_d'),
+    ];
+});

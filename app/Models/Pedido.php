@@ -36,4 +36,10 @@ class Pedido extends Model implements Transformable
     {
         return $this->belongsTo(Cliente::class, 'cliente_id', 'id');
     }
+
+    public function produtos()
+    {
+        return $this->belongsToMany(Produto::class, 'itens_pedidos', 'produto_id', 'pedido_id');
+    }
+
 }
