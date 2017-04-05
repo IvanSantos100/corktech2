@@ -33,7 +33,7 @@
                             <tr>
                                 <td class="col-md-2">{{ $usuario->name}}</td>
                                 <td class="col-md-2">{{ $usuario->email}}</td>
-                                <td class="col-md-2">{{ $usuario->email}}</td>
+                                <td class="col-md-2">{{ $usuario->centroDistribuicoes->descricao}}</td>
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>

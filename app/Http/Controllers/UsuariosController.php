@@ -10,14 +10,21 @@ namespace CorkTeck\Http\Controllers;
 
 //use CorkTeck\Http\Requests\UsuariosRequest;
 use CorkTeck\Repositories\UsuariosRepository;
+use CorkTeck\Repositories\CentroDistribuicoesRepository;
 use Illuminate\Database\QueryException;
 
 class UsuariosController extends Controller
 {
     protected $repository;
 
-    public function __construct(UsuariosRepository $repository){
+    private $centroDistribuicoesRepository;
+
+    public function __construct(
+        UsuariosRepository $repository,
+        CentroDistribuicoesRepository $centroDistribuicoesRepository
+    ){
         $this->repository = $repository;
+        $this->centroDistribuicoesRepository = $centroDistribuicoesRepository;
     }
 
     public function index()

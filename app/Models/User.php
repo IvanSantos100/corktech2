@@ -23,7 +23,10 @@ class User extends Model implements AuthenticatableContracts, CanResetPasswordCo
 
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'centrodistribuicao_id'
     ];
 
     /**
@@ -34,4 +37,12 @@ class User extends Model implements AuthenticatableContracts, CanResetPasswordCo
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function centroDistribuicoes()
+    {
+        return $this->belongsTo(CentroDistribuicao::class, 'centrodistribuicao_id', 'id');
+    }
+
+
+
 }
