@@ -1,16 +1,16 @@
 <?php
 
-namespace CorkTeck\Repositories;
+namespace CorkTech\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use CorkTeck\Repositories\ItensPedidosRepository;
-use CorkTeck\Models\ItemPedido;
-use CorkTeck\Validators\ItensPedidosValidator;
+use CorkTech\Repositories\ItensPedidosRepository;
+use CorkTech\Models\ItemPedido;
+use CorkTech\Validators\ItensPedidosValidator;
 
 /**
  * Class ItensPedidosRepositoryEloquent
- * @package namespace CorkTeck\Repositories;
+ * @package namespace CorkTech\Repositories;
  */
 class ItensPedidosRepositoryEloquent extends BaseRepository implements ItensPedidosRepository
 {

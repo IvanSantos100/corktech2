@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Models;
+namespace CorkTech\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
@@ -29,7 +29,7 @@ class Cliente extends Model implements Transformable
 
     public function estampas()
     {
-        return $this->belongsTo('CorkTeck\Models\Estampa', 'estampa_id', 'id');
+        return $this->belongsTo('CorkTech\Models\Estampa', 'estampa_id', 'id');
     }
 
     public function pedidos()

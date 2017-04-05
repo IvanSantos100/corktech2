@@ -1,12 +1,12 @@
 <?php
 
-namespace CorkTeck\Repositories;
+namespace CorkTech\Repositories;
 
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
  * Interface EstoquesRepository
- * @package namespace CorkTeck\Repositories;
+ * @package namespace CorkTech\Repositories;
  */
 interface EstoquesRepository extends RepositoryInterface
 {

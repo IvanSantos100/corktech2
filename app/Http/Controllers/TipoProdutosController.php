@@ -1,9 +1,9 @@
 <?php
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
-use CorkTeck\Http\Requests\TipoProdutosRequest;
-use CorkTeck\Repositories\TipoProdutosRepository;
+use CorkTech\Http\Requests\TipoProdutosRequest;
+use CorkTech\Repositories\TipoProdutosRepository;
 
 
 class TipoProdutosController extends Controller

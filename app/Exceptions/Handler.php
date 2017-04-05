@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Exceptions;
+namespace CorkTech\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;

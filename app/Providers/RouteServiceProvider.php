@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Providers;
+namespace CorkTech\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'CorkTeck\Http\Controllers';
+    protected $namespace = 'CorkTech\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.

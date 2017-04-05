@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Http\Requests;
+namespace CorkTech\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

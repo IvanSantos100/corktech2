@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Models;
+namespace CorkTech\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;

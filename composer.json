@@ -23,7 +23,7 @@
             "database"
         ],
         "psr-4": {
-            "CorkTeck\\": "app/"
+            "CorkTech\\": "app/"
         }
     },
     "autoload-dev": {

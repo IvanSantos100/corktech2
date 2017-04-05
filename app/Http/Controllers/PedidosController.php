@@ -1,11 +1,11 @@
 <?php
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
-use CorkTeck\Http\Requests\PedidosRequest;
-use CorkTeck\Repositories\CentroDistribuicoesRepository;
-use CorkTeck\Repositories\PedidosRepository;
-use CorkTeck\Repositories\ClientesRepository;
+use CorkTech\Http\Requests\PedidosRequest;
+use CorkTech\Repositories\CentroDistribuicoesRepository;
+use CorkTech\Repositories\PedidosRepository;
+use CorkTech\Repositories\ClientesRepository;
 
 
 class PedidosController extends Controller

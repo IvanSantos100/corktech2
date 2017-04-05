@@ -6,11 +6,11 @@
  * Time: 21:40
  */
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
-//use CorkTeck\Http\Requests\UsuariosRequest;
-use CorkTeck\Repositories\UsuariosRepository;
-use CorkTeck\Repositories\CentroDistribuicoesRepository;
+//use CorkTech\Http\Requests\UsuariosRequest;
+use CorkTech\Repositories\UsuariosRepository;
+use CorkTech\Repositories\CentroDistribuicoesRepository;
 use Illuminate\Database\QueryException;
 
 class UsuariosController extends Controller

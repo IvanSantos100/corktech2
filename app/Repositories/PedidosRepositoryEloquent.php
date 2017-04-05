@@ -1,14 +1,14 @@
 <?php
 
-namespace CorkTeck\Repositories;
+namespace CorkTech\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use CorkTeck\Models\Pedido;
+use CorkTech\Models\Pedido;
 
 /**
  * Class PedidosRepositoryEloquent
- * @package namespace CorkTeck\Repositories;
+ * @package namespace CorkTech\Repositories;
  */
 class PedidosRepositoryEloquent extends BaseRepository implements PedidosRepository
 {

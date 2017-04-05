@@ -1,14 +1,14 @@
 <?php
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CorkTeck\Http\Requests;
+use CorkTech\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use CorkTeck\Http\Requests\ClassesRequest;
-use CorkTeck\Repositories\ClassesRepository;
+use CorkTech\Http\Requests\ClassesRequest;
+use CorkTech\Repositories\ClassesRepository;
 
 
 class ClassesController extends Controller

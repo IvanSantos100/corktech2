@@ -1,14 +1,14 @@
 <?php
 
-namespace CorkTeck\Repositories;
+namespace CorkTech\Repositories;
 
-use CorkTeck\Models\Estoque;
+use CorkTech\Models\Estoque;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 
 /**
  * Class EstoquesRepositoryEloquent
- * @package namespace CorkTeck\Repositories;
+ * @package namespace CorkTech\Repositories;
  */
 class EstoquesRepositoryEloquent extends BaseRepository implements EstoquesRepository
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Models;
+namespace CorkTech\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
@@ -23,7 +23,7 @@ class CentroDistribuicao extends Model implements Transformable
 
     public function produtos()
     {
-        return $this->hasMany('CorkTeck\Models\Produto', 'estampa_id', 'id');
+        return $this->hasMany('CorkTech\Models\Produto', 'estampa_id', 'id');
     }
 
     public function origens()
