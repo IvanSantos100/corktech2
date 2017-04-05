@@ -20,6 +20,13 @@ $factory->define(CorkTeck\Models\User::class, function (Faker\Generator $faker) 
         'email' => $faker->unique()->safeEmail,
         'centrodistribuicao_id' => 1,
         'password' => $password ?: $password = bcrypt('secret'),
+        'endereco' =>$faker->address,
+        'bairro' => 'teste',
+        'cidade' => $faker->city,
+        'UF' => $faker->name,
+        'CEP' =>rand(111111,9999999),
+        'fone' => 123456,
+        'celular' => 123456,
         'remember_token' => str_random(10),
     ];
 });

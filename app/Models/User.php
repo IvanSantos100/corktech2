@@ -26,7 +26,14 @@ class User extends Model implements AuthenticatableContracts, CanResetPasswordCo
         'name',
         'email',
         'password',
-        'centrodistribuicao_id'
+        'centrodistribuicao_id',
+        'endereco',
+        'bairro',
+        'cidade',
+        'uf',
+        'cep',
+        'fone',
+        'celular',
     ];
 
     /**

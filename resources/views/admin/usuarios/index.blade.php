@@ -10,7 +10,7 @@
                 <div class="panel-heading">Listagem de usuários</div>
                 <div class="panel-body">
                     <div>
-                       <a class="btn btn-primary" href="{{route('admin.usuarios.create')}}">Novo cliente</a>
+                       <a class="btn btn-primary" href="{{route('admin.usuarios.create')}}">Novo usuário</a>
                     </div>
                     <br>
                     <div>
@@ -37,10 +37,10 @@
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-warning' href="{{ route('admin.usuarios.edit', ['cliente' => $usuario->id]) }}">Editar</a>
+                                            <a class='btn btn-warning' href="{{ route('admin.usuarios.edit', ['usuario' => $usuario->id]) }}">Editar</a>
                                         </li>
                                         <li>
-                                            <a class='btn btn-danger' href="{{ route('admin.usuarios.show', ['cliente' => $usuario->id]) }}">Excluir</a>
+                                            <a class='btn btn-danger' href="{{ route('admin.usuarios.show', ['usuario' => $usuario->id]) }}">Excluir</a>
                                         </li>
                                     </ul>
 
