@@ -2,7 +2,7 @@
 
 namespace CorkTeck\Http\Controllers\Auth;
 
-use CorkTeck\User;
+use CorkTeck\Models\User;
 use CorkTeck\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
