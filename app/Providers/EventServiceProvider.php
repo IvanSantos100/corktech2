@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Providers;
+namespace CorkTech\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'CorkTeck\Events\SomeEvent' => [
-            'CorkTeck\Listeners\EventListener',
+        'CorkTech\Events\SomeEvent' => [
+            'CorkTech\Listeners\EventListener',
         ],
     ];
 

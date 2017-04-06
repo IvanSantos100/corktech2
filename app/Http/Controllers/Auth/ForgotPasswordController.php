@@ -1,8 +1,8 @@
 <?php
 
-namespace CorkTeck\Http\Controllers\Auth;
+namespace CorkTech\Http\Controllers\Auth;
 
-use CorkTeck\Http\Controllers\Controller;
+use CorkTech\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller

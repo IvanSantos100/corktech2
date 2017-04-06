@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Models;
+namespace CorkTech\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
@@ -22,11 +22,11 @@ class ItemPedido extends Model implements Transformable
 
     public function pedido()
     {
-        return $this->belongsTo('CorkTeck\Models\Pedido', 'pedido_id', 'id');
+        return $this->belongsTo('CorkTech\Models\Pedido', 'pedido_id', 'id');
     }
 
     public function produto()
     {
-        return $this->belongsTo('CorkTeck\Models\Produto', 'produto_id', 'id');
+        return $this->belongsTo('CorkTech\Models\Produto', 'produto_id', 'id');
     }
 }

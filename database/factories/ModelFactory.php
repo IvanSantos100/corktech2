@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CorkTeck\Models\User::class, function (Faker\Generator $faker) {
+$factory->define(CorkTech\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -32,7 +32,7 @@ $factory->define(CorkTeck\Models\User::class, function (Faker\Generator $faker) 
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CorkTeck\Models\Classe::class, function (Faker\Generator $faker) {
+$factory->define(CorkTech\Models\Classe::class, function (Faker\Generator $faker) {
 
     return [
         'descricao' => $faker->sentence(2),
@@ -45,7 +45,7 @@ $factory->define(CorkTeck\Models\Classe::class, function (Faker\Generator $faker
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CorkTeck\Models\Estampa::class, function (Faker\Generator $faker) {
+$factory->define(CorkTech\Models\Estampa::class, function (Faker\Generator $faker) {
 
     return [
         'descricao' => $faker->sentence(2),
@@ -53,7 +53,7 @@ $factory->define(CorkTeck\Models\Estampa::class, function (Faker\Generator $fake
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CorkTeck\Models\TipoProduto::class, function (Faker\Generator $faker) {
+$factory->define(CorkTech\Models\TipoProduto::class, function (Faker\Generator $faker) {
 
     return [
         'descricao' => $faker->sentence(2),
@@ -61,7 +61,7 @@ $factory->define(CorkTeck\Models\TipoProduto::class, function (Faker\Generator $
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CorkTeck\Models\Produto::class, function (Faker\Generator $faker) {
+$factory->define(CorkTech\Models\Produto::class, function (Faker\Generator $faker) {
 
     return [
         'descricao' => $faker->sentence(2),
@@ -73,7 +73,7 @@ $factory->define(CorkTeck\Models\Produto::class, function (Faker\Generator $fake
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CorkTeck\Models\CentroDistribuicao::class, function (Faker\Generator $faker) {
+$factory->define(CorkTech\Models\CentroDistribuicao::class, function (Faker\Generator $faker) {
 
     return [
         'descricao' => 'Nacional',
@@ -86,7 +86,7 @@ $factory->define(CorkTeck\Models\CentroDistribuicao::class, function (Faker\Gene
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CorkTeck\Models\Estoque::class, function (Faker\Generator $faker) {
+$factory->define(CorkTech\Models\Estoque::class, function (Faker\Generator $faker) {
 
     return [
         'lote' => rand(111111111, 999999999),
@@ -97,7 +97,7 @@ $factory->define(CorkTeck\Models\Estoque::class, function (Faker\Generator $fake
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CorkTeck\Models\Cliente::class, function (Faker\Generator $faker) {
+$factory->define(CorkTech\Models\Cliente::class, function (Faker\Generator $faker) {
 
     return [
         'tipo' => rand(1,2),
@@ -116,7 +116,7 @@ $factory->define(CorkTeck\Models\Cliente::class, function (Faker\Generator $fake
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CorkTeck\Models\Pedido::class, function (Faker\Generator $faker) {
+$factory->define(CorkTech\Models\Pedido::class, function (Faker\Generator $faker) {
 
     return [
         'tipo' => rand(1,3),
@@ -133,7 +133,7 @@ $factory->define(CorkTeck\Models\Pedido::class, function (Faker\Generator $faker
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CorkTeck\Models\ItemPedido::class, function (Faker\Generator $faker) {
+$factory->define(CorkTech\Models\ItemPedido::class, function (Faker\Generator $faker) {
 
     return [
         'pedido_id' => rand(1,100),

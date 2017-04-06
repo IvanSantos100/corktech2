@@ -1,9 +1,9 @@
 <?php
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
-use CorkTeck\Http\Requests\CentroDistribuicoesRequest;
-use CorkTeck\Repositories\CentroDistribuicoesRepository;
+use CorkTech\Http\Requests\CentroDistribuicoesRequest;
+use CorkTech\Repositories\CentroDistribuicoesRepository;
 use Illuminate\Database\QueryException;
 
 

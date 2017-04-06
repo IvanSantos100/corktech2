@@ -1,10 +1,10 @@
 <?php
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
-use CorkTeck\Http\Requests\ClientesRequest;
-use CorkTeck\Repositories\ClientesRepository;
-use CorkTeck\Repositories\TipoClientesRepository;
+use CorkTech\Http\Requests\ClientesRequest;
+use CorkTech\Repositories\ClientesRepository;
+use CorkTech\Repositories\TipoClientesRepository;
 
 
 class ClientesController extends Controller

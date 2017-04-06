@@ -175,12 +175,12 @@ return [
         /*
          * Application Service Providers...
          */
-        CorkTeck\Providers\AppServiceProvider::class,
-        CorkTeck\Providers\AuthServiceProvider::class,
-        // CorkTeck\Providers\BroadcastServiceProvider::class,
-        CorkTeck\Providers\EventServiceProvider::class,
-        CorkTeck\Providers\RouteServiceProvider::class,
-        CorkTeck\Providers\RepositoryServiceProvider::class,
+        CorkTech\Providers\AppServiceProvider::class,
+        CorkTech\Providers\AuthServiceProvider::class,
+        // CorkTech\Providers\BroadcastServiceProvider::class,
+        CorkTech\Providers\EventServiceProvider::class,
+        CorkTech\Providers\RouteServiceProvider::class,
+        CorkTech\Providers\RepositoryServiceProvider::class,
 
     ],
 

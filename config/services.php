@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => CorkTeck\User::class,
+        'model' => CorkTech\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

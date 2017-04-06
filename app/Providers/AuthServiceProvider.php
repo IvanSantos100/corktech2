@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Providers;
+namespace CorkTech\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'CorkTeck\Model' => 'CorkTeck\Policies\ModelPolicy',
+        'CorkTech\Model' => 'CorkTech\Policies\ModelPolicy',
     ];
 
     /**

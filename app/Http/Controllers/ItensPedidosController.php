@@ -1,10 +1,10 @@
 <?php
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
-use CorkTeck\Http\Requests\ItensPedidosRequest;
-use CorkTeck\Repositories\ItensPedidosRepository;
-use CorkTeck\Repositories\PedidosRepository;
+use CorkTech\Http\Requests\ItensPedidosRequest;
+use CorkTech\Repositories\ItensPedidosRepository;
+use CorkTech\Repositories\PedidosRepository;
 
 
 class ItensPedidosController extends Controller

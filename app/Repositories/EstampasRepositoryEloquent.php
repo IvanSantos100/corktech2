@@ -1,16 +1,16 @@
 <?php
 
-namespace CorkTeck\Repositories;
+namespace CorkTech\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use CorkTeck\Repositories\EstampasRepository;
-use CorkTeck\Models\Estampa;
-use CorkTeck\Validators\EstampasValidator;
+use CorkTech\Repositories\EstampasRepository;
+use CorkTech\Models\Estampa;
+use CorkTech\Validators\EstampasValidator;
 
 /**
  * Class EstampasRepositoryEloquent
- * @package namespace CorkTeck\Repositories;
+ * @package namespace CorkTech\Repositories;
  */
 class EstampasRepositoryEloquent extends BaseRepository implements EstampasRepository
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
-use CorkTeck\Http\Requests\EstampasRequest;
-use CorkTeck\Repositories\EstampasRepository;
+use CorkTech\Http\Requests\EstampasRequest;
+use CorkTech\Repositories\EstampasRepository;
 
 
 class EstampasController extends Controller

@@ -1,16 +1,16 @@
 <?php
 
-namespace CorkTeck\Repositories;
+namespace CorkTech\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use CorkTeck\Repositories\ProdutosRepository;
-use CorkTeck\Models\Produto;
-use CorkTeck\Validators\ProductValidator;
+use CorkTech\Repositories\ProdutosRepository;
+use CorkTech\Models\Produto;
+use CorkTech\Validators\ProductValidator;
 
 /**
  * Class ProductRepositoryEloquent
- * @package namespace CorkTeck\Repositories;
+ * @package namespace CorkTech\Repositories;
  */
 class ProdutosRepositoryEloquent extends BaseRepository implements ProdutosRepository
 {

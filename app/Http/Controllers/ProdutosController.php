@@ -1,12 +1,12 @@
 <?php
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
-use CorkTeck\Http\Requests\ProdutosRequest;
-use CorkTeck\Repositories\ClassesRepository;
-use CorkTeck\Repositories\EstampasRepository;
-use CorkTeck\Repositories\ProdutosRepository;
-use CorkTeck\Repositories\TipoProdutosRepository;
+use CorkTech\Http\Requests\ProdutosRequest;
+use CorkTech\Repositories\ClassesRepository;
+use CorkTech\Repositories\EstampasRepository;
+use CorkTech\Repositories\ProdutosRepository;
+use CorkTech\Repositories\TipoProdutosRepository;
 
 
 class ProdutosController extends Controller

@@ -1,9 +1,9 @@
 <?php
 
-namespace CorkTeck\Http\Controllers\Auth;
+namespace CorkTech\Http\Controllers\Auth;
 
-use CorkTeck\Models\User;
-use CorkTeck\Http\Controllers\Controller;
+use CorkTech\Models\User;
+use CorkTech\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 

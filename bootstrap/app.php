@@ -28,17 +28,17 @@ $app = new Illuminate\Foundation\Application(
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
-    CorkTeck\Http\Kernel::class
+    CorkTech\Http\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    CorkTeck\Console\Kernel::class
+    CorkTech\Console\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    CorkTeck\Exceptions\Handler::class
+    CorkTech\Exceptions\Handler::class
 );
 
 /*

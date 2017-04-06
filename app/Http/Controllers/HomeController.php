@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
 use Illuminate\Http\Request;
 

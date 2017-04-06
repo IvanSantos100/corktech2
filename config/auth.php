@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => CorkTeck\Models\User::class,
+            'model' => CorkTech\Models\User::class,
         ],
 
         // 'users' => [

@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Providers;
+namespace CorkTech\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -23,16 +23,16 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(\CorkTeck\Repositories\ProdutosRepository::class, \CorkTeck\Repositories\ProdutosRepositoryEloquent::class);
-        $this->app->bind(\CorkTeck\Repositories\ClassesRepository::class, \CorkTeck\Repositories\ClassesRepositoryEloquent::class);
-        $this->app->bind(\CorkTeck\Repositories\EstampasRepository::class, \CorkTeck\Repositories\EstampasRepositoryEloquent::class);
-        $this->app->bind(\CorkTeck\Repositories\TipoProdutosRepository::class, \CorkTeck\Repositories\TipoProdutosRepositoryEloquent::class);
-        $this->app->bind(\CorkTeck\Repositories\CentroDistribuicoesRepository::class, \CorkTeck\Repositories\CentroDistribuicoesRepositoryEloquent::class);
-        $this->app->bind(\CorkTeck\Repositories\EstoquesRepository::class, \CorkTeck\Repositories\EstoquesRepositoryEloquent::class);
-        $this->app->bind(\CorkTeck\Repositories\ClientesRepository::class, \CorkTeck\Repositories\ClientesRepositoryEloquent::class);
-        $this->app->bind(\CorkTeck\Repositories\PedidosRepository::class, \CorkTeck\Repositories\PedidosRepositoryEloquent::class);
-        $this->app->bind(\CorkTeck\Repositories\ItensPedidosRepository::class, \CorkTeck\Repositories\ItensPedidosRepositoryEloquent::class);
-        $this->app->bind(\CorkTeck\Repositories\UsuariosRepository::class, \CorkTeck\Repositories\UsuariosRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\ProdutosRepository::class, \CorkTech\Repositories\ProdutosRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\ClassesRepository::class, \CorkTech\Repositories\ClassesRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\EstampasRepository::class, \CorkTech\Repositories\EstampasRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\TipoProdutosRepository::class, \CorkTech\Repositories\TipoProdutosRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\CentroDistribuicoesRepository::class, \CorkTech\Repositories\CentroDistribuicoesRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\EstoquesRepository::class, \CorkTech\Repositories\EstoquesRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\ClientesRepository::class, \CorkTech\Repositories\ClientesRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\PedidosRepository::class, \CorkTech\Repositories\PedidosRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\ItensPedidosRepository::class, \CorkTech\Repositories\ItensPedidosRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\UsuariosRepository::class, \CorkTech\Repositories\UsuariosRepositoryEloquent::class);
         //:end-bindings:
     }
 }

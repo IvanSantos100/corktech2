@@ -1,6 +1,6 @@
 <?php
 
-namespace CorkTeck\Http\Middleware;
+namespace CorkTech\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;
 

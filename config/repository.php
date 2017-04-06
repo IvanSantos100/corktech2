@@ -220,7 +220,7 @@ return [
     */
     'generator'  => [
         'basePath'      => app_path(),
-        'rootNamespace' => 'CorkTeck\\',
+        'rootNamespace' => 'CorkTech\\',
         'paths'         => [
             'models'       => 'Models',
             'repositories' => 'Repositories',

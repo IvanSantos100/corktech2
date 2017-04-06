@@ -1,11 +1,11 @@
 <?php
 
-namespace CorkTeck\Http\Controllers;
+namespace CorkTech\Http\Controllers;
 
-use CorkTeck\Http\Requests\EstoquesRequest;
-use CorkTeck\Repositories\CentroDistribuicoesRepository;
-use CorkTeck\Repositories\EstoquesRepository;
-use CorkTeck\Repositories\ProdutosRepository;
+use CorkTech\Http\Requests\EstoquesRequest;
+use CorkTech\Repositories\CentroDistribuicoesRepository;
+use CorkTech\Repositories\EstoquesRepository;
+use CorkTech\Repositories\ProdutosRepository;
 use Illuminate\Database\QueryException;
 
 

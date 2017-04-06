@@ -1,14 +1,14 @@
 <?php
 
-namespace CorkTeck\Repositories;
+namespace CorkTech\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use CorkTeck\Models\CentroDistribuicao;
+use CorkTech\Models\CentroDistribuicao;
 
 /**
  * Class CentroDistribuicoesRepositoryEloquent
- * @package namespace CorkTeck\Repositories;
+ * @package namespace CorkTech\Repositories;
  */
 class CentroDistribuicoesRepositoryEloquent extends BaseRepository implements CentroDistribuicoesRepository
 {
