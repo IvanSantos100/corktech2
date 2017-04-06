@@ -1,6 +1,6 @@
 <?php
 
-use CorkTeck\Models\CentroDistribuicao;
+use CorkTech\Models\CentroDistribuicao;
 use Illuminate\Database\Seeder;
 
 class CentroDistribuicoesTableSeeder extends Seeder

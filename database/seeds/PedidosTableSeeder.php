@@ -12,6 +12,6 @@ class PedidosTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\CorkTeck\Models\Pedido::class, 100)->create();
+        factory(\CorkTech\Models\Pedido::class, 100)->create();
     }
 }

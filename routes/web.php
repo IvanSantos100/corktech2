@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function(){
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function(){  //, 'check-permission:nacional|distribuidora|revenda'
     Route::resource('classes', 'ClassesController');
     Route::resource('estampas', 'EstampasController');
     Route::resource('tipoprodutos', 'TipoProdutosController');
@@ -31,5 +31,4 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::resource('itenspedidos', 'ItensPedidosController');
     Route::resource('usuarios', 'UsuariosController');
 });
-
 

@@ -22,13 +22,16 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
         return Pedido::class;
     }
 
-    
-
     /**
      * Boot up the repository, pushing criteria
      */
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    public function origen()
+    {
+        
     }
 }

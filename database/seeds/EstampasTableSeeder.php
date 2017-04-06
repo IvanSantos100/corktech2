@@ -12,6 +12,6 @@ class EstampasTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\CorkTeck\Models\Estampa::class, 20)->create();
+        factory(\CorkTech\Models\Estampa::class, 20)->create();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use CorkTeck\Models\User;
+use CorkTech\Models\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder

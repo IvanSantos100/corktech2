@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->integer('cep')->nullable();
             $table->integer('fone')->nullable();
             $table->integer('celular')->nullable();
+            $table->tinyInteger('is_permission');
             $table->rememberToken();
             $table->timestamps();
         });

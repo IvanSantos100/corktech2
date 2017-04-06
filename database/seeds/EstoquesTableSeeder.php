@@ -1,6 +1,6 @@
 <?php
 
-use CorkTeck\Models\Estoque;
+use CorkTech\Models\Estoque;
 use Illuminate\Database\Seeder;
 
 class EstoquesTableSeeder extends Seeder

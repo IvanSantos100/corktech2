@@ -12,6 +12,6 @@ class ProdutosTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\CorkTeck\Models\Produto::class, 100)->create();
+        factory(\CorkTech\Models\Produto::class, 100)->create();
     }
 }

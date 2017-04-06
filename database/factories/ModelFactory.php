@@ -28,6 +28,7 @@ $factory->define(CorkTech\Models\User::class, function (Faker\Generator $faker) 
         'fone' => 123456,
         'celular' => 123456,
         'remember_token' => str_random(10),
+        'is_permission' => 1,
     ];
 });
 

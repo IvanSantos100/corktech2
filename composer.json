@@ -24,7 +24,10 @@
         ],
         "psr-4": {
             "CorkTech\\": "app/"
-        }
+        },
+        "files": [
+            "app/Helpers/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
