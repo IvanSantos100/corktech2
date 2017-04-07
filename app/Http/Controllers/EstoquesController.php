@@ -3,10 +3,12 @@
 namespace CorkTech\Http\Controllers;
 
 use CorkTech\Http\Requests\EstoquesRequest;
+use CorkTech\Models\Estoque;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use CorkTech\Repositories\EstoquesRepository;
 use CorkTech\Repositories\ProdutosRepository;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
 
 
 class EstoquesController extends Controller
@@ -43,9 +45,15 @@ class EstoquesController extends Controller
      */
     public function index()
     {
-
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $estoques = $this->repository->paginate(10);
+
+        if(Auth::user()->centrodistribuicao_id==1){
+            $estoques = $this->repository->paginate(10);
+        }else{
+            $where = Auth::user()->centrodistribuicao_id;
+
+            $estoques = $this->repository->paginate(10);
+        }
 
         return view('admin.estoques.index', compact('estoques'));
     }

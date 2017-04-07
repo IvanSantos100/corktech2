@@ -62,7 +62,9 @@ class UsuariosController extends Controller
 
     public function update(UsuariosRequest $request, $id)
     {
-        $this->repository->update($request->all(), $id);
+        $data = $request->all();
+        $data['password'] = bcrypt($request->password);
+        $this->repository->update($data, $id);
         $url = $request->get('redirect_to', route('admin.usuarios.index'));
         $request->session()->flash('message', ' Usuário atualizado com sucesso.');
 
