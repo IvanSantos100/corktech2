@@ -51,8 +51,7 @@ class EstoquesController extends Controller
             $estoques = $this->repository->paginate(10);
         }else{
             $where = Auth::user()->centrodistribuicao_id;
-
-            $estoques = $this->repository->paginate(10);
+            $estoques = $this->repository->findcomWhere($where,10);
         }
 
         return view('admin.estoques.index', compact('estoques'));

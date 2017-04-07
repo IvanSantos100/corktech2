@@ -3,6 +3,7 @@
 namespace CorkTech\Repositories;
 
 use CorkTech\Models\Estoque;
+use Illuminate\Container\Container as Application;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 
@@ -29,7 +30,7 @@ class EstoquesRepositoryEloquent extends BaseRepository implements EstoquesRepos
         return Estoque::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
@@ -38,4 +39,11 @@ class EstoquesRepositoryEloquent extends BaseRepository implements EstoquesRepos
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+
+    public function findcomWhere($where,$limit)
+    {
+        return Estoque::where('centrodistribuicao_id','=',$where)->paginate($limit);
+    }
+
 }
