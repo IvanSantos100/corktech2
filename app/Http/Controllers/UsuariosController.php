@@ -45,6 +45,7 @@ class UsuariosController extends Controller
     {
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
+        $data['is_permission'] = 1;
         $this->repository->create( $data);
         $url = $request->get('redirect_to', route('admin.usuarios.index'));
         $request->session()->flash('message', 'Usuário cadastrado com sucesso.');
@@ -64,6 +65,7 @@ class UsuariosController extends Controller
     {
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
+        $data['is_permission'] = 1;
         $this->repository->update($data, $id);
         $url = $request->get('redirect_to', route('admin.usuarios.index'));
         $request->session()->flash('message', ' Usuário atualizado com sucesso.');

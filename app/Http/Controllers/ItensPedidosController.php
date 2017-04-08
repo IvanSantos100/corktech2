@@ -5,7 +5,7 @@ namespace CorkTech\Http\Controllers;
 use CorkTech\Http\Requests\ItensPedidosRequest;
 use CorkTech\Repositories\ItensPedidosRepository;
 use CorkTech\Repositories\PedidosRepository;
-
+use Illuminate\Http\Request;
 
 class ItensPedidosController extends Controller
 {
@@ -33,12 +33,14 @@ class ItensPedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $itenspedidos = $this->repository->paginate(10);
 
-        return view('admin.itenspedidos.index', compact('itenspedidos'));
+        return view('admin.itenspedidos.index', compact('itenspedidos','search'));
     }
 
     public function create()

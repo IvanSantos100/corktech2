@@ -7,7 +7,7 @@ use CorkTech\Repositories\ClassesRepository;
 use CorkTech\Repositories\EstampasRepository;
 use CorkTech\Repositories\ProdutosRepository;
 use CorkTech\Repositories\TipoProdutosRepository;
-
+use Illuminate\Http\Request;
 
 class ProdutosController extends Controller
 {
@@ -48,12 +48,14 @@ class ProdutosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $produtos = $this->repository->paginate(10);
 
-        return view('admin.produtos.index', compact('produtos'));
+        return view('admin.produtos.index', compact('produtos','search'));
     }
 
     public function create()

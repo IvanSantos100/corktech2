@@ -3,11 +3,11 @@
 namespace CorkTech\Http\Controllers;
 
 use CorkTech\Http\Requests\EstoquesRequest;
-use CorkTech\Models\Estoque;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use CorkTech\Repositories\EstoquesRepository;
 use CorkTech\Repositories\ProdutosRepository;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -43,18 +43,20 @@ class EstoquesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
         if(Auth::user()->centrodistribuicao_id==1){
             $estoques = $this->repository->paginate(10);
         }else{
-            $where = Auth::user()->centrodistribuicao_id;
-            $estoques = $this->repository->findcomWhere($where,10);
+           $centrodis = Auth::user()->centrodistribuicao_id;
+           $estoques = $this->repository->findWherePaginate([['centrodistribuicao_id','=',$centrodis]],10);
         }
 
-        return view('admin.estoques.index', compact('estoques'));
+        return view('admin.estoques.index', compact('estoques','search'));
     }
 
     public function create()

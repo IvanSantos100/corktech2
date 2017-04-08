@@ -2,13 +2,12 @@
 
 namespace CorkTech\Http\Controllers;
 
-use Illuminate\Http\Request;
 
-use CorkTech\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use CorkTech\Http\Requests\ClassesRequest;
 use CorkTech\Repositories\ClassesRepository;
+use Illuminate\Http\Request;
 
 
 class ClassesController extends Controller
@@ -30,13 +29,15 @@ class ClassesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $search = $request->get('search');
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $classes = $this->repository->paginate(10);
 
-        return view('admin.classes.index', compact('classes'));
+        return view('admin.classes.index', compact('classes','search'));
     }
 
     public function create()

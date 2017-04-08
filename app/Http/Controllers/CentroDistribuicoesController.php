@@ -5,6 +5,7 @@ namespace CorkTech\Http\Controllers;
 use CorkTech\Http\Requests\CentroDistribuicoesRequest;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
 
 class CentroDistribuicoesController extends Controller
@@ -26,8 +27,10 @@ class CentroDistribuicoesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $search = $request->get('search');
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $centrodistribuicoes = $this->repository->paginate(10);
@@ -36,13 +39,13 @@ class CentroDistribuicoesController extends Controller
             $item->tipo = $this->opcao($item->tipo);
         });
 
-        return view('admin.centrodistribuicoes.index', compact('centrodistribuicoes'));
+        return view('admin.centrodistribuicoes.index', compact('centrodistribuicoes','search'));
     }
 
     public function create()
     {
         $opcao = [1 => 'Nacional', 2 => 'Distribuidora', 3 => 'Revenda'];
-        return view('admin.centrodistribuicoes.create', compact('opcao'));
+        return view('admin.centrodistribuicoes.create', compact('opcao','search'));
     }
 
     /**

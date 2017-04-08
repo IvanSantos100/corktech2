@@ -41,9 +41,4 @@ class EstoquesRepositoryEloquent extends BaseRepository implements EstoquesRepos
     }
 
 
-    public function findcomWhere($where,$limit)
-    {
-        return Estoque::where('centrodistribuicao_id','=',$where)->paginate($limit);
-    }
-
 }

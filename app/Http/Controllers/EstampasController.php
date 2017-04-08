@@ -4,7 +4,7 @@ namespace CorkTech\Http\Controllers;
 
 use CorkTech\Http\Requests\EstampasRequest;
 use CorkTech\Repositories\EstampasRepository;
-
+use Illuminate\Http\Request;
 
 class EstampasController extends Controller
 {
@@ -26,13 +26,15 @@ class EstampasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $estampas = $this->repository->paginate(10);
 
 
-        return view('admin.estampas.index', compact('estampas'));
+        return view('admin.estampas.index', compact('estampas','search'));
     }
 
     public function create()

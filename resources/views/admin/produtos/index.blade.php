@@ -14,7 +14,7 @@
                     </div>
                     <br>
                     <div>
-                        {!! Form::model([], ['class'=>'form-inline', 'method'=> 'GET'])!!}
+                        {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                             {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                             {!! Form::text('search', null, ['class' => 'form-control']) !!}
                             {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}

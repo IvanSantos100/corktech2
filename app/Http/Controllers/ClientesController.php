@@ -5,7 +5,7 @@ namespace CorkTech\Http\Controllers;
 use CorkTech\Http\Requests\ClientesRequest;
 use CorkTech\Repositories\ClientesRepository;
 use CorkTech\Repositories\TipoClientesRepository;
-
+use Illuminate\Http\Request;
 
 class ClientesController extends Controller
 {
@@ -25,8 +25,10 @@ class ClientesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $clientes = $this->repository->paginate(10);
 
@@ -35,7 +37,7 @@ class ClientesController extends Controller
         });
 
 
-        return view('admin.clientes.index', compact('clientes'));
+        return view('admin.clientes.index', compact('clientes','search'));
     }
 
     public function create()

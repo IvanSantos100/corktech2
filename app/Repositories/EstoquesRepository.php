@@ -11,5 +11,4 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface EstoquesRepository extends RepositoryInterface
 {
     //
-    function findcomWhere($where, $limite);
 }

@@ -34,6 +34,7 @@ class User extends Model implements AuthenticatableContracts, CanResetPasswordCo
         'cep',
         'fone',
         'celular',
+        'is_permission',
     ];
 
     /**

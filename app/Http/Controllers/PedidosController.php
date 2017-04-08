@@ -6,7 +6,8 @@ use CorkTech\Http\Requests\PedidosRequest;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use CorkTech\Repositories\PedidosRepository;
 use CorkTech\Repositories\ClientesRepository;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PedidosController extends Controller
 {
@@ -47,16 +48,23 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $pedidos = $this->repository->paginate(10);
+
+        if(Auth::user()->centrodistribuicao_id==1){
+            $pedidos = $this->repository->paginate(10);
+        }else{
+            $centrodis = Auth::user()->centrodistribuicao_id;
+            $pedidos = $this->repository->findWherePaginate([['origem_id','=',$centrodis],['destino_id','=',$centrodis]],10);
+        }
 
         $pedidos->each(function ($item, $key) {
             $item->tipo = $this->opcao($item->tipo);
         });
 
-        return view('admin.pedidos.index', compact('pedidos'));
+        return view('admin.pedidos.index', compact('pedidos','search'));
     }
 
     public function create()

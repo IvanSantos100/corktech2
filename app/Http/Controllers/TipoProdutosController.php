@@ -4,7 +4,7 @@ namespace CorkTech\Http\Controllers;
 
 use CorkTech\Http\Requests\TipoProdutosRequest;
 use CorkTech\Repositories\TipoProdutosRepository;
-
+use Illuminate\Http\Request;
 
 class TipoProdutosController extends Controller
 {
@@ -26,13 +26,15 @@ class TipoProdutosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $tipoprodutos = $this->repository->paginate(10);
 
 
-        return view('admin.tipoprodutos.index', compact('tipoprodutos'));
+        return view('admin.tipoprodutos.index', compact('tipoprodutos','search'));
     }
 
     public function create()
