@@ -10,7 +10,7 @@
                 <div class="panel-heading">Listagem de pedido</div>
                 <div class="panel-body">
                     <div>
-                       <a class="btn btn-primary" href="{{route('admin.pedidos.create')}}">Novo pedido</a>
+                        <a class="btn btn-primary" href="{{route('admin.pedidos.create')}}">Novo Pedido</a>
                     </div>
                     <br>
                     <div>
@@ -36,13 +36,25 @@
                                 <td class="col-md-2">{{ $pedido->tipo}}</td>
                                 <td class="col-md-2">{{ $pedido->status}}</td>
                                 <td class="col-md-2">{{ $pedido->valor_base}}</td>
-                                <td class="col-md-2">
+                                <td class="col-md-3">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-warning' href="{{ route('admin.pedidos.edit', ['pedido' => $pedido->id]) }}">Editar</a>
+                                            <a class='btn btn-primary' href="{{ route('admin.itenspedidos.index', ['pedido' => $pedido->id]) }}">Produtos</a>
                                         </li>
                                         <li>
-                                            <a class='btn btn-danger' href="{{ route('admin.pedidos.show', ['pedido' => $pedido->id]) }}">Excluir</a>
+                                            @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
+                                                <a class='btn btn-warning' href="{{ route('admin.pedidos.edit', ['pedido' => $pedido->id]) }}">Editar</a>
+                                            @else
+                                                <a class='btn btn-warning' disabled="true">Editar</a>
+                                            @endif
+                                        </li>
+                                        <li>
+                                            @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
+                                                <a class='btn btn-danger' href="{{ route('admin.pedidos.show', ['pedido' => $pedido->id]) }}">Excluir</a>
+                                            @else
+                                                <a class='btn btn-danger' disabled="true">Excluir</a>
+                                            @endif
+
                                         </li>
                                     </ul>
 

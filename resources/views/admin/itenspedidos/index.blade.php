@@ -9,10 +9,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de item pedido</div>
                 <div class="panel-body">
-                    <div>
-                       <a class="btn btn-primary" href="{{route('admin.itenspedidos.create')}}">Novo itenspedido</a>
-                    </div>
-                    <br>
+                    @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
+                        <div>
+                            <a class="btn btn-primary" href="{{route('admin.itenspedidos.create')}}">Adicionar produto</a>
+                        </div>
+                        <br>
+                    @endif
                     <div>
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
@@ -41,10 +43,18 @@
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-warning' href="{{ route('admin.itenspedidos.edit', ['itenspedido' => $itenspedido->id]) }}">Editar</a>
+                                            @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
+                                                <a class='btn btn-warning' href="{{ route('admin.itenspedidos.edit', ['itenspedido' => $itenspedido->id]) }}">Editar</a>
+                                            @else
+                                                <a class='btn btn-warning' disabled="true">Editar</a>
+                                            @endif
                                         </li>
                                         <li>
-                                            <a class='btn btn-danger' href="{{ route('admin.itenspedidos.show', ['itenspedido' => $itenspedido->id]) }}">Excluir</a>
+                                            @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
+                                                <a class='btn btn-danger' href="{{ route('admin.itenspedidos.show', ['itenspedido' => $itenspedido->id]) }}">Excluir</a>
+                                            @else
+                                                <a class='btn btn-danger' disabled="true">Excluir</a>
+                                            @endif
                                         </li>
                                     </ul>
 

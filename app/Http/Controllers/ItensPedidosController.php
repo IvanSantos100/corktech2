@@ -5,6 +5,7 @@ namespace CorkTech\Http\Controllers;
 use CorkTech\Http\Requests\ItensPedidosRequest;
 use CorkTech\Repositories\ItensPedidosRepository;
 use CorkTech\Repositories\PedidosRepository;
+use CorkTech\Repositories\ProdutosRepository;
 use Illuminate\Http\Request;
 
 class ItensPedidosController extends Controller
@@ -19,12 +20,14 @@ class ItensPedidosController extends Controller
      */
     private $pedidosRepository;
 
+    private $produtosRepository;
 
     public function __construct(
-        ItensPedidosRepository $repository, PedidosRepository $pedidosRepository
+        ItensPedidosRepository $repository, PedidosRepository $pedidosRepository,ProdutosRepository $produtosRepository
     ){
         $this->repository = $repository;
         $this->pedidosRepository = $pedidosRepository;
+        $this->produtosRepository = $produtosRepository;
     }
 
 
@@ -36,11 +39,15 @@ class ItensPedidosController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $pedidorealizado = $request->get('pedido');
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $itenspedidos = $this->repository->paginate(10);
+        $this->pedidosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        return view('admin.itenspedidos.index', compact('itenspedidos','search'));
+        $itenspedidos = $this->repository->findWherePaginate([['pedido_id','=',$pedidorealizado]],10);
+        $pedido = $this->pedidosRepository->find($pedidorealizado);
+
+        return view('admin.itenspedidos.index', compact('itenspedidos','search', 'pedido'));
     }
 
     public function create()
