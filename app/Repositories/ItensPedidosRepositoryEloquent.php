@@ -29,7 +29,16 @@ class ItensPedidosRepositoryEloquent extends BaseRepository implements ItensPedi
         return ItemPedido::class;
     }
 
-    
+
+    public function findWherePaginate($where, $limit){
+        $this->applyCriteria();
+        $this->applyScope();
+        $this->applyConditions($where);
+        $model = $this->model->paginate($limit);
+        $this->resetModel();
+        return $this->parserResult($model);
+    }
+
 
     /**
      * Boot up the repository, pushing criteria

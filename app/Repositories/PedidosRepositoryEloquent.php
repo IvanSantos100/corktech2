@@ -30,6 +30,17 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
     /**
      * Boot up the repository, pushing criteria
      */
+    public function findWherePaginate($where, $limit){
+        $this->applyCriteria();
+        $this->applyScope();
+        $this->applyConditions($where);
+        $model = $this->model->paginate($limit);
+        $this->resetModel();
+        return $this->parserResult($model);
+    }
+
+
+
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
