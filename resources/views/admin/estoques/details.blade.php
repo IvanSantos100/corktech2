@@ -4,41 +4,43 @@
     <div class="container">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Visualizar produto</div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" >Descrição:</label>
-                            <div class="col-sm-10">
+                <div class="panel-heading">
+                    Visualizar produto
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Descrição:</label><br>
                                 {{ $produto->descricao }}
                             </div>
+                            <div class="form-group">
+                                <label>Preço:</label><br>
+                                {{ $produto->preco }}
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" >Preço:</label>
-                                <div class="col-sm-10">
-                                    {{ $produto->preco }}
-                                </div>
+                                <label>Lote:</label><br>
+                                {{ $produto->lote }}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Estampa:</label><br>
+                                {{ $produto->estampas->descricao }}
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" >Estampa:</label>
-                                <div class="col-sm-10">
-                                    {{ $produto->estampas->descricao }}
-                                </div>
+                                <label>Tipo produto:</label><br>
+                                {{ $produto->tipoprodutos->descricao }}
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" >Tipo produto:</label>
-                                <div class="col-sm-10">
-                                    {{ $produto->tipoprodutos->descricao }}
-                                </div>
+                                <label>Classe:</label><br>
+                                {{ $produto->classes->descricao }}
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" >Classe:</label>
-                                <div class="col-sm-10">
-                                    {{ $produto->classes->descricao }}
-                                </div>
-                            </div>
-                        <div>
-                        <a class='btn btn-primary' href="{{ route('admin.estoques.index') }}">Voltar</a>
+                        </div>
                     </div>
+                </div>
+                <div class="panel-footer">
+                    <center><a class='btn btn-primary' href="{{ route('admin.estoques.index') }}">Voltar</a></center>
                 </div>
             </div>
         </div>
