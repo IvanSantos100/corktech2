@@ -92,6 +92,7 @@ $factory->define(CorkTech\Models\Estoque::class, function (Faker\Generator $fake
     return [
         'lote' => rand(111111111, 999999999),
         'valor' => $faker->randomFloat(2,10,100),
+        'quantidade' => rand(0,200),
         'centrodistribuicao_id' => rand(1,3),
         'produto_id' => rand(1,100),
     ];

@@ -100,6 +100,20 @@ class EstoquesController extends Controller
 
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function details($id)
+    {
+        $produto = $this->produtosRepository->find($id);
+
+        return view('admin.estoques.details', compact('produto'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
