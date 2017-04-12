@@ -47,7 +47,7 @@
                                 <td class="col-md-3">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.estoques.details', ['produto' => $estoque->produto_id]) }}">Detalhar</a>
+                                            <a class='btn btn-primary' href="{{ route('admin.estoques.details', ['estoque' => $estoque->id]) }}">Detalhar</a>
                                         </li>
                                         @if (Auth::user()->centrodistribuicao_id==1)
                                             <li>

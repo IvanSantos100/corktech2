@@ -20,7 +20,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Lote:</label><br>
-                                {{ $produto->lote }}
+                                {{ $estoque->lote }}
                             </div>
                         </div>
                         <div class="col-lg-6">

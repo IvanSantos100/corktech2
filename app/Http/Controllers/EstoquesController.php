@@ -108,9 +108,10 @@ class EstoquesController extends Controller
      */
     public function details($id)
     {
-        $produto = $this->produtosRepository->find($id);
+        $estoque = $this->repository->find($id);
+        $produto = $this->produtosRepository->find($estoque->produto_id);
 
-        return view('admin.estoques.details', compact('produto'));
+        return view('admin.estoques.details', compact('produto','estoque'));
     }
 
     /**
