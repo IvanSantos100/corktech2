@@ -28,7 +28,14 @@ class UsuariosRepositoryEloquent extends BaseRepository implements UsuariosRepos
         return User::class;
     }
 
-    
+    public function findWherePaginate($where, $limit){
+        $this->applyCriteria();
+        $this->applyScope();
+        $this->applyConditions($where);
+        $model = $this->model->paginate($limit);
+        $this->resetModel();
+        return $this->parserResult($model);
+    }
 
     /**
      * Boot up the repository, pushing criteria
