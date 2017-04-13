@@ -39,7 +39,7 @@
                                 <td class="col-md-1">{{ $centrodistribuicao->prazo_fabrica}}</td>
                                 <td class="col-md-1">{{ $centrodistribuicao->prazo_nacional}}</td>
                                 <td class="col-md-1">{{ $centrodistribuicao->prazo_regional}}</td>
-                                <td class="col-md-1">{{ $centrodistribuicao->valor_base}}</td>
+                                <td class="col-md-1">R$ {{number_format($centrodistribuicao->valor_base,2, ',', '.') }}</td>
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>

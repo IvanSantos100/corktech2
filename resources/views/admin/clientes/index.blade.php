@@ -9,9 +9,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de cliente</div>
                 <div class="panel-body">
-                    <div>
-                       <a class="btn btn-primary" href="{{route('admin.clientes.create')}}">Novo cliente</a>
-                    </div>
+                    @if(checkPermission(['nacional']))
+                        <div>
+                            <a class="btn btn-primary" href="{{route('admin.clientes.create')}}">Novo cliente</a>
+                        </div>
+                    @endif
                     <br>
                     <div>
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
@@ -34,17 +36,20 @@
                                 <td class="col-md-2">{{ $cliente->tipo}}</td>
                                 <td class="col-md-2">{{ $cliente->nome}}</td>
                                 <td class="col-md-2">{{ $cliente->documento}}</td>
-                                <td class="col-md-2">
-                                    <ul class="list-inline">
-                                        <li>
-                                            <a class='btn btn-warning' href="{{ route('admin.clientes.edit', ['cliente' => $cliente->id]) }}">Editar</a>
-                                        </li>
-                                        <li>
-                                            <a class='btn btn-danger' href="{{ route('admin.clientes.show', ['cliente' => $cliente->id]) }}">Excluir</a>
-                                        </li>
-                                    </ul>
-
-                                </td>
+                                @if(checkPermission(['nacional']))
+                                    <td class="col-md-2">
+                                        <ul class="list-inline">
+                                            <li>
+                                                <a class='btn btn-warning'
+                                                   href="{{ route('admin.clientes.edit', ['cliente' => $cliente->id]) }}">Editar</a>
+                                            </li>
+                                            <li>
+                                                <a class='btn btn-danger'
+                                                   href="{{ route('admin.clientes.show', ['cliente' => $cliente->id]) }}">Excluir</a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

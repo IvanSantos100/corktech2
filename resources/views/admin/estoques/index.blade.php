@@ -9,7 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de estoque</div>
                 <div class="panel-body">
-                    @if (Auth::user()->centrodistribuicao_id==1)
+                    @if(checkPermission(['nacional']))
                         <div>
                            <a class="btn btn-primary" href="{{route('admin.estoques.create')}}">Nova estoque</a>
                         </div>
@@ -26,7 +26,7 @@
                         <thead>
                         <tr>
                             <th>Produto</th>
-                            @if (Auth::user()->centrodistribuicao_id==1)
+                            @if(checkPermission(['nacional']))
                                 <th>Centro distribuição</th>
                             @endif
                             <th>Lote</th>
@@ -38,18 +38,18 @@
                         @foreach($estoques as $estoque)
                             <tr>
                                 <td class="col-md-2">{{ $estoque->produtos->descricao}}</td>
-                                @if (Auth::user()->centrodistribuicao_id==1)
+                                @if(checkPermission(['nacional']))
                                     <td class="col-md-2">{{ $estoque->centroDistribuicoes->descricao}}</td>
                                 @endif
                                 <td class="col-md-2">{{ $estoque->lote}}</td>
                                 <td class="col-md-1">{{ $estoque->quantidade}}</td>
-                                <td class="col-md-1">{{ $estoque->valor}}</td>
+                                <td class="col-md-1">R$ {{number_format($estoque->valor,2, ',', '.') }}</td>
                                 <td class="col-md-3">
                                     <ul class="list-inline">
                                         <li>
                                             <a class='btn btn-primary' href="{{ route('admin.estoques.details', ['estoque' => $estoque->id]) }}">Detalhar</a>
                                         </li>
-                                        @if (Auth::user()->centrodistribuicao_id==1)
+                                        @if(checkPermission(['nacional']))
                                             <li>
                                                 <a class='btn btn-warning' href="{{ route('admin.estoques.edit', ['estoque' => $estoque->id]) }}">Editar</a>
                                             </li>

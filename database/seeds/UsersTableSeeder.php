@@ -16,5 +16,12 @@ class UsersTableSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@corktech.com'
         ]);
+
+        factory(User::class, 1)->create([
+            'name' => 'User',
+            'email' => 'user@corktech.com',
+            'centrodistribuicao_id' => 2,
+            'is_permission' => 2
+        ]);
     }
 }

@@ -35,7 +35,7 @@
                                 <td class="col-md-2">{{ $pedido->id}}</td>
                                 <td class="col-md-2">{{ $pedido->tipo}}</td>
                                 <td class="col-md-2">{{ $pedido->status}}</td>
-                                <td class="col-md-2">{{ $pedido->valor_base}}</td>
+                                <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
                                 <td class="col-md-3">
                                     <ul class="list-inline">
                                         <li>

@@ -11,25 +11,38 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
+Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function(){  //, 'check-permission:nacional|distribuidora|revenda'
-    Route::resource('classes', 'ClassesController');
-    Route::resource('estampas', 'EstampasController');
-    Route::resource('tipoprodutos', 'TipoProdutosController');
+    Route::group(['middleware' => 'check-permission:nacional'], function() {
+        Route::resource('classes', 'ClassesController');
+        Route::resource('estampas', 'EstampasController');
+        Route::resource('tipoprodutos', 'TipoProdutosController');
+        Route::resource('centrodistribuicoes', 'CentroDistribuicoesController');
+    });
+
     Route::resource('produtos', 'ProdutosController');
-    Route::resource('centrodistribuicoes', 'CentroDistribuicoesController');
-    Route::resource('estoques', 'EstoquesController');
+
+    Route::name('estoques.index')->get('estoques', 'EstoquesController@index');
+    Route::group(['middleware' => 'check-permission:nacional'], function() {
+        Route::resource('estoques', 'EstoquesController', ['except' => 'index']);
+    });
     Route::get('estoques/{estoque}/details', 'EstoquesController@details')->name('estoques.details');
-    Route::resource('clientes', 'ClientesController');
+
+    Route::name('clientes.index ')->get('clientes','ClientesController@index');
+    Route::group(['middleware' => 'check-permission:nacional'], function(){
+        Route::resource('clientes', 'ClientesController', ['except' => 'index']);
+    });
+
     Route::resource('pedidos', 'PedidosController');
     Route::resource('itenspedidos', 'ItensPedidosController');
-    Route::resource('usuarios', 'UsuariosController');
+
+    Route::name('usuarios.index ')->get('usuarios','UsuariosController@index');
+    Route::group(['middleware' => 'check-permission:nacional'], function() {
+        Route::resource('usuarios', 'UsuariosController', ['except' => 'index']);
+    });
 });
 
