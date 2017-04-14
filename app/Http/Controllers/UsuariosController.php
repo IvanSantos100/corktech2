@@ -12,6 +12,8 @@ use CorkTech\Http\Requests\UsuariosRequest;
 use CorkTech\Repositories\UsuariosRepository;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsuariosController extends Controller
 {
@@ -27,12 +29,20 @@ class UsuariosController extends Controller
         $this->centroDistribuicoesRepository = $centroDistribuicoesRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $usuarios = $this->repository->paginate(10);
 
-        return view('admin.usuarios.index', compact('usuarios'));
+        if(Auth::user()->centrodistribuicao_id==1){
+            $usuarios = $this->repository->paginate(10);
+        }else{
+            $centrodis = Auth::user()->centrodistribuicao_id;
+            $usuarios = $this->repository->findWherePaginate([['centrodistribuicao_id','=',$centrodis]],10);
+        }
+
+
+        return view('admin.usuarios.index', compact('usuarios','search'));
     }
 
     public function create()

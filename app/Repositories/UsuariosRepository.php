@@ -11,4 +11,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface UsuariosRepository extends RepositoryInterface
 {
     //
+    public function findWherePaginate($where, $limit);
 }
