@@ -20,26 +20,29 @@ class Pedido extends Model implements Transformable
         'forma_pagamento',
         'obs',
         'date_confimacao',
+        'cliente_id'
     ];
 
-    public function origens()
+    public function origem()
     {
         return $this->belongsTo(CentroDistribuicao::class, 'origem_id', 'id');
     }
 
-    public function destinos()
+    public function destino()
     {
         return $this->belongsTo(CentroDistribuicao::class, 'destino_id', 'id');
     }
 
-    public function clientes()
+    public function cliente()
     {
         return $this->belongsTo(Cliente::class, 'cliente_id', 'id');
     }
 
     public function produtos()
     {
-        return $this->belongsToMany(Produto::class, 'itens_pedidos', 'produto_id', 'pedido_id');
+        return $this->belongsToMany(Produto::class, 'itens_pedidos', 'pedido_id', 'produto_id')
+            ->withPivot('quantidade', 'preco', 'prazoentrega')
+            ->withTimestamps();
     }
-
 }
+///$p->produto(10)->attach(1,['quantidade'=>100,'preco'=>123, 'prazoentrega'=>'1']);

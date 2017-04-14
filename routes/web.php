@@ -38,7 +38,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     });
 
     Route::resource('pedidos', 'PedidosController');
-    Route::resource('itenspedidos', 'ItensPedidosController');
+
+    Route::get('itenspedido/{pedido}', 'ItensPedidoController@index')->name('itenspedido.index');
+    Route::get('itenspedido/{pedido}/produtos', 'ItensPedidoController@listarProdutos')->name('itenspedido.produtos');
+    Route::post('itenspedido/{pedido}/produtos', 'ItensPedidoController@addProdudo')->name('itenspedido.produtos');
+
+    //Route::resource('itenspedidos', 'ItensPedidosController');
 
     Route::name('usuarios.index ')->get('usuarios','UsuariosController@index');
     Route::group(['middleware' => 'check-permission:nacional'], function() {

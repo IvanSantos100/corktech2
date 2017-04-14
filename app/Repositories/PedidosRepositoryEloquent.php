@@ -19,6 +19,7 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
      */
     protected $fieldSearchable = [
         'id' => 'like',
+        'tipo' => 'like',
     ];
 
 
@@ -26,6 +27,8 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
     {
         return Pedido::class;
     }
+
+
 
     /**
      * Boot up the repository, pushing criteria
@@ -46,8 +49,9 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    public function origen()
+    public function itensPedido($id)
     {
-        
+        $model = $this->find($id);
+        return $model->produtos;
     }
 }

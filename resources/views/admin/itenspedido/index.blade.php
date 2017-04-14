@@ -7,10 +7,10 @@
         </div>
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Listagem de pedido</div>
+                <div class="panel-heading">Itens do pedido: {{ $itenspedido[0]->pivot->pedido_id}}</div>
                 <div class="panel-body">
                     <div>
-                        <a class="btn btn-primary" href="{{route('admin.pedidos.create')}}">Novo Pedido</a>
+                        <a class="btn btn-primary" href="{{route('admin.itenspedido.produtos', ['pedidoId' => $itenspedido[0]->pivot->pedido_id])}}">Novo Produto</a>
                     </div>
                     <br>
                     <div>
@@ -23,34 +23,30 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Tipo</th>
-                            <th>Status</th>
+                            <th>Descrição</th>
+                            <th>Quantidade</th>
                             <th>Valor base</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($pedidos as $pedido)
+                        @foreach($itenspedido as $itempedido)
+
                             <tr>
-                                <td class="col-md-2">{{ $pedido->id}}</td>
-                                <td class="col-md-2">{{ $pedido->tipo}}</td>
-                                <td class="col-md-2">{{ $pedido->status}}</td>
-                                <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
+                                <td class="col-md-2">{{ $itempedido->descricao}}</td>
+                                <td class="col-md-2">{{ $itempedido->pivot->quantidade}}</td>
+                                <td class="col-md-2">R$ {{number_format($itempedido->preco,2, ',', '.') }}</td>
                                 <td class="col-md-3">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.itenspedido.index', ['pedido' => $pedido->id]) }}">Produtos</a>
-                                        </li>
-                                        <li>
-                                            @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-warning' href="{{ route('admin.pedidos.edit', ['pedido' => $pedido->id]) }}">Editar</a>
+                                            @if ($itempedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
+                                                <a class='btn btn-warning' href="{{ route('admin.pedidos.edit', ['pedido' => $itempedido->id]) }}">Editar</a>
                                             @else
                                                 <a class='btn btn-warning' disabled="true">Editar</a>
                                             @endif
                                         </li>
                                         <li>
-                                            @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-danger' href="{{ route('admin.pedidos.show', ['pedido' => $pedido->id]) }}">Excluir</a>
+                                            @if ($itempedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
+                                                <a class='btn btn-danger' href="{{ route('admin.pedidos.show', ['pedido' => $itempedido->id]) }}">Excluir</a>
                                             @else
                                                 <a class='btn btn-danger' disabled="true">Excluir</a>
                                             @endif
@@ -63,7 +59,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{ $pedidos->links() }}
+
                 </div>
             </div>
         </div>

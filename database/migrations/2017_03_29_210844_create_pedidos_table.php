@@ -15,12 +15,12 @@ class CreatePedidosTable extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('tipo', [1, 2, 3]);  //1 = entrada, 2 = movimentação e 3 = saída
+            $table->enum('tipo', ['Entrada', 'Movimentação', 'Saída']);  //1 = entrada, 2 = movimentação e 3 = saída
             $table->enum('status', [1, 2]);
             $table->float('valor_base')->nullable();
             $table->float('desconto')->nullable();
             $table->enum('forma_pagamento', [1, 2]);
-            $table->text('obs');
+            $table->text('obs')->nullable();
 
             $table->integer('origem_id')->unsigned()->nullable();
             $table->foreign('origem_id')->references('id')->on('centro_distribuicoes');
@@ -31,7 +31,7 @@ class CreatePedidosTable extends Migration
             $table->integer('cliente_id')->unsigned();
             $table->foreign('cliente_id')->references('id')->on('clientes');
 
-            $table->date('date_confirmacao');
+            $table->date('date_confirmacao')->nullable();
             $table->timestamps();
         });
     }
