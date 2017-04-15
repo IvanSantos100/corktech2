@@ -6,6 +6,8 @@ use CorkTech\Http\Requests\PedidosRequest;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use CorkTech\Repositories\PedidosRepository;
 use CorkTech\Repositories\ClientesRepository;
+use CorkTech\Repositories\ProdutosRepository;
+use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,18 +30,24 @@ class PedidosController extends Controller
      * @var ClientesRepository
      */
     private $clientesRepository;
+    /**
+     * @var ProdutosRepository
+     */
+    private $produtosRepository;
 
 
     public function __construct(
         PedidosRepository $repository,
         CentroDistribuicoesRepository $origensRepository,
         CentroDistribuicoesRepository $destinosRepository,
-        ClientesRepository $clientesRepository
+        ClientesRepository $clientesRepository,
+        ProdutosRepository $produtosRepository
     ){
         $this->repository = $repository;
         $this->origensRepository = $origensRepository;
         $this->destinosRepository = $destinosRepository;
         $this->clientesRepository = $clientesRepository;
+        $this->produtosRepository = $produtosRepository;
     }
 
 
@@ -60,10 +68,6 @@ class PedidosController extends Controller
             $pedidos = $this->repository->findWherePaginate([['origem_id','=',$centrodis],['destino_id','=',$centrodis]],10);
         }
 
-        $pedidos->each(function ($item, $key) {
-            $item->tipo = $this->opcao($item->tipo);
-        });
-
         return view('admin.pedidos.index', compact('pedidos','search'));
     }
 
@@ -72,11 +76,11 @@ class PedidosController extends Controller
         $origens = $this->origensRepository->pluck('descricao', 'id');
         $destinos = $this->destinosRepository->pluck('descricao', 'id');
         $clientes = $this->clientesRepository->pluck('nome', 'id');
-
-        $opcao = [1 => 'Entrada', 2 => 'Movimentação', 3 => 'Saída'];
+        $opcao = $this->opcao();
 
         return view('admin.pedidos.create', compact('origens', 'destinos', 'clientes', 'opcao') );
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -158,18 +162,24 @@ class PedidosController extends Controller
      */
     public function destroy($id)
     {
-        $this->repository->delete($id);
-        \Session::flash('message', 'Pedidos excluída com sucesso.');
+        try {
+            $this->repository->delete($id);
+            \Session::flash('message', 'Pedidos excluída com sucesso.');
+        }catch (QueryExceptionception $ex){
+            \Session::flash('error', 'Pedidos não pode ser excluido. Existe produtos relacionados.');
+        }
 
         return redirect('admin/pedidos');
     }
 
-    private function opcao($p)
+    private function opcao()
     {
-        switch ($p){
-            case 1 : return 'Entrada'; break;
-            case 2 : return 'Movimentação'; break;
-            case 3 : return 'Saída';
+        $center_id = \Auth::user()->centrodistribuicao_id;
+        switch ($center_id){
+            case 1: return ['Entrada' => 'Entrada', 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
+            case 2: return ['Movimentação' => 'Movimentação'];
+            case 3: return ['Saída' => 'Saída'];
         }
+
     }
 }

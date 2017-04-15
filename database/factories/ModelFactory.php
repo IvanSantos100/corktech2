@@ -121,7 +121,7 @@ $factory->define(CorkTech\Models\Cliente::class, function (Faker\Generator $fake
 $factory->define(CorkTech\Models\Pedido::class, function (Faker\Generator $faker) {
 
     return [
-        'tipo' => rand(1,3),
+        'tipo' => $faker->randomElement(['Entrada', 'Movimentação', 'Saída']),
         'status' => rand(1,2),
         'valor_base' => $faker->randomFloat(2,10,100),
         'desconto' => $faker->randomFloat(2,10,100),

@@ -25,7 +25,6 @@ class PedidosRequest extends FormRequest
     {
         return [
             'tipo' => "required",
-            'status' => "required",
             'valor_base' => "required|numeric",
             'forma_pagamento' => "required",
             'cliente_id' => "exists:clientes,id",
