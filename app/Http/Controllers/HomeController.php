@@ -2,10 +2,11 @@
 
 namespace CorkTech\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use CorkTech\Repositories\UsuariosRepository;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
+use CorkTech\Http\Requests\UserRequest;
+use CorkTech\Http\Requests\PasswordRequest;
 use Illuminate\Database\QueryException;
 
 
@@ -51,7 +52,7 @@ class HomeController extends Controller
         return view('edit', compact('usuario', 'centroDistribuicoes'));
     }
 
-    public function update(Request $request)
+    public function update(UserRequest $request)
     {
         $data = $request->all();
 
@@ -70,7 +71,7 @@ class HomeController extends Controller
         return view('editpassword', compact('usuario'));
     }
 
-    public function updatepassword(Request $request)
+    public function updatepassword(PasswordRequest $request)
     {
         $data['password'] = bcrypt($request->password);
         $id = Auth::user()->id;
