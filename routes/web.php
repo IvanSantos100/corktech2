@@ -16,6 +16,12 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 
+
+Route::get('/edit', 'HomeController@edit')->name('edit');
+Route::get('/editpassword', 'HomeController@editpassword')->name('editpassword');
+Route::put('/update', 'HomeController@update')->name('update');
+Route::put('/updatepassword', 'HomeController@updatepassword')->name('updatepassword');
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function(){  //, 'check-permission:nacional|distribuidora|revenda'
     Route::group(['middleware' => 'check-permission:nacional'], function() {
         Route::resource('classes', 'ClassesController');
