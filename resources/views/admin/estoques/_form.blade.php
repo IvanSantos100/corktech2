@@ -18,6 +18,12 @@
 {!! Form::error('lote', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
+{!! Html::openFormGroup('quantidade', $errors) !!}
+{!! Form::label('quantidade', 'Quantidade', ['class' => 'control-label']) !!}
+{!! Form::text('quantidade', null, ['class' => 'form-control']) !!}
+{!! Form::error('quantidade', $errors) !!}
+{!! Html::closeFormGroup() !!}
+
 {!! Html::openFormGroup('valor', $errors) !!}
 {!! Form::label('valor', 'Valor', ['class' => 'control-label']) !!}
 {!! Form::text('valor', null, ['class' => 'form-control']) !!}

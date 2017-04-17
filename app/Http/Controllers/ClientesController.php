@@ -61,7 +61,7 @@ class ClientesController extends Controller
         $url = $request->get('redirect_to', route('admin.clientes.index'));
         $request->session()->flash('message', 'Cliente cadastrado com sucesso.');
 
-        return redirect()->to($url);
+        return redirect()->action('ClientesController@index');
     }
 
 
@@ -109,10 +109,9 @@ class ClientesController extends Controller
     public function update(ClientesRequest $request, $id)
     {
         $this->repository->update($request->all(), $id);
-        $url = $request->get('redirect_to', route('admin.clientes.index'));
         $request->session()->flash('message', ' Cliente atualizado com sucesso.');
 
-        return redirect()->to($url);
+        return redirect()->action('ClientesController@index');
     }
 
 
@@ -128,7 +127,7 @@ class ClientesController extends Controller
         $this->repository->delete($id);
         \Session::flash('message', 'Clientes excluída com sucesso.');
 
-        return redirect('admin/clientes');
+        return redirect()->action('ClientesController@index');
     }
 
     private function opcao($p)

@@ -55,12 +55,12 @@ class UsuariosController extends Controller
     {
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
-        $data['is_permission'] = 1;
+        $centrodistribuicao = $this->centroDistribuicoesRepository->find($data['centrodistribuicao_id']);
+        $data['is_permission'] = $centrodistribuicao['tipo'];
         $this->repository->create( $data);
-        $url = $request->get('redirect_to', route('admin.usuarios.index'));
         $request->session()->flash('message', 'Usuário cadastrado com sucesso.');
 
-        return redirect()->to($url);
+        return redirect()->action('UsuariosController@index');
     }
 
     public function edit($id)
@@ -75,12 +75,15 @@ class UsuariosController extends Controller
     {
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
-        $data['is_permission'] = 1;
+
+        $centrodistribuicao = $this->centroDistribuicoesRepository->find($data['centrodistribuicao_id']);
+
+        $data['is_permission'] = $centrodistribuicao['tipo'];
+
         $this->repository->update($data, $id);
-        $url = $request->get('redirect_to', route('admin.usuarios.index'));
         $request->session()->flash('message', ' Usuário atualizado com sucesso.');
 
-        return redirect()->to($url);
+        return redirect()->action('UsuariosController@index');
     }
 
     public function show($id)
@@ -99,7 +102,7 @@ class UsuariosController extends Controller
             \Session::flash('error', 'Usuário não pode ser excluido. Ele está relacionado com outro registro .');
         }
 
-        return redirect('admin/usuarios');
+        return redirect()->action('UsuariosController@index');
     }
 
 }
