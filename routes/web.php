@@ -53,6 +53,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     Route::name('usuarios.index ')->get('usuarios','UsuariosController@index');
     Route::group(['middleware' => 'check-permission:nacional'], function() {
+        Route::get('usuarios/{usuario}/editpassword','UsuariosController@editpassword')->name('usuarios.editpassword');
+        Route::put('usuarios/{usuario}/updatepassword', 'UsuariosController@updatepassword')->name('usuarios.updatepassword');
         Route::resource('usuarios', 'UsuariosController', ['except' => 'index']);
     });
 });

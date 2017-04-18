@@ -12,11 +12,13 @@
 {!! Form::error('email', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
+@if(empty($usuario))
 {!! Html::openFormGroup('´password', $errors) !!}
 {!! Form::label('password', 'Senha', ['class' => 'control-label']) !!}
-{!! Form::password('password', null, ['class' => 'form-control']) !!}
+{!! Form::password('password', ['class' => 'form-control']) !!}
 {!! Form::error('password', $errors) !!}
 {!! Html::closeFormGroup() !!}
+@endif
 
 {!! Html::openFormGroup('centrodistribuicao_id', $errors) !!}
 {!! Form::label('centrodistribuicao_id', 'Centro de Distribuição', ['class' => 'control-label']) !!}

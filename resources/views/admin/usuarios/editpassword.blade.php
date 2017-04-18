@@ -5,7 +5,7 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">Editar usuário</div>
-            {!! Form::model($usuario,['route' => ['updatepassword'],'class' => 'form', 'method' => 'PUT']) !!}
+            {!! Form::model($usuario,['route' => ['admin.usuarios.updatepassword', 'class' => $usuario->id],'class' => 'form', 'method' => 'PUT']) !!}
             <div class="panel-body">
                 {!! Form::hidden('redirect_to', URL::previous()) !!}
 

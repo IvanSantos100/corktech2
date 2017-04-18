@@ -13,6 +13,7 @@ class Classe extends Model implements Transformable
     protected $table = 'classes';
 
     protected $fillable = [
+        'descricao',
         'tamanho',
         'espessura',
         'atacado',

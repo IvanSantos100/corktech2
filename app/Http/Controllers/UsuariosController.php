@@ -9,6 +9,8 @@
 namespace CorkTech\Http\Controllers;
 
 use CorkTech\Http\Requests\UsuariosRequest;
+use CorkTech\Http\Requests\UserRequest;
+use CorkTech\Http\Requests\PasswordRequest;
 use CorkTech\Repositories\UsuariosRepository;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use Illuminate\Database\QueryException;
@@ -71,10 +73,9 @@ class UsuariosController extends Controller
         return view('admin.usuarios.edit', compact('usuario', 'centroDistribuicoes'));
     }
 
-    public function update(UsuariosRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $data = $request->all();
-        $data['password'] = bcrypt($request->password);
 
         $centrodistribuicao = $this->centroDistribuicoesRepository->find($data['centrodistribuicao_id']);
 
@@ -82,6 +83,22 @@ class UsuariosController extends Controller
 
         $this->repository->update($data, $id);
         $request->session()->flash('message', ' Usuário atualizado com sucesso.');
+
+        return redirect()->action('UsuariosController@index');
+    }
+
+    public function editpassword($id){
+        $usuario = $this->repository->find($id);
+
+        return view('admin.usuarios.editpassword', compact('usuario'));
+    }
+
+    public function updatepassword(PasswordRequest $request, $id)
+    {
+        $data['password'] = bcrypt($request->password);
+
+        $this->repository->update($data, $id);
+        $request->session()->flash('message', ' Senha alterada com sucesso.');
 
         return redirect()->action('UsuariosController@index');
     }

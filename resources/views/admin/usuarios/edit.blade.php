@@ -4,20 +4,26 @@
     <div class="container">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Editar usuário</div>
-                <div class="panel-body">
-                    {!! Form::model($usuario,[
-                    'route' => ['admin.usuarios.update' , 'class' => $usuario->id],
-                    'class' => 'form', 'method' => 'PUT']) !!}
-
-                    @include('admin.usuarios._form')
-
-                    {!! Html::openFormGroup() !!}
-                    {!! form::submit('Salvar usuário', ['class' => 'btn btn-primary']) !!}
-                    {!! Html::closeFormGroup() !!}
-
-                    {!! Form::close() !!}
+                <div class="panel-heading" style="padding-bottom: 19px">
+                    Editar usuário
+                    <div class="btn-group pull-right">
+                        <a class='btn btn-warning' href="{{ route('admin.usuarios.editpassword', ['usuario' => $usuario->id]) }}">Alterar Senha</a>
+                    </div>
                 </div>
+                {!! Form::model($usuario,[
+                   'route' => ['admin.usuarios.update' , 'class' => $usuario->id],
+                   'class' => 'form', 'method' => 'PUT']) !!}
+                <div class="panel-body">
+                    @include('admin.usuarios._form')
+                </div>
+                <div class="panel-footer">
+                    <center>
+                        {!! Html::openFormGroup() !!}
+                        {!! form::submit('Salvar usuário', ['class' => 'btn btn-primary']) !!}
+                        {!! Html::closeFormGroup() !!}
+                    </center>
+                </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
