@@ -17,6 +17,7 @@ class Estoque extends Model implements Transformable
         'valor',
         'centrodistribuicao_id',
         'produto_id',
+        'quantidade'
     ];
 
     public function centroDistribuicoes()

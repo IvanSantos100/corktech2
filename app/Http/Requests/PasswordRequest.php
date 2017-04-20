@@ -4,10 +4,9 @@ namespace CorkTech\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EstoquesRequest extends FormRequest
+class PasswordRequest extends FormRequest
 {
     /**
-     *
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -25,11 +24,7 @@ class EstoquesRequest extends FormRequest
     public function rules()
     {
         return [
-            'lote' => "required|max:30",
-            'valor' => "required|numeric",
-            'quantidade'=> "required|numeric",
-            'centrodistribuicao_id' => "exists:centro_distribuicoes,id",
-            'produto_id' => "exists:produtos,id",
+            'password' => "required",
         ];
     }
 }

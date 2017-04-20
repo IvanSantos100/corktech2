@@ -12,19 +12,10 @@
 {!! Form::error('email', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
-@if(empty($usuario))
-{!! Html::openFormGroup('´password', $errors) !!}
-{!! Form::label('password', 'Senha', ['class' => 'control-label']) !!}
-{!! Form::password('password', ['class' => 'form-control']) !!}
-{!! Form::error('password', $errors) !!}
-{!! Html::closeFormGroup() !!}
-@endif
-
-{!! Html::openFormGroup('centrodistribuicao_id', $errors) !!}
-{!! Form::label('centrodistribuicao_id', 'Centro de Distribuição', ['class' => 'control-label']) !!}
-{!! Form::select('centrodistribuicao_id', $centroDistribuicoes, null, ['class' => 'form-control']) !!}
-{!! Form::error('centrodistribuicao_id', $errors) !!}
-{!! Html::closeFormGroup() !!}
+<div class="form-group">
+    <label>Centro de Distribuição:</label><br>
+    {{ $centroDistribuicoes->descricao }}
+</div>
 
 {!! Html::openFormGroup('endereco', $errors) !!}
 {!! Form::label('endereco', 'Endereço', ['class' => 'control-label']) !!}

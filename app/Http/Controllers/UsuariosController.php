@@ -9,6 +9,8 @@
 namespace CorkTech\Http\Controllers;
 
 use CorkTech\Http\Requests\UsuariosRequest;
+use CorkTech\Http\Requests\UserRequest;
+use CorkTech\Http\Requests\PasswordRequest;
 use CorkTech\Repositories\UsuariosRepository;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use Illuminate\Database\QueryException;
@@ -55,12 +57,12 @@ class UsuariosController extends Controller
     {
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
-        $data['is_permission'] = 1;
+        $centrodistribuicao = $this->centroDistribuicoesRepository->find($data['centrodistribuicao_id']);
+        $data['is_permission'] = $centrodistribuicao['tipo'];
         $this->repository->create( $data);
-        $url = $request->get('redirect_to', route('admin.usuarios.index'));
         $request->session()->flash('message', 'Usuário cadastrado com sucesso.');
 
-        return redirect()->to($url);
+        return redirect()->action('UsuariosController@index');
     }
 
     public function edit($id)
@@ -71,16 +73,34 @@ class UsuariosController extends Controller
         return view('admin.usuarios.edit', compact('usuario', 'centroDistribuicoes'));
     }
 
-    public function update(UsuariosRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $data = $request->all();
-        $data['password'] = bcrypt($request->password);
-        $data['is_permission'] = 1;
+
+        $centrodistribuicao = $this->centroDistribuicoesRepository->find($data['centrodistribuicao_id']);
+
+        $data['is_permission'] = $centrodistribuicao['tipo'];
+
         $this->repository->update($data, $id);
-        $url = $request->get('redirect_to', route('admin.usuarios.index'));
         $request->session()->flash('message', ' Usuário atualizado com sucesso.');
 
-        return redirect()->to($url);
+        return redirect()->action('UsuariosController@index');
+    }
+
+    public function editpassword($id){
+        $usuario = $this->repository->find($id);
+
+        return view('admin.usuarios.editpassword', compact('usuario'));
+    }
+
+    public function updatepassword(PasswordRequest $request, $id)
+    {
+        $data['password'] = bcrypt($request->password);
+
+        $this->repository->update($data, $id);
+        $request->session()->flash('message', ' Senha alterada com sucesso.');
+
+        return redirect()->action('UsuariosController@index');
     }
 
     public function show($id)
@@ -99,7 +119,7 @@ class UsuariosController extends Controller
             \Session::flash('error', 'Usuário não pode ser excluido. Ele está relacionado com outro registro .');
         }
 
-        return redirect('admin/usuarios');
+        return redirect()->action('UsuariosController@index');
     }
 
 }

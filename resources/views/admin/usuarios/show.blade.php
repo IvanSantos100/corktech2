@@ -73,7 +73,7 @@
                     </div>
                     <div>
                         {!! Form::open(['route' => ['admin.usuarios.destroy', 'usuario' => $usuario->id], 'id' => $usuario->id, 'method' => 'DELETE']) !!}
-                        <a href="{{ route('admin.usuarios.index') }}" class="btn btn-success">Voltar</a>
+                        <a href="{{ action('UsuariosController@index') }}" class="btn btn-success">Voltar</a>
                         {!! Form::submit('Excluir', ['class' => 'btn btn-danger']) !!}
                         {!! Form::close() !!}
                     </div>
