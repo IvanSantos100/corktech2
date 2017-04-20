@@ -157,7 +157,7 @@ class EstoquesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try {
             $this->repository->delete($id);
@@ -165,7 +165,8 @@ class EstoquesController extends Controller
         }catch (QueryException $ex){
             \Session::flash('error', 'Estoque não pode ser excluido. Ele está relacionado com outro registro .');
         }
+        $url = $request->get('redirect_to', route('admin.estoques.index'));
 
-        return redirect()->action('EstoquesController@index');
+        return redirect()->to($url);
     }
 }

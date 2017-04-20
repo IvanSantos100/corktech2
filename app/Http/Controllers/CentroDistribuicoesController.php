@@ -125,7 +125,7 @@ class CentroDistribuicoesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try {
             $this->repository->delete($id);
@@ -133,8 +133,10 @@ class CentroDistribuicoesController extends Controller
         }catch (QueryException $ex){
             \Session::flash('error', 'Centro de distribuicão não pode ser excluido. Ele está relacionado com outro registro .');
         }
+        $url = $request->get('redirect_to', route('admin.centrodistribuicoes.index'));
 
-        return redirect('admin/centrodistribuicoes');
+
+        return redirect()->to($url);
     }
 
     private function opcao($p)

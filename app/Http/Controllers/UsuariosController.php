@@ -113,7 +113,7 @@ class UsuariosController extends Controller
         return view('admin.usuarios.show', compact('usuario'));
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try {
             $this->repository->delete($id);
@@ -122,7 +122,9 @@ class UsuariosController extends Controller
             \Session::flash('error', 'Usuário não pode ser excluido. Ele está relacionado com outro registro .');
         }
 
-        return redirect()->action('UsuariosController@index');
+        $url = $request->get('redirect_to', route('admin.usuarios.index'));
+
+        return redirect()->to($url);
     }
 
 }

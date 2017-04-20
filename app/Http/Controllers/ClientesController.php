@@ -123,12 +123,13 @@ class ClientesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $this->repository->delete($id);
+        $url = $request->get('redirect_to', route('admin.clientes.index'));
         \Session::flash('message', 'Clientes excluída com sucesso.');
 
-        return redirect()->action('ClientesController@index');
+        return redirect()->to($url);
     }
 
     private function opcao($p)

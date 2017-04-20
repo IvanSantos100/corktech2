@@ -115,11 +115,13 @@ class EstampasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $this->repository->delete($id);
         \Session::flash('message', 'Estampas excluída com sucesso.');
 
-        return redirect('admin/estampas');
+        $url = $request->get('redirect_to', route('admin.estampas.index'));
+
+        return redirect()->to($url);
     }
 }

@@ -142,11 +142,12 @@ class ProdutosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $this->repository->delete($id);
         \Session::flash('message', 'Produtos excluída com sucesso.');
+        $url = $request->get('redirect_to', route('admin.produtos.index'));
 
-        return redirect('admin/produtos');
+        return redirect()->to($url);
     }
 }

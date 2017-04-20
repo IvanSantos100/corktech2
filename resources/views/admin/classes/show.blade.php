@@ -44,15 +44,18 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="panel-footer">
                     <div class="alert alert-danger">
                         Deseja realmente excluir?.
                     </div>
-                    <div>
+                    <center>
                         {!! Form::open(['route' => ['admin.classes.destroy', 'classe' => $classe->id], 'id' => $classe->id, 'method' => 'DELETE']) !!}
-                        <a href="{{ route('admin.classes.index') }}" class="btn btn-success">Voltar</a>
+                        {!! Form::hidden('redirect_to', URL::previous()) !!}
+                        <a href="{{ URL::previous() }}" class="btn btn-success">Voltar</a>
                         {!! Form::submit('Excluir', ['class' => 'btn btn-danger']) !!}
                         {!! Form::close() !!}
-                    </div>
+                    </center>
                 </div>
             </div>
         </div>

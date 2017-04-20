@@ -118,7 +118,7 @@ class ClassesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try {
             $this->repository->delete($id);
@@ -127,6 +127,8 @@ class ClassesController extends Controller
             \Session::flash('error', 'Classe não pode ser excluido. Ele está relacionado com outro registro .');
         }
 
-        return redirect('admin/classes');
+        $url = $request->get('redirect_to', route('admin.classes.index'));
+
+        return redirect()->to($url);
     }
 }
