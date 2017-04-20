@@ -52,6 +52,8 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
     public function itensPedido($id)
     {
         $model = $this->find($id);
+
+        //dd($model->paginate(10));
         return $model->produtos;
     }
 }

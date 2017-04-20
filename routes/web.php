@@ -42,6 +42,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('itenspedido/{pedido}', 'ItensPedidoController@index')->name('itenspedido.index');
     Route::get('itenspedido/{pedido}/produtos', 'ItensPedidoController@listarProdutos')->name('itenspedido.produtos');
     Route::post('itenspedido/{pedido}/produtos', 'ItensPedidoController@addProdudo')->name('itenspedido.produtos');
+    Route::get('itenspedido/{pedido}/produto/{produto}', 'ItensPedidoController@editProdudo')->name('itenspedido.produto.edit');
 
     //Route::resource('itenspedidos', 'ItensPedidosController');
 

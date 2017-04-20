@@ -32,8 +32,6 @@ class ItensPedidoController extends Controller
     {
 
         $itenspedido = $this->pedidosRepository->itensPedido($id);
-
-        //dd($itenspedido);
         if ($itenspedido->isEmpty()) {
 
             return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $id]);
@@ -76,6 +74,14 @@ class ItensPedidoController extends Controller
         //dd($pedido, $produto->estampas, $produto->classes, $produto->tipoprodutos, $produto->pedidos);
         //$pedido->produtos()->attach(1,['quantidade'=>100,'preco'=>123, 'prazoentrega'=>'2017-01-01']);
 
+    }
+
+    public function editProdudo($pedidoId, $produtoId)
+    {
+        $pedido = $this->pedidosRepository->find($pedidoId);
+        $produto = $pedido->produtos->find(1);
+
+        return view('admin.itenspedido.edit', compact('produto'));
     }
 
 

@@ -39,7 +39,8 @@
                                     <ul class="list-inline">
                                         <li>
                                             @if ($itempedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-warning' href="{{ route('admin.pedidos.edit', ['pedido' => $itempedido->id]) }}">Editar</a>
+                                                <a class='btn btn-warning' href="{{ route('admin.itenspedido.produto.edit',
+                                                ['pedidoId' => $itempedido->pivot->pedido_id, 'produtoId' => $itempedido->pivot->produto_id]) }}">Editar</a>
                                             @else
                                                 <a class='btn btn-warning' disabled="true">Editar</a>
                                             @endif
