@@ -2,6 +2,7 @@
 
 namespace CorkTech\Http\Controllers;
 
+use CorkTech\Repositories\ItensPedidosRepository;
 use CorkTech\Repositories\PedidosRepository;
 use CorkTech\Repositories\ProdutosRepository;
 use Illuminate\Http\Request;
@@ -18,20 +19,32 @@ class ItensPedidoController extends Controller
      * @var ProdutosRepository
      */
     private $produtosRepository;
+    /**
+     * @var ItensPedidosRepository
+     */
+    private $itensPedidosRepository;
 
     public function __construct(
         PedidosRepository $pedidosRepository,
-        ProdutosRepository $produtosRepository
+        ProdutosRepository $produtosRepository,
+        ItensPedidosRepository $itensPedidosRepository
     )
     {
         $this->pedidosRepository = $pedidosRepository;
         $this->produtosRepository = $produtosRepository;
+        $this->itensPedidosRepository = $itensPedidosRepository;
     }
 
     public function index($id)
     {
 
-        $itenspedido = $this->pedidosRepository->itensPedido($id);
+        //$itenspedido = $this->pedidosRepository->itensPedido($id);
+
+        $itenspedido = $this->itensPedidosRepository->scopeQuery(function($query) use($id){
+            return $query->where('pedido_id',$id);
+        })->paginate(10);
+
+
         if ($itenspedido->isEmpty()) {
 
             return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $id]);
@@ -79,6 +92,9 @@ class ItensPedidoController extends Controller
     public function editProdudo($pedidoId, $produtoId)
     {
         $pedido = $this->pedidosRepository->find($pedidoId);
+
+        dd($pedido);
+
         $produto = $pedido->produtos->find(1);
 
         return view('admin.itenspedido.edit', compact('produto'));
