@@ -60,9 +60,10 @@ class UsuariosController extends Controller
         $centrodistribuicao = $this->centroDistribuicoesRepository->find($data['centrodistribuicao_id']);
         $data['is_permission'] = $centrodistribuicao['tipo'];
         $this->repository->create( $data);
+        $url = $request->get('redirect_to', route('admin.usuarios.index'));
         $request->session()->flash('message', 'Usuário cadastrado com sucesso.');
 
-        return redirect()->action('UsuariosController@index');
+        return redirect()->to($url);
     }
 
     public function edit($id)
@@ -82,9 +83,10 @@ class UsuariosController extends Controller
         $data['is_permission'] = $centrodistribuicao['tipo'];
 
         $this->repository->update($data, $id);
+        $url = $request->get('redirect_to', route('admin.usuarios.index'));
         $request->session()->flash('message', ' Usuário atualizado com sucesso.');
 
-        return redirect()->action('UsuariosController@index');
+        return redirect()->to($url);
     }
 
     public function editpassword($id){
@@ -98,9 +100,10 @@ class UsuariosController extends Controller
         $data['password'] = bcrypt($request->password);
 
         $this->repository->update($data, $id);
+        $url = $request->get('redirect_to', route('admin.usuarios.index'));
         $request->session()->flash('message', ' Senha alterada com sucesso.');
 
-        return redirect()->action('UsuariosController@index');
+        return redirect()->to($url);
     }
 
     public function show($id)

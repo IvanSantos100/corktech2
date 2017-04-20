@@ -5,19 +5,20 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Editar produto</div>
-                <div class="panel-body">
-                    {!! Form::model($produto,[
+                {!! Form::model($produto,[
                     'route' => ['admin.produtos.update' , 'class' => $produto->id],
                     'class' => 'form', 'method' => 'PUT']) !!}
-
+                <div class="panel-body">
                     @include('admin.produtos._form')
-
-                    {!! Html::openFormGroup() !!}
-                    {!! form::submit('Salvar produto', ['class' => 'btn btn-primary']) !!}
-                    {!! Html::closeFormGroup() !!}
-
-                    {!! Form::close() !!}
                 </div>
+                <div class="panel-footer">
+                    <center>
+                        {!! Html::openFormGroup() !!}
+                        {!! form::submit('Salvar produto', ['class' => 'btn btn-primary']) !!}
+                        {!! Html::closeFormGroup() !!}
+                    </center>
+                </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

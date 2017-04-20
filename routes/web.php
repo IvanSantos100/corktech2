@@ -38,7 +38,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     });
     Route::get('estoques/{estoque}/details', 'EstoquesController@details')->name('estoques.details');
 
-    Route::name('clientes.index ')->get('clientes','ClientesController@index');
+    Route::name('clientes.index')->get('clientes','ClientesController@index');
     Route::group(['middleware' => 'check-permission:nacional'], function(){
         Route::resource('clientes', 'ClientesController', ['except' => 'index']);
     });
@@ -52,7 +52,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     //Route::resource('itenspedidos', 'ItensPedidosController');
 
-    Route::name('usuarios.index ')->get('usuarios','UsuariosController@index');
+    Route::name('usuarios.index')->get('usuarios','UsuariosController@index');
     Route::group(['middleware' => 'check-permission:nacional'], function() {
         Route::get('usuarios/{usuario}/editpassword','UsuariosController@editpassword')->name('usuarios.editpassword');
         Route::put('usuarios/{usuario}/updatepassword', 'UsuariosController@updatepassword')->name('usuarios.updatepassword');

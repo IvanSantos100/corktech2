@@ -77,9 +77,10 @@ class EstoquesController extends Controller
     public function store(EstoquesRequest $request)
     {
         $this->repository->create($request->all());
+        $url = $request->get('redirect_to', route('admin.estoques.index'));
         $request->session()->flash('message', 'Estoque cadastrado com sucesso.');
 
-        return redirect()->action('EstoquesController@index');
+        return redirect()->to($url);
     }
 
 
@@ -142,9 +143,10 @@ class EstoquesController extends Controller
     {
 
         $this->repository->update($request->all(), $id);
+        $url = $request->get('redirect_to', route('admin.estoques.index'));
         $request->session()->flash('message', 'Estoque atualizada com sucesso.');
 
-        return redirect()->action('EstoquesController@index');
+        return redirect()->to($url);
     }
 
 

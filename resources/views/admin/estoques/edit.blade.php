@@ -5,19 +5,20 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Editar estoque</div>
-                <div class="panel-body">
-                    {!! Form::model($estoque,[
+                {!! Form::model($estoque,[
                     'route' => ['admin.estoques.update' , 'class' => $estoque->id],
                     'class' => 'form', 'method' => 'PUT']) !!}
-
+                <div class="panel-body">
                     @include('admin.estoques._form')
-
-                    {!! Html::openFormGroup() !!}
-                    {!! form::submit('Salvar estoque', ['class' => 'btn btn-primary']) !!}
-                    {!! Html::closeFormGroup() !!}
-
-                    {!! Form::close() !!}
                 </div>
+                <div class="panel-footer">
+                    <center>
+                        {!! Html::openFormGroup() !!}
+                        {!! form::submit('Salvar estoque', ['class' => 'btn btn-primary']) !!}
+                        {!! Html::closeFormGroup() !!}
+                    </center>
+                </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

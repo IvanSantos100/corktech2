@@ -61,7 +61,7 @@ class ClientesController extends Controller
         $url = $request->get('redirect_to', route('admin.clientes.index'));
         $request->session()->flash('message', 'Cliente cadastrado com sucesso.');
 
-        return redirect()->action('ClientesController@index');
+        return redirect()->to($url);
     }
 
 
@@ -109,9 +109,10 @@ class ClientesController extends Controller
     public function update(ClientesRequest $request, $id)
     {
         $this->repository->update($request->all(), $id);
+        $url = $request->get('redirect_to', route('admin.clientes.index'));
         $request->session()->flash('message', ' Cliente atualizado com sucesso.');
 
-        return redirect()->action('ClientesController@index');
+        return redirect()->to($url);
     }
 
 

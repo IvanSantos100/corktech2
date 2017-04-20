@@ -5,17 +5,18 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Criar tipo produto</div>
+                {!! Form::open(['route' => 'admin.tipoprodutos.store', 'class' => 'form']) !!}
                 <div class="panel-body">
-                    {!! Form::open(['route' => 'admin.tipoprodutos.store', 'class' => 'form']) !!}
-
                     @include('admin.tipoprodutos._form')
-
-                    {!! Html::openFormGroup() !!}
-                    {!! form::submit('Criar tipo produto', ['class' => 'btn btn-primary']) !!}
-                    {!! Html::closeFormGroup() !!}
-
-                    {!! Form::close() !!}
                 </div>
+                <div class="panel-footer">
+                    <center>
+                        {!! Html::openFormGroup() !!}
+                        {!! form::submit('Criar tipo produto', ['class' => 'btn btn-primary']) !!}
+                        {!! Html::closeFormGroup() !!}
+                    </center>
+                </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
