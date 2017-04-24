@@ -107,16 +107,16 @@ class ItensPedidoController extends Controller
 
         $produtos = $this->pedidosRepository->find($pedidoId)->produtos()->where('produtos.id', $produtoId)->get();
 
-        //dd($produtos[0]->pivot->quantidade);
-
         return view('admin.itenspedido.edit', compact('produtos', 'pedidoId'));
     }
 
     public function updateProdudo(Request $request, $pedidoId, $produtoId)
     {
-       //$this->itensPedidosRepository->wehre
-        //$i = CorkTech\Models\ItemPedido::updateOrCreate(['quantidade'=>100],['pedido_id'=>6, 'produto_id'=>29])
 
+        $this->itensPedidosRepository->updateOrCreate(['pedido_id'=>$pedidoId, 'produto_id'=>$produtoId],['quantidade' => $request->quantidade]);
+
+        \Session::flash('message', 'Produto atualizado.');
+        return redirect()->route('admin.itenspedido.index', ['pedidoId' => $pedidoId]);
     }
 
     public function deleteProduto($pedidoId, $produtoId)

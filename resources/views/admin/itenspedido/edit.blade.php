@@ -35,7 +35,7 @@
                                 </td>
                                 <td class="col-md-1">
                                     <a class='btn btn-success' href="#"
-                                       onclick="document.getElementById({{"\"add-form-{$pedidoId}-{$produto->id}\""}}).submit();">Add
+                                       onclick="document.getElementById({{"\"add-form-{$pedidoId}-{$produto->id}\""}}).submit();">Salvar
                                     </a>
                                 </td>
                             </tr>

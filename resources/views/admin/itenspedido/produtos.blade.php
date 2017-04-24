@@ -16,6 +16,8 @@
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
+
+                        <a class='btn btn-success pull-right' href="{{ route('admin.itenspedido.index',['pedidoId' => $pedidoId]) }}">Valtar</a>
                     </div>
                     <table class="table table-hover table-striped">
                         <thead>

@@ -39,6 +39,11 @@ class ItensPedidosRepositoryEloquent extends BaseRepository implements ItensPedi
         return $this->parserResult($model);
     }
 
+    public function updateQntPedido($pedidoId, $produtoId, $qnt)
+    {
+        $this->model->where(['pedido_id' => $pedidoId, 'produto_id' => $produtoId])->update(['quantidade' => $qnt]);
+    }
+
 
     /**
      * Boot up the repository, pushing criteria

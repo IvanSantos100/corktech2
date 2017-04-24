@@ -168,7 +168,7 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
 
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
