@@ -40,7 +40,7 @@
                                     {!! Form::open(['route' => ['admin.itenspedido.produtos', $pedidoId],
                                         'class' => 'form', 'id' => "add-form-{$pedidoId}-{$produto->id}"]) !!}
 
-                                        {!! form::number('quantidade', 'value', ['min' => 1]) !!}
+                                        {!! form::number('quantidade', 1, ['min' => 1]) !!}
 
                                         {!! form::hidden('produto_id', $produto->id) !!}
 

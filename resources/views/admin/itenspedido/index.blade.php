@@ -7,10 +7,12 @@
         </div>
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Itens do pedido: {{ $itenspedido[0]->pedido_id}}</div>
+                <div class="panel-heading">Itens do pedido: {{ $itenspedido[0]->pivot->pedido_id}}</div>
                 <div class="panel-body">
                     <div>
-                        <a class="btn btn-primary" href="{{route('admin.itenspedido.produtos', ['pedidoId' => $itenspedido[0]->pedido_id])}}">Novo Produto</a>
+                        <a class="btn btn-primary"
+                           href="{{route('admin.itenspedido.produtos', ['pedidoId' => $itenspedido[0]->pivot->pedido_id])}}">Novo
+                            Produto</a>
                     </div>
                     <br>
                     <div>
@@ -32,26 +34,28 @@
                         @foreach($itenspedido as $itempedido)
 
                             <tr>
-                                <td class="col-md-2">{{ $itempedido->produto->descricao}}</td>
-                                <td class="col-md-2">{{ $itempedido->quantidade}}</td>
-                                <td class="col-md-2">{{ $itempedido->preco}}</td>
+                                <td class="col-md-2">{{ $itempedido->descricao}}</td>
+                                <td class="col-md-2">{{ $itempedido->pivot->quantidade}}</td>
+                                <td class="col-md-2">{{ $itempedido->pivot->preco}}</td>
                                 <td class="col-md-3">
                                     <ul class="list-inline">
                                         <li>
                                             @if ($itempedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-warning' href="{{ route('admin.itenspedido.produto.edit',
-                                                ['pedidoId' => $itempedido->pedido_id, 'produtoId' => $itempedido->produto_id]) }}">Editar</a>
+                                                <a class='btn btn-warning' href="{{ route('admin.itenspedido.edit',
+                                                ['pedidoId' => $itempedido->pivot->pedido_id, 'produtoId' => $itempedido->pivot->produto_id]) }}">Editar</a>
                                             @else
                                                 <a class='btn btn-warning' disabled="true">Editar</a>
                                             @endif
                                         </li>
                                         <li>
-                                            @if ($itempedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-danger' href="{{ route('admin.pedidos.show', ['pedido' => $itempedido->produto_id]) }}">Excluir</a>
-                                            @else
-                                                <a class='btn btn-danger' disabled="true">Excluir</a>
-                                            @endif
+                                            <a class='btn btn-danger' href="#"
+                                               onclick="event.preventDefault(); document.getElementById({{"\"form-{$itempedido->pivot->pedido_id}-{$itempedido->pivot->produto_id}\""}}).submit();">Excluir</a>
 
+                                            {!! Form::open(['route' => ['admin.itenspedido.produto.delete',
+                                                'pedidoId' => $itempedido->pivot->pedido_id, 'produtoId' => $itempedido->pivot->produto_id],
+                                                'id' => "form-{$itempedido->pivot->pedido_id}-{$itempedido->pivot->produto_id}",
+                                                'method' => 'DELETE', 'style' => 'display:nome']) !!}
+                                            {!! Form::close() !!}
                                         </li>
                                     </ul>
 
@@ -60,7 +64,7 @@
                         @endforeach
                         </tbody>
                     </table>
-
+                    {{$itenspedido->links()}}
                 </div>
             </div>
         </div>

@@ -21,7 +21,7 @@ class ItensPedidosRepositoryEloquent extends BaseRepository implements ItensPedi
      */
     protected $fieldSearchable = [
         'id' => 'like',
-        'descricao' => 'like'
+        'produto.descricao' => 'like'
     ];
 
     public function model()
