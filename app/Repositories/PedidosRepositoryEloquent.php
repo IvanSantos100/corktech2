@@ -28,6 +28,14 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
         return Pedido::class;
     }
 
+    public function updateValorPedido($pedidoId)
+    {
+        $valorPedido = $this->model->find($pedidoId)->produtos->sum(function ($produtos) {
+            return $produtos->pivot->preco * $produtos->pivot->quantidade;
+        });
+
+        $this->model->updateOrCreate(['id'=>$pedidoId],['valor_base'=>$valorPedido]);
+    }
 
 
     /**
@@ -49,11 +57,5 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    public function itensPedido($id)
-    {
-        $model = $this->find($id);
 
-        //dd($model->paginate(10));
-        return $model->produtos;
-    }
 }

@@ -14,7 +14,7 @@
                            href="{{route('admin.itenspedido.produtos', ['pedidoId' => $itenspedido[0]->pivot->pedido_id])}}">Novo
                             Produto</a>
 
-                        <a class='btn btn-success pull-right' href="{{ route('admin.pedidos.index') }}">Valtar</a>
+                        <a class='btn btn-success pull-right' href="{{ route('admin.pedidos.index') }}">Voltar</a>
                     </div>
                     <br>
                     <div>

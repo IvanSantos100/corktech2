@@ -2,6 +2,7 @@
 
 namespace CorkTech\Http\Controllers;
 
+use CorkTech\Criteria\FindByPedidoPendenteCriteria;
 use CorkTech\Http\Requests\PedidosRequest;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use CorkTech\Repositories\PedidosRepository;
@@ -48,6 +49,8 @@ class PedidosController extends Controller
         $this->destinosRepository = $destinosRepository;
         $this->clientesRepository = $clientesRepository;
         $this->produtosRepository = $produtosRepository;
+
+        $this->repository->pushCriteria(new FindByPedidoPendenteCriteria());
     }
 
 
@@ -59,7 +62,7 @@ class PedidosController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+
 
         if(Auth::user()->centrodistribuicao_id==1){
             $pedidos = $this->repository->paginate(10);

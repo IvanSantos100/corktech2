@@ -13,5 +13,5 @@ interface PedidosRepository extends RepositoryInterface
     //
     public function findWherePaginate($where, $limit);
 
-    public function itensPedido($id);
+    public function updateValorPedido($pedidoId);
 }

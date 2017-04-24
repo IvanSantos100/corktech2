@@ -2,6 +2,7 @@
 
 namespace CorkTech\Http\Controllers;
 
+use CorkTech\Criteria\FindByPedidoPendenteCriteria;
 use CorkTech\Criteria\FindByProdutosCriteria;
 use CorkTech\Repositories\ItensPedidosRepository;
 use CorkTech\Repositories\PedidosRepository;
@@ -34,6 +35,8 @@ class ItensPedidoController extends Controller
         $this->pedidosRepository = $pedidosRepository;
         $this->produtosRepository = $produtosRepository;
         $this->itensPedidosRepository = $itensPedidosRepository;
+
+        $this->pedidosRepository->pushCriteria(new FindByPedidoPendenteCriteria());
     }
 
     public function index(Request $request, $id)
@@ -51,8 +54,6 @@ class ItensPedidoController extends Controller
 
         $itenspedido = $this->pedidosRepository->find($id)->produtos()->orderBy('descricao')->paginate(10);
 
-        //dd($itenspedido);
-
         if ($itenspedido->isEmpty()) {
 
             return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $id]);
@@ -65,30 +66,29 @@ class ItensPedidoController extends Controller
 
     public function listarProdutos(Request $request, $pedidoId)
     {
-
         $search = $request->get('search');
 
         $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId));
 
-        $produtos = $this->produtosRepository->scopeQuery(function ($query) {
-            return $query->orderBy('descricao');
-        })->paginate(10);
+        $produtos = $this->produtosRepository->orderBy('descricao')->paginate(10);
 
         return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedidoId'));
     }
 
-    public function addProdudo(Request $request, $id)
+    public function addProdudo(Request $request, $pedidoId)
     {
-        $userId = \Auth::user()->centrodistribuicao_id;
         $produto = $this->produtosRepository->find($request->produto_id);
-        //dd($produto);
-        $pedido = $this->pedidosRepository->find($id);
-        //dd($pedido);
+
+        $pedido = $this->pedidosRepository->find($pedidoId);
+
         if ($pedido->tipo === 'Entrada') {
+
             $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco, 'prazoentrega' => '2017-01-01']);
 
+            $this->pedidosRepository->updateValorPedido($pedidoId);
+
             \Session::flash('message', 'Produto incluido no pedido.');
-            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $id]);
+            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedidoId]);
         }
         if ($pedido->tipo === 'Movimentação') {
 
@@ -115,6 +115,8 @@ class ItensPedidoController extends Controller
 
         $this->itensPedidosRepository->updateOrCreate(['pedido_id'=>$pedidoId, 'produto_id'=>$produtoId],['quantidade' => $request->quantidade]);
 
+        $this->pedidosRepository->updateValorPedido($pedidoId);
+
         \Session::flash('message', 'Produto atualizado.');
         return redirect()->route('admin.itenspedido.index', ['pedidoId' => $pedidoId]);
     }
@@ -122,6 +124,8 @@ class ItensPedidoController extends Controller
     public function deleteProduto($pedidoId, $produtoId)
     {
         $pedido = $this->pedidosRepository->find($pedidoId)->produtos()->detach($produtoId);
+
+        $this->pedidosRepository->updateValorPedido($pedidoId);
 
         \Session::flash('message', 'Produto excluído.');
         return redirect()->route('admin.itenspedido.index', ['pedidoId' => $pedidoId]);
