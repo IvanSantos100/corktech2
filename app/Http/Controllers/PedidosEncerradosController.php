@@ -89,8 +89,14 @@ class PedidosEncerradosController extends Controller
         }
 
         return view('admin.pedidosencerrados.itenspedido', compact('itenspedido', 'search'));
+    }
 
 
+    public function details($id)
+    {
+        $produto = $this->produtosRepository->find($id);
+
+        return view('admin.pedidosencerrados.details', compact('produto'));
     }
 
 

@@ -7,7 +7,7 @@
                 <div class="panel-heading">Itens do pedido: {{ $itenspedido[0]->pivot->pedido_id}}</div>
                 <div class="panel-body">
                     <div>
-                        <a class='btn btn-success pull-right' href="{{ route('admin.pedidos.index') }}">Voltar</a>
+                        <a class='btn btn-primary pull-right' href="{{ route('admin.pedidosencerrados.index') }}">Voltar</a>
                     </div>
                     <br>
                     <div>
@@ -35,7 +35,7 @@
                                 <td class="col-md-1">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.itenspedido.edit',
+                                            <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.details',
                                             ['pedidoId' => $itempedido->pivot->pedido_id, 'produtoId' => $itempedido->pivot->produto_id]) }}">Detalhar</a>
 
                                         </li>

@@ -46,6 +46,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('pedidos', 'PedidosController');
     Route::resource('pedidosencerrados', 'PedidosEncerradosController');
     Route::get('pedidosencerrados/{pedido}/itenspedido', 'PedidosEncerradosController@itenspedido')->name('pedidosencerrados.itenspedido');
+    Route::get('pedidosencerrados/{pedido}/{produto}/details', 'PedidosEncerradosController@details')->name('pedidosencerrados.details');
 
     Route::get('itenspedido/{pedido}', 'ItensPedidoController@index')->name('itenspedido.index');
     Route::get('itenspedido/{pedido}/produtos', 'ItensPedidoController@listarProdutos')->name('itenspedido.produtos');
