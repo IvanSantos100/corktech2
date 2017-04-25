@@ -10,9 +10,8 @@
                 <div class="panel-heading">Listagem de pedido</div>
                 <div class="panel-body">
                     <div>
-                        <a class="btn btn-primary" href="{{route('admin.pedidos.create')}}">Novo Pedido</a>
                         <div class="btn-group pull-right">
-                            <a class='btn btn-warning' href="{{route('admin.pedidos.encerrados')}}">Encerrados</a>
+                            <a class='btn btn-warning' href="{{route('admin.pedidos.create')}}">Andamento</a>
                         </div>
                     </div>
                     <br>

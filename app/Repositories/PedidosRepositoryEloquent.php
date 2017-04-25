@@ -44,13 +44,39 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
     public function findWherePaginate($where, $limit){
         $this->applyCriteria();
         $this->applyScope();
-        $this->applyConditions($where);
+        $this->applyConditionsOr($where);
+        $model = $this->model->paginate($limit);
+        $this->resetModel();
+        return $this->parserResult($model);
+    }
+
+    public function findOrWherePaginate($where, $limit){
+        $this->applyCriteria();
+        $this->applyScope();
+        $this->applyConditionsOr($where);
         $model = $this->model->paginate($limit);
         $this->resetModel();
         return $this->parserResult($model);
     }
 
 
+    protected function applyConditionsOr(array $where)
+    {
+        $cont = 0;
+        foreach ($where as $field => $value) {
+            if (is_array($value)) {
+                list($field, $condition, $val) = $value;
+                if($cont==0){
+                    $this->model = $this->model->where($field, $condition, $val);
+                    $cont++;
+                }else {
+                    $this->model = $this->model->orWhere($field, $condition, $val);
+                }
+            } else {
+                $this->model = $this->model->where($field, '=', $value);
+            }
+        }
+    }
 
     public function boot()
     {
