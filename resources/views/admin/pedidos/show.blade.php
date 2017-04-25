@@ -8,33 +8,45 @@
                 <div class="panel-body">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" >Descrição:</label>
+                            <label class="control-label col-sm-2" >ID:</label>
                             <div class="col-sm-10">
-                                {{ $pedido->descricao }}
+                                {{ $pedido->id }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Origen:</label>
+                            <div class="col-sm-10">
+                                {{ $pedido->origem->descricao }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Destino:</label>
+                            <div class="col-sm-10">
+                                {{ $pedido->destino->descricao }}
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Preço:</label>
                             <div class="col-sm-10">
-                                {{ $pedido->preco }}
+                                {{ $pedido->valor_base }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" >Estampa:</label>
+                            <label class="control-label col-sm-2" >Desconto:</label>
                             <div class="col-sm-10">
-                                {{ $pedido->estampas->descricao }}
+                                {{ $pedido->desconto }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" >Tipo pedido:</label>
+                            <label class="control-label col-sm-2" >Data criação:</label>
                             <div class="col-sm-10">
-                                {{ $pedido->tipopedidos->descricao }}
+                                {{ $pedido->created_at->format('d/m/Y') }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" >Classe:</label>
+                            <label class="control-label col-sm-2" >Total de produtos:</label>
                             <div class="col-sm-10">
-                                {{ $pedido->classes->descricao }}
+                                {{ $pedido->produtos->count() }}
                             </div>
                         </div>
                     </form>

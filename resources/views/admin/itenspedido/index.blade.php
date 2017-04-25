@@ -18,7 +18,7 @@
                     </div>
                     <div class="pull-right">
                         <a class="btn btn-primary"
-                           href="{{route('admin.itenspedido.produtos', ['pedidoId' => $itenspedido[0]->pivot->pedido_id])}}">Novo
+                           href="{{route('admin.itenspedido.produtos', ['pedidoId' => $itenspedido[0]->pivot->pedido_id])}}">Adicionar
                             Produto</a>
                         <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Pedidos</a>
                     </div>

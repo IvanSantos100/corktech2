@@ -114,6 +114,7 @@ class PedidosController extends Controller
     {
         $pedido = $this->repository->find($id);
 
+        //dd($pedido->date_confirmacao);
         $pedido->tipo = $this->opcao($pedido->tipo);
 
         return view('admin.pedidos.show', compact('pedido'));

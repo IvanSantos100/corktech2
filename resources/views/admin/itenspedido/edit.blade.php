@@ -6,6 +6,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Editar produto do pedido: {{ $pedidoId }}</div>
                 <div class="panel-body">
+                    <div class="pull-right">
+                        <a class="btn btn-primary" href="{{route('admin.itenspedido.index', ['pedidoId' => $pedidoId])}}">Voltar</a>
+                    </div>
+                    <br><br>
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
