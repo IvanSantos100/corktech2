@@ -104,6 +104,8 @@ class EstampasController extends Controller
         $url = $request->get('redirect_to', route('admin.estampas.index'));
         $request->session()->flash('message', 'Estampa cadastrado com sucesso.');
 
+       // \Storage::disk('estampas_local')->put('file.jpg','Contents');
+
         return redirect()->to($url);
     }
 
