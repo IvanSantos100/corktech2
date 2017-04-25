@@ -47,7 +47,14 @@
                     <div class="nav navbar-nav">
                         <li><a href="{{ url('admin/clientes') }}">Clientes</a></li>
                         <li><a href="{{ url('admin/usuarios') }}">Usuários</a></li>
-                        <li><a href="{{ url('admin/pedidos') }}">Pedidos</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">Pedidos <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ route('admin.pedidos.index') }}">Pedidos</a></li>
+                                <li><a href="{{ route('admin.pedidosencerrados.index') }}">Encerrados</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">Estoque <span class="caret"></span></a>

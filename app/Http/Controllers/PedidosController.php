@@ -43,7 +43,8 @@ class PedidosController extends Controller
         CentroDistribuicoesRepository $destinosRepository,
         ClientesRepository $clientesRepository,
         ProdutosRepository $produtosRepository
-    ){
+    )
+    {
         $this->repository = $repository;
         $this->origensRepository = $origensRepository;
         $this->destinosRepository = $destinosRepository;
@@ -52,7 +53,6 @@ class PedidosController extends Controller
 
         $this->repository->pushCriteria(new FindByPedidoPendenteCriteria());
     }
-
 
     /**
      * Display a listing of the resource.
@@ -64,16 +64,25 @@ class PedidosController extends Controller
         $search = $request->get('search');
 
 
-        if(Auth::user()->centrodistribuicao_id==1){
+        if (Auth::user()->centrodistribuicao_id == 1) {
             $pedidos = $this->repository->paginate(10);
-        }else{
+        } else {
             $centrodis = Auth::user()->centrodistribuicao_id;
-            $pedidos = $this->repository->findOrWherePaginate([['origem_id','=',$centrodis],['destino_id','=',$centrodis]],10);
+            $pedidos = $this->repository->findOrWherePaginate([['origem_id', '=', $centrodis], ['destino_id', '=', $centrodis]], 10);
         }
 
-        return view('admin.pedidos.index', compact('pedidos','search'));
+        return view('admin.pedidos.index', compact('pedidos', 'search'));
     }
 
+    public function status(Request $request, $pedidoId)
+    {
+        $pedido = ['status' => 2];
+        $this->repository->update($pedido, $pedidoId);
+        $url = $request->get('redirect_to', route('admin.pedidos.index'));
+        $request->session()->flash('message', "Pedido {$pedidoId} finalizado.");
+
+        return redirect()->to($url);
+    }
 
     public function create()
     {
@@ -82,9 +91,8 @@ class PedidosController extends Controller
         $clientes = $this->clientesRepository->pluck('nome', 'id');
         $opcao = $this->opcao();
 
-        return view('admin.pedidos.create', compact('origens', 'destinos', 'clientes', 'opcao') );
+        return view('admin.pedidos.create', compact('origens', 'destinos', 'clientes', 'opcao'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -102,7 +110,6 @@ class PedidosController extends Controller
         return redirect()->to($url);
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -114,12 +121,8 @@ class PedidosController extends Controller
     {
         $pedido = $this->repository->find($id);
 
-        //dd($pedido->date_confirmacao);
-        $pedido->tipo = $this->opcao($pedido->tipo);
-
         return view('admin.pedidos.show', compact('pedido'));
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -144,7 +147,7 @@ class PedidosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  PedidosRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      */
@@ -170,7 +173,7 @@ class PedidosController extends Controller
         try {
             $this->repository->delete($id);
             \Session::flash('message', 'Pedidos excluída com sucesso.');
-        }catch (QueryExceptionception $ex){
+        } catch (QueryExceptionception $ex) {
             \Session::flash('error', 'Pedidos não pode ser excluido. Existe produtos relacionados.');
         }
 
@@ -180,10 +183,13 @@ class PedidosController extends Controller
     private function opcao()
     {
         $center_id = \Auth::user()->centrodistribuicao_id;
-        switch ($center_id){
-            case 1: return ['Entrada' => 'Entrada', 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
-            case 2: return ['Movimentação' => 'Movimentação'];
-            case 3: return ['Saída' => 'Saída'];
+        switch ($center_id) {
+            case 1:
+                return ['Entrada' => 'Entrada', 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
+            case 2:
+                return ['Movimentação' => 'Movimentação'];
+            case 3:
+                return ['Saída' => 'Saída'];
         }
 
     }

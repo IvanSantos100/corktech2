@@ -48,7 +48,7 @@
                                             @endif
                                         </li>
                                         <li>
-                                            <a class='btn btn-success' href="{{ route('admin.itenspedido.index', ['pedido' => $pedido->id]) }}">Finalizar</a>
+                                            <a class='btn btn-success' href="{{ route('admin.pedidos.status', ['pedido' => $pedido->id]) }}">Finalizar</a>
                                         </li>
                                         <li>
                                             @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)

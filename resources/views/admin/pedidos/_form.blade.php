@@ -18,12 +18,6 @@
 {!! Form::error('destino_id', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
-{!! Html::openFormGroup('valor_base', $errors) !!}
-{!! Form::label('valor_base', 'Valor base', ['class' => 'control-label']) !!}
-{!! Form::text('valor_base', null, ['class' => 'form-control']) !!}
-{!! Form::error('valor_base', $errors) !!}
-{!! Html::closeFormGroup() !!}
-
 {!! Html::openFormGroup('desconto', $errors) !!}
 {!! Form::label('desconto', 'Desconto', ['class' => 'control-label']) !!}
 {!! Form::text('desconto', null, ['class' => 'form-control']) !!}
