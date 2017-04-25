@@ -9,16 +9,15 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de Classes</div>
                 <div class="panel-body">
-                    <div>
-                       <a class="btn btn-primary" href="{{route('admin.classes.create')}}">Nova classe</a>
-                    </div>
-                    <br>
-                    <div>
+                    <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
+                    </div>
+                    <div class="pull-right">
+                        <a class="btn btn-primary" href="{{route('admin.classes.create')}}">Nova classe</a>
                     </div>
                     <table class="table table-hover table-striped">
                         <thead>

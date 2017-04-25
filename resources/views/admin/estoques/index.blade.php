@@ -9,19 +9,19 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de estoque</div>
                 <div class="panel-body">
-                    @if(checkPermission(['nacional']))
-                        <div>
-                           <a class="btn btn-primary" href="{{route('admin.estoques.create')}}">Nova estoque</a>
-                        </div>
-                        <br>
-                    @endif
-                    <div>
+                    <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
                     </div>
+                    @if(checkPermission(['nacional']))
+                        <div class="pull-right">
+                            <a class="btn btn-primary" href="{{route('admin.estoques.create')}}">Novo estoque</a>
+                        </div>
+                        <br>
+                    @endif
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>

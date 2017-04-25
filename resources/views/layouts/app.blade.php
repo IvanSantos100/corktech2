@@ -57,7 +57,7 @@
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">Estoque <span class="caret"></span></a>
+                               aria-haspopup="true" aria-expanded="false">Operacional <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 @if(checkPermission(['nacional']))
                                     <li><a href="{{ url('admin/classes') }}">Classes </a></li>

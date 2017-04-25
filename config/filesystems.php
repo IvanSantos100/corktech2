@@ -48,6 +48,11 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'estampas_local' => [
+            'driver' => 'local',
+            'root' => storage_path('app/estampas')
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
