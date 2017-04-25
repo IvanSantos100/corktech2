@@ -12,7 +12,7 @@
                     <div>
                         <a class="btn btn-primary" href="{{route('admin.pedidos.create')}}">Novo Pedido</a>
                         <div class="btn-group pull-right">
-                            <a class='btn btn-warning' href="{{route('admin.pedidos.encerrados')}}">Encerrados</a>
+                            <a class='btn btn-primary' href="{{route('admin.pedidosencerrados.index')}}">Encerrados</a>
                         </div>
                     </div>
                     <br>

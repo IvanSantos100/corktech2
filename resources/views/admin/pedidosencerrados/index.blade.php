@@ -3,15 +3,12 @@
 @section('content')
     <div class="container">
         <div class="row">
-
-        </div>
-        <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de pedido</div>
                 <div class="panel-body">
                     <div>
                         <div class="btn-group pull-right">
-                            <a class='btn btn-warning' href="{{route('admin.pedidos.create')}}">Andamento</a>
+                            <a class='btn btn-primary' href="{{route('admin.pedidos.index')}}">Andamento</a>
                         </div>
                     </div>
                     <br>
@@ -34,32 +31,16 @@
                         <tbody>
                         @foreach($pedidos as $pedido)
                             <tr>
-                                <td class="col-md-2">{{ $pedido->id}}</td>
-                                <td class="col-md-2">{{ $pedido->tipo}}</td>
-                                <td class="col-md-2">{{ $pedido->status}}</td>
-                                <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
-                                <td class="col-md-3">
+                                <td class="col-md-3">{{ $pedido->id}}</td>
+                                <td class="col-md-3">{{ $pedido->tipo}}</td>
+                                <td class="col-md-3">{{ $pedido->status}}</td>
+                                <td class="col-md-3">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
+                                <td class="col-md-1">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.itenspedido.index', ['pedido' => $pedido->id]) }}">Produtos</a>
-                                        </li>
-                                        <li>
-                                            @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-warning' href="{{ route('admin.pedidos.edit', ['pedido' => $pedido->id]) }}">Editar</a>
-                                            @else
-                                                <a class='btn btn-warning' disabled="true">Editar</a>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-danger' href="{{ route('admin.pedidos.show', ['pedido' => $pedido->id]) }}">Excluir</a>
-                                            @else
-                                                <a class='btn btn-danger' disabled="true">Excluir</a>
-                                            @endif
-
+                                            <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.itenspedido', ['pedido' => $pedido->id]) }}">Produtos</a>
                                         </li>
                                     </ul>
-
                                 </td>
                             </tr>
                         @endforeach

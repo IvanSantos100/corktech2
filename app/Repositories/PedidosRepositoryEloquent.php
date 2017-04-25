@@ -44,7 +44,7 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
     public function findWherePaginate($where, $limit){
         $this->applyCriteria();
         $this->applyScope();
-        $this->applyConditionsOr($where);
+        $this->applyConditions($where);
         $model = $this->model->paginate($limit);
         $this->resetModel();
         return $this->parserResult($model);

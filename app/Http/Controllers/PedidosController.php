@@ -74,20 +74,6 @@ class PedidosController extends Controller
         return view('admin.pedidos.index', compact('pedidos','search'));
     }
 
-    public function pedidosEncerrados(Request $request)
-    {
-        $search = $request->get('search');
-
-        if(Auth::user()->centrodistribuicao_id==1){
-            $pedidos = $this->repository->findWherePaginate([['status','=',2]],10);
-        }else{
-            $centrodis = Auth::user()->centrodistribuicao_id;
-            $pedidos = $this->repository->findOrWherePaginate([['origem_id','=',$centrodis],['destino_id','=',$centrodis]],10);
-        }
-
-        return view('admin.pedidos.encerrados', compact('pedidos','search'));
-    }
-
 
     public function create()
     {
