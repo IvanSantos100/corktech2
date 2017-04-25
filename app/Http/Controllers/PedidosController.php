@@ -103,11 +103,22 @@ class PedidosController extends Controller
      */
     public function store(PedidosRequest $request)
     {
-        $this->repository->create($request->all());
-        $url = $request->get('redirect_to', route('admin.pedidos.index'));
-        $request->session()->flash('message', 'Pedido cadastrado com sucesso.');
+        $data = $request->all();
+        $data['status'] = 1;
+        $data['desconto'] = $data['desconto'] ?? 0;
+        $data['forma_pagamento'] = $data['forma_pagamento'] ?? 1;
 
-        return redirect()->to($url);
+
+        if ($data['tipo'] === 'Entrada') {
+            $data['origem_id'] = null;
+            $data['destino_id'] = 1;
+
+        }
+        //dd($data);
+
+        $pedido = $this->repository->create($data);
+
+        return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedido->id]);
     }
 
     /**
@@ -134,8 +145,8 @@ class PedidosController extends Controller
     public function edit($id)
     {
         $pedido = $this->repository->find($id);
-        $origens = $this->origensRepository->pluck('descricao', 'id');
-        $destinos = $this->destinosRepository->pluck('descricao', 'id');
+        $origens = $this->origensRepository->pluck('descricao', 'id')->prepend('NULL', '');
+        $destinos = $this->destinosRepository->pluck('descricao', 'id')->prepend('NULL', '');
         $clientes = $this->clientesRepository->pluck('nome', 'id');
         $opcao = [1 => 'Entrada', 2 => 'Movimentação', 3 => 'Saída'];
 

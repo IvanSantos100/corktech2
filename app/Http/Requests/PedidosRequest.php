@@ -23,11 +23,12 @@ class PedidosRequest extends FormRequest
      */
     public function rules()
     {
+        $tipo = \Request::input('tipo');
+
+        //dd($tipo);
+
         return [
             'tipo' => "required",
-            'valor_base' => "required|numeric",
-            'forma_pagamento' => "required",
-            'cliente_id' => "exists:clientes,id",
         ];
     }
 }
