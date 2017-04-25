@@ -9,16 +9,20 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de produto</div>
                 <div class="panel-body">
-                    <br>
-                    <div>
+                    <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
-
-                        <a class='btn btn-success pull-right' href="{{ route('admin.itenspedido.index',['pedidoId' => $pedidoId]) }}">Voltar</a>
                     </div>
+                    <div class="pull-right">
+                        <a class='btn btn-success pull-right'
+                           href="{{ route('admin.itenspedido.index',['pedidoId' => $pedidoId]) }}">Ver produto desse
+                            pedido
+                        </a>
+                    </div>
+                    <br><br>
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
@@ -42,9 +46,9 @@
                                     {!! Form::open(['route' => ['admin.itenspedido.produtos', $pedidoId],
                                         'class' => 'form', 'id' => "add-form-{$pedidoId}-{$produto->id}"]) !!}
 
-                                        {!! form::number('quantidade', 1, ['min' => 1]) !!}
+                                    {!! form::number('quantidade', 1, ['min' => 1]) !!}
 
-                                        {!! form::hidden('produto_id', $produto->id) !!}
+                                    {!! form::hidden('produto_id', $produto->id) !!}
 
                                     {!! Form::close() !!}
                                 </td>

@@ -28,7 +28,7 @@ class CreatePedidosTable extends Migration
             $table->integer('destino_id')->unsigned()->nullable();
             $table->foreign('destino_id')->references('id')->on('centro_distribuicoes');
 
-            $table->integer('cliente_id')->unsigned();
+            $table->integer('cliente_id')->unsigned()->nullable();
             $table->foreign('cliente_id')->references('id')->on('clientes');
 
             $table->date('date_confirmacao')->nullable();

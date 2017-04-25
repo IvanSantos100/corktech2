@@ -9,26 +9,23 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de pedido</div>
                 <div class="panel-body">
-                    <div>
-                        <a class="btn btn-primary" href="{{route('admin.pedidos.create')}}">Novo Pedido</a>
-                        <div class="btn-group pull-right">
-                            <a class='btn btn-primary' href="{{route('admin.pedidosencerrados.index')}}">Encerrados</a>
-                        </div>
-                    </div>
-                    <br>
-                    <div>
+                    <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
                     </div>
+                    <div class="pull-right">
+                        <a class="btn btn-primary" href="{{route('admin.pedidos.create')}}">Novo Pedido</a>
+                        <a class='btn btn-primary' href="{{route('admin.pedidosencerrados.index')}}">Encerrados</a>
+                    </div>
+                    <br><br>
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
                             <th>Id</th>
                             <th>Tipo</th>
-                            <th>Status</th>
                             <th>Valor base</th>
                         </tr>
                         </thead>
@@ -37,7 +34,6 @@
                             <tr>
                                 <td class="col-md-2">{{ $pedido->id}}</td>
                                 <td class="col-md-2">{{ $pedido->tipo}}</td>
-                                <td class="col-md-2">{{ $pedido->status}}</td>
                                 <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
                                 <td class="col-md-3">
                                     <ul class="list-inline">
@@ -50,6 +46,9 @@
                                             @else
                                                 <a class='btn btn-warning' disabled="true">Editar</a>
                                             @endif
+                                        </li>
+                                        <li>
+                                            <a class='btn btn-success' href="{{ route('admin.itenspedido.index', ['pedido' => $pedido->id]) }}">Finalizar</a>
                                         </li>
                                         <li>
                                             @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)

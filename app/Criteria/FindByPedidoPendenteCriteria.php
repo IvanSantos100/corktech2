@@ -26,6 +26,6 @@ class FindByPedidoPendenteCriteria implements CriteriaInterface
 
         //$user = \Auth::user()->centrodistribuicao_id;
 
-        return $model->where('status','=', 1);
+        return $model->where('status', 1);
     }
 }

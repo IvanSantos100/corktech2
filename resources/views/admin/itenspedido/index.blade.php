@@ -9,21 +9,20 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Itens do pedido: {{ $itenspedido[0]->pivot->pedido_id}}</div>
                 <div class="panel-body">
-                    <div>
-                        <a class="btn btn-primary"
-                           href="{{route('admin.itenspedido.produtos', ['pedidoId' => $itenspedido[0]->pivot->pedido_id])}}">Novo
-                            Produto</a>
-
-                        <a class='btn btn-success pull-right' href="{{ route('admin.pedidos.index') }}">Voltar</a>
-                    </div>
-                    <br>
-                    <div>
+                    <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
                     </div>
+                    <div class="pull-right">
+                        <a class="btn btn-primary"
+                           href="{{route('admin.itenspedido.produtos', ['pedidoId' => $itenspedido[0]->pivot->pedido_id])}}">Novo
+                            Produto</a>
+                        <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Pedidos</a>
+                    </div>
+                    <br><br>
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
