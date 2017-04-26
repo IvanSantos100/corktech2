@@ -108,7 +108,6 @@ class PedidosController extends Controller
         $data['desconto'] = $data['desconto'] ?? 0;
         $data['forma_pagamento'] = $data['forma_pagamento'] ?? 1;
 
-
         if ($data['tipo'] === 'Entrada') {
             $data['origem_id'] = null;
             $data['destino_id'] = 1;

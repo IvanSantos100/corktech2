@@ -16,12 +16,14 @@
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
                     </div>
+                    @if(!$ver)
                     <div class="pull-right">
                         <a class='btn btn-success pull-right'
                            href="{{ route('admin.itenspedido.index',['pedidoId' => $pedidoId]) }}">Ver produtos desse
                             pedido
                         </a>
                     </div>
+                    @endif
                     <br><br>
                     <table class="table table-hover table-striped">
                         <thead>

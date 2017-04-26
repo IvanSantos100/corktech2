@@ -56,7 +56,7 @@ class ItensPedidoController extends Controller
 
         if ($itenspedido->isEmpty()) {
 
-            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $id]);
+            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $id, 'ver'=>true]);
         }
 
         return view('admin.itenspedido.index', compact('itenspedido', 'search'));
@@ -67,12 +67,13 @@ class ItensPedidoController extends Controller
     public function listarProdutos(Request $request, $pedidoId)
     {
         $search = $request->get('search');
+        $ver = $request->get('ver');
 
         $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId));
 
         $produtos = $this->produtosRepository->orderBy('descricao')->paginate(10);
 
-        return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedidoId'));
+        return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedidoId', 'ver'));
     }
 
     public function addProdudo(Request $request, $pedidoId)
