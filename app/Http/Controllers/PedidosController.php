@@ -211,7 +211,7 @@ class PedidosController extends Controller
             $style = [
                 "",
                 "",
-                "display: none" 
+                "display: none"
             ];
         }else if($pedido['tipo']=='Saída'){
             $style = [
