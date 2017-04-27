@@ -5,6 +5,7 @@ namespace CorkTech\Http\Controllers;
 use CorkTech\Criteria\FindByPedidoPendenteCriteria;
 use CorkTech\Http\Requests\PedidosRequest;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
+use CorkTech\Repositories\EstoquesRepository;
 use CorkTech\Repositories\PedidosRepository;
 use CorkTech\Repositories\ClientesRepository;
 use CorkTech\Repositories\ProdutosRepository;
@@ -35,6 +36,10 @@ class PedidosController extends Controller
      * @var ProdutosRepository
      */
     private $produtosRepository;
+    /**
+     * @var EstoquesRepository
+     */
+    private $estoquesRepository;
 
 
     public function __construct(
@@ -42,7 +47,8 @@ class PedidosController extends Controller
         CentroDistribuicoesRepository $origensRepository,
         CentroDistribuicoesRepository $destinosRepository,
         ClientesRepository $clientesRepository,
-        ProdutosRepository $produtosRepository
+        ProdutosRepository $produtosRepository,
+        EstoquesRepository $estoquesRepository
     )
     {
         $this->repository = $repository;
@@ -52,6 +58,7 @@ class PedidosController extends Controller
         $this->produtosRepository = $produtosRepository;
 
         $this->repository->pushCriteria(new FindByPedidoPendenteCriteria());
+        $this->estoquesRepository = $estoquesRepository;
     }
 
     /**
@@ -62,7 +69,6 @@ class PedidosController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-
 
         if (Auth::user()->centrodistribuicao_id == 1) {
             $pedidos = $this->repository->paginate(10);
@@ -76,29 +82,35 @@ class PedidosController extends Controller
 
     public function status(Request $request, $pedidoId)
     {
-
-        $p = $this->repository->find($pedidoId);
-
-        dd($p);
-
         $pedido = $this->repository->find($pedidoId);
 
-
         if($pedido->tipo === 'Entrada') {
-
-            $pedido = $pedido->produtos()->each(function ($produto ) use($pedidoId){
-                dd($produto);
-                $estoque = ['lote' => $pedidoId,
-                            'valor' => 1,
-                            'quantidade' => 1,
-
+            $pedido->produtos()->each(function ($produto ) use($pedido){
+                $estoque = ['lote' => $pedido->id,
+                            'produto_id' => $produto->produto_id,
+                            'valor' => $produto->preco - ($pedido->desconto  ? $produto->preco * ($pedido->desconto/100) : 0)   ,
+                            'quantidade' => $produto->quantidade,
+                            'centrodistribuicao_id' => $pedido->destino->id
                     ];
-                return $produto;
-            });
 
-            dd($pedido);
+                $this->estoquesRepository->create($estoque);
+                return $estoque;
+            });
         }
 
+        if($pedido->tipo === 'movimentação') {
+            $pedido->produtos()->each(function ($produto ) use($pedido){
+                $estoque = ['lote' => $pedido->id,
+                            'produto_id' => $produto->produto_id,
+                            'valor' => $produto->preco - ($pedido->desconto  ? $produto->preco * ($pedido->desconto/100) : 0)   ,
+                            'quantidade' => $produto->quantidade,
+                            'centrodistribuicao_id' => $pedido->destino->id
+                    ];
+
+                $this->estoquesRepository->create($estoque);
+                return $estoque;
+            });
+        }
 
         $pedido = ['status' => 2];
         $this->repository->update($pedido, $pedidoId);
@@ -145,13 +157,13 @@ class PedidosController extends Controller
 
         //dd($data);
         $data['status'] = 1;
-        $data['desconto'] = $data['desconto'] ?? 1;
+        $data['desconto'] = $data['desconto'] ?? 0;
         $data['forma_pagamento'] = $data['forma_pagamento'] ?? 1;
 
         //if ($data['tipo'] == 1)
         {
             $data['origem_id'] = null;
-            $data['destino_id'] = 1;
+            $data['destino_id'] = Auth::user()->centrodistribuicao_id;
         }
 
         if ($data['tipo'] === 'movimentação') {

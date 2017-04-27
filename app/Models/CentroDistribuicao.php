@@ -23,7 +23,9 @@ class CentroDistribuicao extends Model implements Transformable
 
     public function produtos()
     {
-        return $this->hasMany('CorkTech\Models\Produto', 'estampa_id', 'id');
+        //return $this->hasMany('CorkTech\Models\Produto', 'estampa_id', 'id');
+        return $this->belongsToMany(Produto::class, 'estoques', 'centrodistribuicao_id', 'produto_id')
+            ->withPivot('lote', 'valor', 'quantidade');
     }
 
     public function origens()

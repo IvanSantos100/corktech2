@@ -26,6 +26,7 @@ class Estoque extends Model implements Transformable
     }
     public function produtos()
     {
+        //return $this->hasMany(Produto::class, 'produto_id', 'id');
         return $this->belongsTo(Produto::class, 'produto_id', 'id');
     }
 
