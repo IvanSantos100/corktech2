@@ -7,13 +7,13 @@
 {!! Html::closeFormGroup() !!}
 
 @if(checkPermission(['nacional']))
-{!! Html::openFormGroup('origem_id', $errors) !!}
+{!! Html::openFormGroup('origem_id', $errors, $style[0]) !!}
 {!! Form::label('origem_id', 'Origem', ['class' => 'control-label']) !!}
 {!! Form::select('origem_id', $origens, null, ['class' => 'form-control']) !!}
 {!! Form::error('origem_id', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
-{!! Html::openFormGroup('destino_id', $errors) !!}
+{!! Html::openFormGroup('destino_id', $errors, $style[1]) !!}
 {!! Form::label('destino_id', 'Destino', ['class' => 'control-label']) !!}
 {!! Form::select('destino_id', $destinos, null, ['class' => 'form-control']) !!}
 {!! Form::error('destino_id', $errors) !!}
@@ -26,11 +26,8 @@
 {!! Html::closeFormGroup() !!}
 @endif
 
-@if(!empty($pedido))
-    {!! Html::openFormGroup('cliente_id', $errors) !!}
-@else
-    {!! Html::openFormGroup('cliente_id', $errors, "display: none") !!}
-@endif
+
+{!! Html::openFormGroup('cliente_id', $errors, $style[2]) !!}
 {!! Form::label('cliente_id', 'Cliente', ['class' => 'control-label']) !!}
 {!! Form::select('cliente_id', $clientes, null, ['class' => 'form-control']) !!}
 {!! Form::error('cliente_id', $errors) !!}

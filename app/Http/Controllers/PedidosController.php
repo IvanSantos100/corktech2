@@ -115,7 +115,21 @@ class PedidosController extends Controller
         $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
         $opcao = $this->opcao();
 
-        return view('admin.pedidos.create', compact('origens', 'destinos', 'clientes', 'opcao'));
+        if(\Auth::user()->centrodistribuicao_id==1) {
+            $style = [
+                "display: none",
+                "display: none",
+                "display: none"
+            ];
+        }else{
+            $style = [
+                "",
+                "",
+                "display: none"
+            ];
+        }
+
+        return view('admin.pedidos.create', compact('origens', 'destinos', 'clientes', 'opcao', 'style'));
     }
 
     /**
@@ -187,7 +201,27 @@ class PedidosController extends Controller
 
         $opcao = $this->opcao();
 
-        return view('admin.pedidos.edit', compact('pedido', 'origens', 'destinos', 'clientes', 'opcao'));
+        if($pedido['tipo']=='Entrada') {
+            $style = [
+                "display: none",
+                "display: none",
+                "display: none"
+            ];
+        }else if($pedido['tipo']=='Movimentação'){
+            $style = [
+                "",
+                "",
+                "display: none" 
+            ];
+        }else if($pedido['tipo']=='Saída'){
+            $style = [
+                "",
+                "display: none",
+                ""
+            ];
+        }
+
+        return view('admin.pedidos.edit', compact('pedido', 'origens', 'destinos', 'clientes', 'opcao', 'style'));
     }
 
 
