@@ -76,6 +76,18 @@ class PedidosController extends Controller
 
     public function status(Request $request, $pedidoId)
     {
+        $pedido = $this->repository->find($pedidoId);
+
+
+        if($pedido->tipo === 'Entrada') {
+
+            $pedido = $pedido->produtos()->each(function ($key, $produto ){
+                return $produto[$key];
+            });
+
+            dd($pedido);
+        }
+
         $pedido = ['status' => 2];
         $this->repository->update($pedido, $pedidoId);
         $url = $request->get('redirect_to', route('admin.pedidos.index'));
@@ -111,9 +123,17 @@ class PedidosController extends Controller
         if ($data['tipo'] === 'Entrada') {
             $data['origem_id'] = null;
             $data['destino_id'] = 1;
-
         }
-        //dd($data);
+
+        if ($data['tipo'] === 'movimentação') {
+            $data['origem_id'] = 1;
+            //$data['destino_id'] = 1;
+        }
+
+        if ($data['tipo'] === 'saída') {
+            //$data['origem_id'] = null;
+            $data['destino_id'] = null;
+        }
 
         $pedido = $this->repository->create($data);
 
