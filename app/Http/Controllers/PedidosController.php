@@ -76,6 +76,10 @@ class PedidosController extends Controller
 
     public function status(Request $request, $pedidoId)
     {
+        $p = $this->repository->find($pedidoId);
+
+        dd($p);
+
         $pedido = ['status' => 2];
         $this->repository->update($pedido, $pedidoId);
         $url = $request->get('redirect_to', route('admin.pedidos.index'));
@@ -104,17 +108,20 @@ class PedidosController extends Controller
     public function store(PedidosRequest $request)
     {
         $data = $request->all();
+
+        //dd($data);
         $data['status'] = 1;
-        $data['desconto'] = $data['desconto'] ?? 0;
+        $data['desconto'] = $data['desconto'] ?? 1;
         $data['forma_pagamento'] = $data['forma_pagamento'] ?? 1;
 
-        if ($data['tipo'] === 'Entrada') {
+        //if ($data['tipo'] == 1)
+        {
             $data['origem_id'] = null;
             $data['destino_id'] = 1;
 
         }
-        //dd($data);
 
+        //dd($data);
         $pedido = $this->repository->create($data);
 
         return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedido->id]);

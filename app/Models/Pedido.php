@@ -20,7 +20,9 @@ class Pedido extends Model implements Transformable
         'forma_pagamento',
         'obs',
         'date_confimacao',
-        'cliente_id'
+        'cliente_id',
+        'origem_id',
+        'destino_id'
     ];
 
     public function origem()
