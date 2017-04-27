@@ -76,9 +76,29 @@ class PedidosController extends Controller
 
     public function status(Request $request, $pedidoId)
     {
+
         $p = $this->repository->find($pedidoId);
 
         dd($p);
+
+        $pedido = $this->repository->find($pedidoId);
+
+
+        if($pedido->tipo === 'Entrada') {
+
+            $pedido = $pedido->produtos()->each(function ($produto ) use($pedidoId){
+                dd($produto);
+                $estoque = ['lote' => $pedidoId,
+                            'valor' => 1,
+                            'quantidade' => 1,
+
+                    ];
+                return $produto;
+            });
+
+            dd($pedido);
+        }
+
 
         $pedido = ['status' => 2];
         $this->repository->update($pedido, $pedidoId);
@@ -92,7 +112,7 @@ class PedidosController extends Controller
     {
         $origens = $this->origensRepository->pluck('descricao', 'id');
         $destinos = $this->destinosRepository->pluck('descricao', 'id');
-        $clientes = $this->clientesRepository->pluck('nome', 'id');
+        $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
         $opcao = $this->opcao();
 
         return view('admin.pedidos.create', compact('origens', 'destinos', 'clientes', 'opcao'));
@@ -118,7 +138,16 @@ class PedidosController extends Controller
         {
             $data['origem_id'] = null;
             $data['destino_id'] = 1;
+        }
 
+        if ($data['tipo'] === 'movimentação') {
+            $data['origem_id'] = 1;
+            //$data['destino_id'] = 1;
+        }
+
+        if ($data['tipo'] === 'saída') {
+            //$data['origem_id'] = null;
+            $data['destino_id'] = null;
         }
 
         //dd($data);
@@ -151,10 +180,12 @@ class PedidosController extends Controller
     public function edit($id)
     {
         $pedido = $this->repository->find($id);
+
         $origens = $this->origensRepository->pluck('descricao', 'id')->prepend('NULL', '');
         $destinos = $this->destinosRepository->pluck('descricao', 'id')->prepend('NULL', '');
-        $clientes = $this->clientesRepository->pluck('nome', 'id');
-        $opcao = [1 => 'Entrada', 2 => 'Movimentação', 3 => 'Saída'];
+        $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
+
+        $opcao = $this->opcao();
 
         return view('admin.pedidos.edit', compact('pedido', 'origens', 'destinos', 'clientes', 'opcao'));
     }
@@ -203,10 +234,8 @@ class PedidosController extends Controller
         switch ($center_id) {
             case 1:
                 return ['Entrada' => 'Entrada', 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
-            case 2:
-                return ['Movimentação' => 'Movimentação'];
-            case 3:
-                return ['Saída' => 'Saída'];
+            default:
+                return [ 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
         }
 
     }
