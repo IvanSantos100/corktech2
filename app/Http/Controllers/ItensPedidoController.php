@@ -3,7 +3,9 @@
 namespace CorkTech\Http\Controllers;
 
 use CorkTech\Criteria\FindByPedidoPendenteCriteria;
+use CorkTech\Criteria\FindByProdutoEstoque;
 use CorkTech\Criteria\FindByProdutosCriteria;
+use CorkTech\Repositories\CentroDistribuicoesRepository;
 use CorkTech\Repositories\ItensPedidosRepository;
 use CorkTech\Repositories\PedidosRepository;
 use CorkTech\Repositories\ProdutosRepository;
@@ -25,11 +27,16 @@ class ItensPedidoController extends Controller
      * @var ItensPedidosRepository
      */
     private $itensPedidosRepository;
+    /**
+     * @var CentroDistribuicoesRepository
+     */
+    private $centroDistribuicoesRepository;
 
     public function __construct(
         PedidosRepository $pedidosRepository,
         ProdutosRepository $produtosRepository,
-        ItensPedidosRepository $itensPedidosRepository
+        ItensPedidosRepository $itensPedidosRepository,
+        CentroDistribuicoesRepository $centroDistribuicoesRepository
     )
     {
         $this->pedidosRepository = $pedidosRepository;
@@ -37,6 +44,7 @@ class ItensPedidoController extends Controller
         $this->itensPedidosRepository = $itensPedidosRepository;
 
         $this->pedidosRepository->pushCriteria(new FindByPedidoPendenteCriteria());
+        $this->centroDistribuicoesRepository = $centroDistribuicoesRepository;
     }
 
     public function index(Request $request, $id)
@@ -56,12 +64,10 @@ class ItensPedidoController extends Controller
 
         if ($itenspedido->isEmpty()) {
 
-            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $id, 'ver'=>true]);
+            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $id, 'ver' => true]);
         }
 
         return view('admin.itenspedido.index', compact('itenspedido', 'search'));
-
-
     }
 
     public function listarProdutos(Request $request, $pedidoId)
@@ -70,6 +76,7 @@ class ItensPedidoController extends Controller
         $ver = $request->get('ver');
 
         $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId));
+        $this->centroDistribuicoesRepository->pushCriteria(FindByProdutoEstoque::class);
 
         $produtos = $this->produtosRepository->orderBy('descricao')->paginate(10);
 
@@ -82,7 +89,8 @@ class ItensPedidoController extends Controller
 
         $pedido = $this->pedidosRepository->find($pedidoId);
 
-        if ($pedido->tipo === 'Entrada') {
+        //if ($pedido->tipo === 'Entrada')
+        {
 
             $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco, 'prazoentrega' => '2017-01-01']);
 
@@ -114,7 +122,7 @@ class ItensPedidoController extends Controller
     public function updateProdudo(Request $request, $pedidoId, $produtoId)
     {
 
-        $this->itensPedidosRepository->updateOrCreate(['pedido_id'=>$pedidoId, 'produto_id'=>$produtoId],['quantidade' => $request->quantidade]);
+        $this->itensPedidosRepository->updateOrCreate(['pedido_id' => $pedidoId, 'produto_id' => $produtoId], ['quantidade' => $request->quantidade]);
 
         $this->pedidosRepository->updateValorPedido($pedidoId);
 
