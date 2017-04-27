@@ -81,8 +81,14 @@ class PedidosController extends Controller
 
         if($pedido->tipo === 'Entrada') {
 
-            $pedido = $pedido->produtos()->each(function ($key, $produto ){
-                return $produto[$key];
+            $pedido = $pedido->produtos()->each(function ($produto ) use($pedidoId){
+                dd($produto);
+                $estoque = ['lote' => $pedidoId,
+                            'valor' => 1,
+                            'quantidade' => 1,
+
+                    ];
+                return $produto;
             });
 
             dd($pedido);
