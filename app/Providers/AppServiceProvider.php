@@ -21,8 +21,10 @@ class AppServiceProvider extends ServiceProvider
             return null;
         });
 
-        \Html::macro('openFormGroup', function ($field = null, $errors = null) {
+        \Html::macro('openFormGroup', function ($field = null, $errors = null, $style = null) {
             $result = false;
+            $hasId = "";
+            $hasStyle = "";
             if ($field != null and $errors != null) {
                 if (is_array($field)) {
                     foreach ($field as $value) {
@@ -36,9 +38,16 @@ class AppServiceProvider extends ServiceProvider
                         $result = true;
                     }
                 }
+                $hasId = "id='div-$field'";
             }
             $hasError = $result ? ' has-error' : '';
-            return "<div class=\"form-group{$hasError}\">";
+
+            if($style != null){
+                $hasStyle = "style = '$style'";
+            }
+
+
+            return "<div {$hasId} class=\"form-group{$hasError}\" {$hasStyle}>";
         });
 
         \Html::macro('closeFormGroup', function () {

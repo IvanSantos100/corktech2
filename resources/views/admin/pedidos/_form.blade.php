@@ -2,10 +2,11 @@
 
 {!! Html::openFormGroup('tipo', $errors) !!}
 {!! Form::label('tipo', 'Tipo', ['class' => 'control-label']) !!}
-{!! Form::select('tipo', $opcao, null, ['class' => 'form-control']) !!}
+{!! Form::select('tipo', $opcao, null, ['class' => 'form-control', 'onchange' => 'alteraFormPedido(this.value)']) !!}
 {!! Form::error('tipo', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
+@if(checkPermission(['nacional']))
 {!! Html::openFormGroup('origem_id', $errors) !!}
 {!! Form::label('origem_id', 'Origem', ['class' => 'control-label']) !!}
 {!! Form::select('origem_id', $origens, null, ['class' => 'form-control']) !!}
@@ -22,6 +23,17 @@
 {!! Form::label('desconto', 'Desconto', ['class' => 'control-label']) !!}
 {!! Form::text('desconto', null, ['class' => 'form-control']) !!}
 {!! Form::error('desconto', $errors) !!}
+{!! Html::closeFormGroup() !!}
+@endif
+
+@if(!empty($pedido))
+    {!! Html::openFormGroup('cliente_id', $errors) !!}
+@else
+    {!! Html::openFormGroup('cliente_id', $errors, "display: none") !!}
+@endif
+{!! Form::label('cliente_id', 'Cliente', ['class' => 'control-label']) !!}
+{!! Form::select('cliente_id', $clientes, null, ['class' => 'form-control']) !!}
+{!! Form::error('cliente_id', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
 {!! Html::openFormGroup('forma_pagamento', $errors) !!}
