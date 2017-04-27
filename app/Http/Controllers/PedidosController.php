@@ -88,7 +88,7 @@ class PedidosController extends Controller
     {
         $origens = $this->origensRepository->pluck('descricao', 'id');
         $destinos = $this->destinosRepository->pluck('descricao', 'id');
-        $clientes = $this->clientesRepository->pluck('nome', 'id');
+        $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
         $opcao = $this->opcao();
 
         return view('admin.pedidos.create', compact('origens', 'destinos', 'clientes', 'opcao'));
@@ -146,7 +146,7 @@ class PedidosController extends Controller
         $pedido = $this->repository->find($id);
         $origens = $this->origensRepository->pluck('descricao', 'id')->prepend('NULL', '');
         $destinos = $this->destinosRepository->pluck('descricao', 'id')->prepend('NULL', '');
-        $clientes = $this->clientesRepository->pluck('nome', 'id');
+        $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
         $opcao = [1 => 'Entrada', 2 => 'Movimentação', 3 => 'Saída'];
 
         return view('admin.pedidos.edit', compact('pedido', 'origens', 'destinos', 'clientes', 'opcao'));
@@ -195,11 +195,11 @@ class PedidosController extends Controller
         $center_id = \Auth::user()->centrodistribuicao_id;
         switch ($center_id) {
             case 1:
-                return ['Entrada' => 'Entrada', 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
+                return ['1' => 'Entrada', '2' => 'Movimentação', '3' => 'Saída'];
             case 2:
-                return ['Movimentação' => 'Movimentação'];
+                return ['2' => 'Movimentação', '3' => 'Saída'];
             case 3:
-                return ['Saída' => 'Saída'];
+                return ['2' => 'Movimentação', '3' => 'Saída'];
         }
 
     }

@@ -5,19 +5,20 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Editar pedido</div>
+                {!! Form::model($pedido,[
+                'route' => ['admin.pedidos.update' , 'class' => $pedido->id],
+                'class' => 'form', 'method' => 'PUT']) !!}
                 <div class="panel-body">
-                    {!! Form::model($pedido,[
-                    'route' => ['admin.pedidos.update' , 'class' => $pedido->id],
-                    'class' => 'form', 'method' => 'PUT']) !!}
-
                     @include('admin.pedidos._form')
-
-                    {!! Html::openFormGroup() !!}
-                    {!! form::submit('Salvar pedido', ['class' => 'btn btn-primary']) !!}
-                    {!! Html::closeFormGroup() !!}
-
-                    {!! Form::close() !!}
                 </div>
+                <div class="panel-footer">
+                    <center>
+                        {!! Html::openFormGroup() !!}
+                        {!! form::submit('Salvar pedido', ['class' => 'btn btn-primary']) !!}
+                        {!! Html::closeFormGroup() !!}
+                    </center>
+                </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
