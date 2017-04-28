@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoProdutosTableSeeder::class);
         $this->call(ProdutosTableSeeder::class);
         $this->call(CentroDistribuicoesTableSeeder::class);
-        $this->call(EstoquesTableSeeder::class);
+        //$this->call(EstoquesTableSeeder::class);
         $this->call(ClientesTableSeeder::class);
-        $this->call(PedidosTableSeeder::class);
-        $this->call(ItensPedidosTableSeeder::class);
+        //$this->call(PedidosTableSeeder::class);
+        //$this->call(ItensPedidosTableSeeder::class);
         $this->call(UsersTableSeeder::class);
     }
 }

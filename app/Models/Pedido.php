@@ -46,4 +46,4 @@ class Pedido extends Model implements Transformable
             ->withPivot('quantidade', 'preco', 'prazoentrega');
     }
 }
-///$p->produto(10)->attach(1,['quantidade'=>100,'preco'=>123, 'prazoentrega'=>'1']);
+

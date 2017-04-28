@@ -84,28 +84,30 @@ class PedidosController extends Controller
     {
         $pedido = $this->repository->find($pedidoId);
 
-        if($pedido->tipo === 'Entrada') {
-            $pedido->produtos()->each(function ($produto ) use($pedido){
-                $estoque = ['lote' => $pedido->id,
-                            'produto_id' => $produto->produto_id,
-                            'valor' => $produto->preco - ($pedido->desconto  ? $produto->preco * ($pedido->desconto/100) : 0)   ,
-                            'quantidade' => $produto->quantidade,
-                            'centrodistribuicao_id' => $pedido->destino->id
-                    ];
+        if ($pedido->tipo === 'Entrada') {
+            $pedido->produtos()->each(function ($produto) use ($pedido) {
+                $estoque = [
+                    'lote' => $pedido->id,
+                    'produto_id' => $produto->produto_id,
+                    'valor' => $produto->preco - ($pedido->desconto ? $produto->preco * ($pedido->desconto / 100) : 0),
+                    'quantidade' => $produto->quantidade,
+                    'centrodistribuicao_id' => $pedido->destino->id
+                ];
 
                 $this->estoquesRepository->create($estoque);
                 return $estoque;
             });
         }
 
-        if($pedido->tipo === 'movimentação') {
-            $pedido->produtos()->each(function ($produto ) use($pedido){
-                $estoque = ['lote' => $pedido->id,
-                            'produto_id' => $produto->produto_id,
-                            'valor' => $produto->preco - ($pedido->desconto  ? $produto->preco * ($pedido->desconto/100) : 0)   ,
-                            'quantidade' => $produto->quantidade,
-                            'centrodistribuicao_id' => $pedido->destino->id
-                    ];
+        if ($pedido->tipo === 'movimentação') {
+            $pedido->produtos()->each(function ($produto) use ($pedido) {
+                $estoque = [
+                    'lote' => $pedido->id,
+                    'produto_id' => $produto->produto_id,
+                    'valor' => $produto->preco - ($pedido->desconto ? $produto->preco * ($pedido->desconto / 100) : 0),
+                    'quantidade' => $produto->quantidade,
+                    'centrodistribuicao_id' => $pedido->destino->id
+                ];
 
                 $this->estoquesRepository->create($estoque);
                 return $estoque;
@@ -127,13 +129,13 @@ class PedidosController extends Controller
         $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
         $opcao = $this->opcao();
 
-        if(\Auth::user()->centrodistribuicao_id==1) {
+        if (\Auth::user()->centrodistribuicao_id == 1) {
             $style = [
                 "display: none",
                 "display: none",
                 "display: none"
             ];
-        }else{
+        } else {
             $style = [
                 "",
                 "",
@@ -160,18 +162,18 @@ class PedidosController extends Controller
         $data['desconto'] = $data['desconto'] ?? 0;
         $data['forma_pagamento'] = $data['forma_pagamento'] ?? 1;
 
-        //if ($data['tipo'] == 1)
+        if ($data['tipo'] === 'Entrada')
         {
             $data['origem_id'] = null;
             $data['destino_id'] = Auth::user()->centrodistribuicao_id;
         }
 
-        if ($data['tipo'] === 'movimentação') {
+        if ($data['tipo'] === 'Movimentação') {
             $data['origem_id'] = 1;
             //$data['destino_id'] = 1;
         }
 
-        if ($data['tipo'] === 'saída') {
+        if ($data['tipo'] === 'Saída') {
             //$data['origem_id'] = null;
             $data['destino_id'] = null;
         }
@@ -207,25 +209,25 @@ class PedidosController extends Controller
     {
         $pedido = $this->repository->find($id);
 
-        $origens = $this->origensRepository->pluck('descricao', 'id')->prepend('NULL', '');
-        $destinos = $this->destinosRepository->pluck('descricao', 'id')->prepend('NULL', '');
+        $origens = $this->origensRepository->pluck('descricao', 'id');
+        $destinos = $this->destinosRepository->pluck('descricao', 'id');
         $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
 
         $opcao = $this->opcao();
 
-        if($pedido['tipo']=='Entrada') {
+        if ($pedido['tipo'] == 'Entrada') {
             $style = [
                 "display: none",
                 "display: none",
                 "display: none"
             ];
-        }else if($pedido['tipo']=='Movimentação'){
+        } else if ($pedido['tipo'] == 'Movimentação') {
             $style = [
                 "",
                 "",
                 "display: none"
             ];
-        }else if($pedido['tipo']=='Saída'){
+        } else if ($pedido['tipo'] == 'Saída') {
             $style = [
                 "",
                 "display: none",
@@ -281,7 +283,7 @@ class PedidosController extends Controller
             case 1:
                 return ['Entrada' => 'Entrada', 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
             default:
-                return [ 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
+                return ['Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
         }
 
     }
