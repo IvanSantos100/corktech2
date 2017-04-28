@@ -76,9 +76,11 @@ class ItensPedidoController extends Controller
         $ver = $request->get('ver');
 
         $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId));
-        $this->centroDistribuicoesRepository->pushCriteria(FindByProdutoEstoque::class);
+        //$this->centroDistribuicoesRepository->pushCriteria(FindByProdutoEstoque::class);
 
         $produtos = $this->produtosRepository->orderBy('descricao')->paginate(10);
+
+        //dd($produtos);
 
         return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedidoId', 'ver'));
     }
@@ -99,12 +101,14 @@ class ItensPedidoController extends Controller
             \Session::flash('message', 'Produto incluido no pedido.');
             return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedidoId]);
         }
+        /*
         if ($pedido->tipo === 'Movimentação') {
 
         }
         if ($pedido->tipo === 'Saída') {
 
         }
+        */
     }
 
     public function editProdudo($pedidoId, $produtoId)

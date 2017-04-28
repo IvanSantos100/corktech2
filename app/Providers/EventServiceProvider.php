@@ -13,7 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'CorkTech\Events\SomeEvent' => [
+        //'CorkTech\Events\SomeEvent'
+        'Illuminate\Database\Events\QueryExecuted' => [
             'CorkTech\Listeners\EventListener',
         ],
     ];
