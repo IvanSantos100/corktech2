@@ -211,7 +211,7 @@ class PedidosController extends Controller
 
         $origens = $this->origensRepository->pluck('descricao', 'id');
         $destinos = $this->destinosRepository->pluck('descricao', 'id');
-        $clientes = $this->clientesRepository->orderBy('nome');
+        $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');;
 
         $opcao = $this->opcao();
 
