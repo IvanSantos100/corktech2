@@ -26,9 +26,16 @@ class FindByProdutoEstoque implements CriteriaInterface
 
         $user = \Auth::user()->centrodistribuicao_id;
 
-        $model = $repository->visible('id')->with('produtos')->find($user)->get();
 
-        dd($model);
-        return $model->where('asd', 1);
+        $m = $model->join('estoques', 'produtos.id', '=', 'estoques.produto_id')
+            ->where('estoques.centrodistribuicao_id', 1)
+            ->where('estoques.quantidade', '>', 0)
+            ->select('estoques.produto_id')->get();
+
+        $m = $m->map(function ($values) {
+            return $values->produto_id;
+        });
+
+        return $model->whereIn('produtos.id', $m->all());
     }
 }

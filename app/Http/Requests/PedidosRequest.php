@@ -23,9 +23,20 @@ class PedidosRequest extends FormRequest
      */
     public function rules()
     {
-        $tipo = \Request::input('tipo');
+        $request = \Request::all();  //ntrada Movimentação  Saída
 
-        //dd($tipo);
+        if($request['tipo'] === 'Movimentação'){
+            if($request['origem_id'] == $request['destino_id']){
+                return [
+                    'origem' => 'required'
+                ];
+            }
+
+            return [
+                'origem_id' => 'required',
+                'destino_id' => 'required'
+            ];
+        }
 
         return [
             'tipo' => "required",

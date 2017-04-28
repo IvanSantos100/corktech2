@@ -75,12 +75,10 @@ class ItensPedidoController extends Controller
         $search = $request->get('search');
         $ver = $request->get('ver');
 
+        //$this->produtosRepository->pushCriteria(FindByProdutoEstoque::class);  //centrodistribuicao  CentroDistribuicao
         $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId));
-        //$this->centroDistribuicoesRepository->pushCriteria(FindByProdutoEstoque::class);
 
         $produtos = $this->produtosRepository->orderBy('descricao')->paginate(10);
-
-        //dd($produtos);
 
         return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedidoId', 'ver'));
     }
@@ -91,7 +89,7 @@ class ItensPedidoController extends Controller
 
         $pedido = $this->pedidosRepository->find($pedidoId);
 
-        //if ($pedido->tipo === 'Entrada')
+        if ($pedido->tipo === 'Entrada')
         {
 
             $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco, 'prazoentrega' => '2017-01-01']);
@@ -101,14 +99,17 @@ class ItensPedidoController extends Controller
             \Session::flash('message', 'Produto incluido no pedido.');
             return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedidoId]);
         }
-        /*
+
         if ($pedido->tipo === 'Movimentação') {
+
+            dd($produto->estoques());
+            dd($pedido);
 
         }
         if ($pedido->tipo === 'Saída') {
 
         }
-        */
+
     }
 
     public function editProdudo($pedidoId, $produtoId)
@@ -146,3 +147,5 @@ class ItensPedidoController extends Controller
 
 
 }
+
+//https://www.google.com.br/search?q=impedir+campos+iguais+valides+laravel&oq=impedir+campos+iguais+valides+laravel&aqs=chrome..69i57.33127j0j7&sourceid=chrome&ie=UTF-8

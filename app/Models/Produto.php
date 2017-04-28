@@ -42,7 +42,12 @@ class Produto extends Model implements Transformable
 
     public function centrodistribuicao()
     {
-        return $this->belongsToMany(CentroDistribuicao::class, 'estoques', 'centrodistribuicao_id', 'produto_id')
-            ->withPivot('lote', 'valor', 'quantidade');
+        return $this->belongsToMany(CentroDistribuicao::class, 'estoques', 'centrodistribuicao_id', 'centrodistribuicao_id')
+            ->withPivot('lote', 'valor', 'quantidade','produto_id');
+    }
+
+    public function estoques()
+    {
+        return $this->belongsTo(Estoque::class, 'produto_id', 'id');
     }
 }

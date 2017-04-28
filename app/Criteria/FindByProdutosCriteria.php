@@ -46,6 +46,6 @@ class FindByProdutosCriteria implements CriteriaInterface
                 return $query['id'];
             });
 
-        return $model->whereNotIn('id',$produtos->all());
+        return $model->whereNotIn('produtos.id',$produtos->all());
     }
 }
