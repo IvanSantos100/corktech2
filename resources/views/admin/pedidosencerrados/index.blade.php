@@ -39,7 +39,9 @@
                                     <td class="col-md-2">{{ $pedido->origem->descricao}}</td>
                                 @endif
                                 @if($pedido->destino_id=="")
-                                    <td class="col-md-2">Cliente</td>
+                                    <td class="col-md-2">
+                                        <a onclick="popupcliente('{{$pedido->cliente->nome}}','{{$pedido->cliente->tipo}}','{{$pedido->cliente->fone}}')">Cliente</a>
+                                    </td>
                                 @else
                                     <td class="col-md-2">{{ $pedido->destino->descricao}}</td>
                                 @endif
@@ -59,5 +61,22 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="modal fade" id="salvemsg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="Titulomodal"></h4>
+                </div>
+                <div class="modal-body" id="Corpomodal">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
 @endsection
