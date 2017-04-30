@@ -40,6 +40,7 @@
                                 <td class="col-md-2">{{ $itempedido->pivot->preco}}</td>
                                 <td class="col-md-3">
                                     <ul class="list-inline">
+                                        {{--
                                         <li>
                                             @if ($itempedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
                                                 <a class='btn btn-warning' href="{{ route('admin.itenspedido.edit',
@@ -48,6 +49,7 @@
                                                 <a class='btn btn-warning' disabled="true">Editar</a>
                                             @endif
                                         </li>
+                                        --}}
                                         <li>
                                             <a class='btn btn-danger' href="#"
                                                onclick="event.preventDefault(); document.getElementById({{"\"form-{$itempedido->pivot->pedido_id}-{$itempedido->pivot->produto_id}\""}}).submit();">Excluir</a>

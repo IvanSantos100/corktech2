@@ -17,12 +17,13 @@
                         {!! Form::close()!!}
                     </div>
                     @if(!$ver)
-                    <div class="pull-right">
-                        <a class='btn btn-success pull-right'
-                           href="{{ route('admin.itenspedido.index',['pedidoId' => $pedidoId]) }}">Ver produtos desse
-                            pedido
-                        </a>
-                    </div>
+                        <div class="pull-right">
+                            <a class='btn btn-success pull-right'
+                               href="{{ route('admin.itenspedido.index',['pedidoId' => $pedidoId]) }}">Ver produtos
+                                desse
+                                pedido
+                            </a>
+                        </div>
                     @endif
                     <br><br>
                     <table class="table table-hover table-striped">
@@ -32,7 +33,13 @@
                             <th>Estampa</th>
                             <th>Tipo produto</th>
                             <th>Classe</th>
+                            @if(!$tipo)
+                                <th>Lote</th>
+                            @endif
                             <th>Preço</th>
+                            @if(!$tipo)
+                                <th>Estoque</th>
+                            @endif
                             <th>Quantidade</th>
                         </tr>
                         </thead>
@@ -43,20 +50,36 @@
                                 <td class="col-md-2">{{ $produto->estampas->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->tipoprodutos->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->classes->descricao}}</td>
+                                @if(!$tipo)
+                                    <td class="col-md-1">{{ $produto->lote }}</td>
+                                @endif
                                 <td class="col-md-2">R$ {{number_format($produto->preco,2, ',', '.') }}</td>
+                                @if(!$tipo)
+                                    <td class="col-md-1">{{ $produto->quantidade }}</td>
+                                @endif
                                 <td class="col-md-1">
+                                    <?php
+                                    $produtoId = $produto->id;
+                                    if(!$tipo){
+                                        $produtoId = $produto->produto_id;
+                                    }
+
+                                    $form = "add-form-{$pedidoId}-{$produtoId}";
+                                    ?>
+
                                     {!! Form::open(['route' => ['admin.itenspedido.produtos', $pedidoId],
-                                        'class' => 'form', 'id' => "add-form-{$pedidoId}-{$produto->id}"]) !!}
+                                        'class' => 'form', 'id' => "$form"]) !!}
 
-                                    {!! form::number('quantidade', 1, ['min' => 1]) !!}
+                                    {!! form::number('quantidade', 1, ['min' => 1, 'max' => $produto->quantidade]) !!}
 
-                                    {!! form::hidden('produto_id', $produto->id) !!}
+                                    {!! form::hidden('produto_id', $produtoId) !!}
+                                    {!! form::hidden('lote', $produto->lote) !!}
 
                                     {!! Form::close() !!}
                                 </td>
                                 <td class="col-md-1">
                                     <a class='btn btn-success' href="#"
-                                       onclick="document.getElementById({{"\"add-form-{$pedidoId}-{$produto->id}\""}}).submit();">Add
+                                       onclick="document.getElementById({{"\"$form\""}}).submit();">Add
                                     </a>
                                 </td>
                             </tr>

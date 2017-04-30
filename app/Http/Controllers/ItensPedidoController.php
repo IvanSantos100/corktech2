@@ -75,12 +75,27 @@ class ItensPedidoController extends Controller
         $search = $request->get('search');
         $ver = $request->get('ver');
 
-        $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId));
-        $this->centroDistribuicoesRepository->pushCriteria(FindByProdutoEstoque::class);
+        $pedido = $this->pedidosRepository->find($pedidoId);
 
-        $produtos = $this->produtosRepository->orderBy('descricao')->paginate(10);
+        $tipo = $pedido->tipo === 'Entrada';
+        $origemid = $pedido->origem_id;
 
-        return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedidoId', 'ver'));
+        //$this->produtosRepository->pushCriteria(FindByProdutoEstoque::class);  //centrodistribuicao  CentroDistribuicao
+        $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId, $tipo));
+
+        if ($tipo) {
+            $produtos = $this->produtosRepository->orderBy('descricao')->paginate(10);
+        }else {
+            $produtos = $this->produtosRepository->scopeQuery(function ($query) use ($origemid) {
+                return $query->join('estoques', 'produtos.id', '=', 'estoques.produto_id')
+                    ->where('estoques.centrodistribuicao_id', $origemid)
+                    ->orderBy('descricao');
+            })->paginate(10);
+        }
+
+        //dd($produtos);
+
+        return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedidoId', 'ver', 'tipo'));
     }
 
     public function addProdudo(Request $request, $pedidoId)
@@ -89,30 +104,43 @@ class ItensPedidoController extends Controller
 
         $pedido = $this->pedidosRepository->find($pedidoId);
 
-        //if ($pedido->tipo === 'Entrada')
+        if ($pedido->tipo === 'Entrada')
         {
-
-            $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco, 'prazoentrega' => '2017-01-01']);
+            $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco,'prazoentrega' => '2017-01-01']);
 
             $this->pedidosRepository->updateValorPedido($pedidoId);
 
             \Session::flash('message', 'Produto incluido no pedido.');
             return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedidoId]);
         }
+
         if ($pedido->tipo === 'Movimentação') {
+
+            //dd($produto, $pedido);
+            $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco, 'lote' => $request->lote,'prazoentrega' => '2017-01-01']);
+
+            $this->pedidosRepository->updateValorPedido($pedidoId);
+
+            \Session::flash('message', 'Produto incluido no pedido.');
+            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedidoId]);
 
         }
         if ($pedido->tipo === 'Saída') {
 
+            //dd($produto, $pedido);
+            $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco, 'lote' => $request->lote,'prazoentrega' => '2017-01-01']);
+
+            $this->pedidosRepository->updateValorPedido($pedidoId);
+
+            \Session::flash('message', 'Produto incluido no pedido.');
+            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedidoId]);
+
         }
+
     }
 
     public function editProdudo($pedidoId, $produtoId)
     {
-        /*$produtos = $this->pedidosRepository->scopeQuery(function ($query) use ($pedidoId, $produtoId) {
-            return $query->find($pedidoId)->produtos()->where('produtos.id', $produtoId)->get();
-        })->all();
-        */
 
         $produtos = $this->pedidosRepository->find($pedidoId)->produtos()->where('produtos.id', $produtoId)->get();
 
@@ -142,3 +170,5 @@ class ItensPedidoController extends Controller
 
 
 }
+
+//https://www.google.com.br/search?q=impedir+campos+iguais+valides+laravel&oq=impedir+campos+iguais+valides+laravel&aqs=chrome..69i57.33127j0j7&sourceid=chrome&ie=UTF-8

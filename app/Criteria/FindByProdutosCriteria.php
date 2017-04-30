@@ -17,7 +17,7 @@ class FindByProdutosCriteria implements CriteriaInterface
      */
     private $pedidoId;
 
-    function __construct( $pedidoId)
+    function __construct($pedidoId)
     {
         $this->pedidoId = $pedidoId;
     }
@@ -42,10 +42,10 @@ class FindByProdutosCriteria implements CriteriaInterface
         $produtos = Pedido::find($this->pedidoId)
             ->produtos()
             ->get()
-            ->map(function ($query){
+            ->map(function ($query) {
                 return $query['id'];
             });
 
-        return $model->whereNotIn('id',$produtos->all());
+        return $model->whereNotIn('produtos.id', $produtos->all());
     }
 }

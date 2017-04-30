@@ -82,8 +82,12 @@ class PedidosController extends Controller
 
     public function status(Request $request, $pedidoId)
     {
+        $error = '';
+        $pedidofeito = false;
+
         $pedido = $this->repository->find($pedidoId);
 
+        //dd($pedido);
         if ($pedido->tipo === 'Entrada') {
             $pedido->produtos()->each(function ($produto) use ($pedido) {
                 $estoque = [
@@ -95,29 +99,121 @@ class PedidosController extends Controller
                 ];
 
                 $this->estoquesRepository->create($estoque);
-                return $estoque;
+                //return $estoque;
             });
+
+            $pedidofeito = true;
         }
 
-        if ($pedido->tipo === 'movimentação') {
+        if ($pedido->tipo === 'Movimentação') {
+
+            $produtos = $pedido->produtos()->get();  //dd($produtos);
+            foreach ($produtos as $produto){
+                //dd($produto);
+                $estoqueproduto = $this->produtosRepository->find($produto->id)->estoques
+                    ->where('centrodistribuicao_id', $pedido->origem_id)
+                    ->where('lote', $produto->pivot->lote)
+                    ->where('quantidade', '>=', $produto->pivot->quantidade);
+                //dd($produto, $estoqueproduto);
+
+                if (!$estoqueproduto->isEmpty()) {
+
+                    $valor = $produto->pivot->preco - ($pedido->desconto ? $produto->pivot->preco * ($pedido->desconto / 100) : 0);
+                    $estoque = [
+                        'lote' => $produto->pivot->lote,
+                        'produto_id' => $produto->id,
+                        'valor' => $valor,
+                        'quantidade' => $produto->pivot->quantidade,
+                        'centrodistribuicao_id' => $pedido->destino_id
+                    ];
+
+                    //dd($estoque);
+
+                    if ($estoqueproduto->first()->quantidade == $produto->pivot->quantidade) {
+                        $this->estoquesRepository->delete($estoqueproduto->first()->id);
+                    }
+
+                    if($estoqueproduto->first()->quantidade > $produto->pivot->quantidade){
+                        $estoq = ['quantidade' => $estoqueproduto->first()->quantidade - $produto->pivot->quantidade];
+                        $this->estoquesRepository->update($estoq, $estoqueproduto->first()->id);
+                    }
+
+
+                    $prodestoque = $this->estoquesRepository->findWhere([
+                        'lote'=>$produto->pivot->lote,
+                        'valor'=>$valor,
+                        'centrodistribuicao_id'=> $pedido->destino_id,
+                        'produto_id'=> $produto->id
+                    ]);
+
+                    if(!$prodestoque->isEmpty() && $prodestoque->first()->id){
+                        $estoque['quantidade'] = $prodestoque->first()->quantidade + $produto->pivot->quantidade;
+                        $this->estoquesRepository->update($estoque, $prodestoque->first()->id );
+                    }else {
+                        $this->estoquesRepository->create($estoque);
+                    }
+
+                    $pedidofeito = true;
+
+                } else {
+
+                    $error[] = "Produto <b>{$produto->descricao}</b> com quantidade inferior no estoque<br>";
+                }
+                if(!empty($error))
+                    $error = implode('',$error);
+            }
+            //dd($b);
+            /*
             $pedido->produtos()->each(function ($produto) use ($pedido) {
-                $estoque = [
-                    'lote' => $pedido->id,
-                    'produto_id' => $produto->produto_id,
-                    'valor' => $produto->preco - ($pedido->desconto ? $produto->preco * ($pedido->desconto / 100) : 0),
-                    'quantidade' => $produto->quantidade,
-                    'centrodistribuicao_id' => $pedido->destino->id
-                ];
+                //dd($produto);
 
-                $this->estoquesRepository->create($estoque);
-                return $estoque;
+                $estoqueproduto = $this->produtosRepository->find($produto->produto_id)->estoques
+                    ->where('centrodistribuicao_id', $pedido->origem_id)
+                    ->where('lote', $produto->lote)
+                    ->where('quantidade', '>=', $produto->quantidade);
+                //dd($produto, $estoqueproduto);
+
+                if (!$estoqueproduto->isEmpty()) {
+
+                    $estoque = [
+                        'lote' => $produto->lote,
+                        'produto_id' => $produto->produto_id,
+                        'valor' => $produto->preco - ($pedido->desconto ? $produto->preco * ($pedido->desconto / 100) : 0),
+                        'quantidade' => $produto->quantidade,
+                        'centrodistribuicao_id' => $pedido->destino_id
+                    ];
+
+                    if ($estoqueproduto->first()->quantidade == $produto->quantidade) {
+                        $this->estoquesRepository->delete($estoqueproduto->first()->id);
+                    }
+
+                    if($estoqueproduto->first()->quantidade > $produto->quantidade){
+                        $estoq = ['quantidade' => $estoqueproduto->first()->quantidade - $produto->quantidade];
+                        $this->estoquesRepository->update($estoq, $estoqueproduto->first()->id);
+                    }
+
+                    $this->estoquesRepository->create($estoque);
+                    return 1;
+
+                } else {
+
+                    return 0;
+                }
             });
+            */
         }
 
-        $pedido = ['status' => 2];
-        $this->repository->update($pedido, $pedidoId);
+        if($pedidofeito) {
+            $pedido = ['status' => 2];
+            $this->repository->update($pedido, $pedidoId);
+            $url = $request->get('redirect_to', route('admin.pedidos.index'));
+            $request->session()->flash('message', "Pedido {$pedidoId} finalizado. <br> {$error}" );
+
+            return redirect()->to($url);
+        }
+
         $url = $request->get('redirect_to', route('admin.pedidos.index'));
-        $request->session()->flash('message', "Pedido {$pedidoId} finalizado.");
+        $request->session()->flash('error', "Pedido {$pedidoId} Não finalizado. <br> {$error}");
 
         return redirect()->to($url);
     }
@@ -153,7 +249,8 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(PedidosRequest $request)
+    public
+    function store(PedidosRequest $request)
     {
         $data = $request->all();
 
@@ -162,15 +259,16 @@ class PedidosController extends Controller
         $data['desconto'] = $data['desconto'] ?? 0;
         $data['forma_pagamento'] = $data['forma_pagamento'] ?? 1;
 
-        if ($data['tipo'] === 'Entrada')
-        {
+        if ($data['tipo'] === 'Entrada') {
             $data['origem_id'] = null;
             $data['destino_id'] = Auth::user()->centrodistribuicao_id;
+            $data['cliente_id'] = null;
         }
 
         if ($data['tipo'] === 'Movimentação') {
-            $data['origem_id'] = 1;
+            //$data['origem_id'] = 1;
             //$data['destino_id'] = 1;
+            $data['cliente_id'] = null;
         }
 
         if ($data['tipo'] === 'Saída') {
@@ -191,7 +289,8 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public
+    function show($id)
     {
         $pedido = $this->repository->find($id);
 
@@ -205,13 +304,17 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public
+    function edit($id)
     {
         $pedido = $this->repository->find($id);
 
         $origens = $this->origensRepository->pluck('descricao', 'id');
         $destinos = $this->destinosRepository->pluck('descricao', 'id');
-        $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
+
+
+        $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');;
+
 
         $opcao = $this->opcao();
 
@@ -247,7 +350,8 @@ class PedidosController extends Controller
      *
      * @return Response
      */
-    public function update(PedidosRequest $request, $id)
+    public
+    function update(PedidosRequest $request, $id)
     {
         $this->repository->update($request->all(), $id);
         $url = $request->get('redirect_to', route('admin.pedidos.index'));
@@ -264,7 +368,8 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         try {
             $this->repository->delete($id);
@@ -276,7 +381,8 @@ class PedidosController extends Controller
         return redirect('admin/pedidos');
     }
 
-    private function opcao()
+    private
+    function opcao()
     {
         $center_id = \Auth::user()->centrodistribuicao_id;
         switch ($center_id) {

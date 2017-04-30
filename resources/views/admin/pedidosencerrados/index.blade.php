@@ -33,8 +33,16 @@
                             <tr>
                                 <td class="col-md-2">{{ $pedido->id}}</td>
                                 <td class="col-md-2">{{ $pedido->tipo}}</td>
-                                <td class="col-md-2">{{ $pedido->origem->descricao}}</td>
-                                <td class="col-md-2">{{ $pedido->destino->descricao}}</td>
+                                @if($pedido->origem_id=="")
+                                    <td class="col-md-2">Fábrica</td>
+                                @else
+                                    <td class="col-md-2">{{ $pedido->origem->descricao}}</td>
+                                @endif
+                                @if($pedido->destino_id=="")
+                                    <td class="col-md-2">Cliente</td>
+                                @else
+                                    <td class="col-md-2">{{ $pedido->destino->descricao}}</td>
+                                @endif
                                 <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
                                 <td class="col-md-2">
                                     <ul class="list-inline">
@@ -51,6 +59,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

@@ -43,7 +43,7 @@ class Pedido extends Model implements Transformable
     public function produtos()
     {
         return $this->belongsToMany(Produto::class, 'itens_pedidos', 'pedido_id', 'produto_id')
-            ->withPivot('quantidade', 'preco', 'prazoentrega');
+            ->withPivot('quantidade', 'preco', 'prazoentrega', 'lote');
     }
 }
 
