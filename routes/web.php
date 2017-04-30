@@ -34,7 +34,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     Route::name('estoques.index')->get('estoques', 'EstoquesController@index');
     Route::group(['middleware' => 'check-permission:nacional'], function() {
-        Route::resource('estoques', 'EstoquesController', ['except' => 'index']);
+        Route::resource('estoques', 'EstoquesController', ['except' => ['index','create', 'store', 'update', 'store', 'destroy']]);
     });
     Route::get('estoques/{estoque}/details', 'EstoquesController@details')->name('estoques.details');
 

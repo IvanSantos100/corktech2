@@ -17,10 +17,10 @@
                         {!! Form::close()!!}
                     </div>
                     @if(checkPermission(['nacional']))
-                        <div class="pull-right">
+                       {{-- <div class="pull-right">
                             <a class="btn btn-primary" href="{{route('admin.estoques.create')}}">Novo estoque</a>
                         </div>
-                        <br>
+                        <br>--}}
                     @endif
                     <table class="table table-hover table-striped">
                         <thead>
@@ -49,14 +49,14 @@
                                         <li>
                                             <a class='btn btn-primary' href="{{ route('admin.estoques.details', ['estoque' => $estoque->id]) }}">Detalhar</a>
                                         </li>
-                                        @if(checkPermission(['nacional']))
+                                       {{-- @if(checkPermission(['nacional']))
                                             <li>
                                                 <a class='btn btn-warning' href="{{ route('admin.estoques.edit', ['estoque' => $estoque->id]) }}">Editar</a>
                                             </li>
                                             <li>
                                                 <a class='btn btn-danger' href="{{ route('admin.estoques.show', ['estoque' => $estoque->id]) }}">Excluir</a>
                                             </li>
-                                        @endif
+                                        @endif--}}
                                     </ul>
                                 </td>
                             </tr>

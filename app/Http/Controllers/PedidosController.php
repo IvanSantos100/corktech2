@@ -203,6 +203,33 @@ class PedidosController extends Controller
             */
         }
 
+        if ($pedido->tipo === 'Saída') {
+
+            $produtos = $pedido->produtos()->get();
+            foreach ($produtos as $produto) {
+                //dd($produto, $pedido);
+
+                $prodestoque = $this->estoquesRepository->findWhere([
+                    'lote'=>$produto->pivot->lote,
+                    'centrodistribuicao_id'=> $pedido->origem_id,
+                    'produto_id'=> $produto->id
+                ]);
+
+                if ($prodestoque->first()->quantidade == $produto->pivot->quantidade) {
+                    $this->estoquesRepository->delete($prodestoque->first()->id);
+                }
+
+                if($prodestoque->first()->quantidade > $produto->pivot->quantidade){
+                    $estoq = ['quantidade' => $prodestoque->first()->quantidade - $produto->pivot->quantidade];
+                    $this->estoquesRepository->update($estoq, $prodestoque->first()->id);
+                }
+
+            }
+
+            $pedidofeito = true;
+
+        }
+
         if($pedidofeito) {
             $pedido = ['status' => 2];
             $this->repository->update($pedido, $pedidoId);
