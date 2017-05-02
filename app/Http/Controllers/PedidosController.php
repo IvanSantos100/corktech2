@@ -69,13 +69,20 @@ class PedidosController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-
-        if (Auth::user()->centrodistribuicao_id == 1) {
+        /*
+        $user = Auth::user()->centrodistribuicao_id;
+        if ($user == 1) {
             $pedidos = $this->repository->paginate(10);
         } else {
-            $centrodis = Auth::user()->centrodistribuicao_id;
-            $pedidos = $this->repository->findOrWherePaginate([['origem_id', '=', $centrodis], ['destino_id', '=', $centrodis]], 10);
+            $pedidos = $this->repository->scopeQuery(function ($query) use($user){
+              return $query->whereOr(['origem_id' => $user, 'destino_id' => $user]);
+            })->paginate(10);
         }
+        */
+
+        $pedidos = $this->repository->paginate(10);
+
+        //dd($pedidos);
 
         return view('admin.pedidos.index', compact('pedidos', 'search'));
     }
@@ -281,14 +288,14 @@ class PedidosController extends Controller
     {
         $data = $request->all();
 
-        //dd($data);
+        $user = \Auth::user()->centrodistribuicao_id;
         $data['status'] = 1;
         $data['desconto'] = $data['desconto'] ?? 0;
         $data['forma_pagamento'] = $data['forma_pagamento'] ?? 1;
 
         if ($data['tipo'] === 'Entrada') {
             $data['origem_id'] = null;
-            $data['destino_id'] = Auth::user()->centrodistribuicao_id;
+            $data['destino_id'] = $user;
             $data['cliente_id'] = null;
         }
 
@@ -296,6 +303,11 @@ class PedidosController extends Controller
             //$data['origem_id'] = 1;
             //$data['destino_id'] = 1;
             $data['cliente_id'] = null;
+
+            if ($user != 1) {
+                $data['origem_id'] = 1;
+                $data['destino_id'] = $user;
+            }
         }
 
         if ($data['tipo'] === 'Saída') {

@@ -26,6 +26,11 @@ class PedidosRequest extends FormRequest
         $request = \Request::all();  //ntrada Movimentação  Saída
 
         if($request['tipo'] === 'Movimentação'){
+            if (\Auth::user()->centrodistribuicao_id != 1) {
+                return [
+                    'tipo' => "required",
+                ];
+            }
             if($request['origem_id'] == $request['destino_id']){
                 return [
                     'origem' => 'required'

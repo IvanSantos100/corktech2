@@ -24,8 +24,15 @@ class FindByPedidoPendenteCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
 
-        //$user = \Auth::user()->centrodistribuicao_id;
+        $user = \Auth::user()->centrodistribuicao_id;
 
-        return $model->where('status', 1);
+        if($user == 1 ){
+            return $model->where('status', 1);
+        }
+
+        return $model->where(['status' => 1])->where(function($query) use($user) {
+            return $query->where(['origem_id' => $user])->orWhere(['destino_id' => $user]);
+        });
+
     }
 }
