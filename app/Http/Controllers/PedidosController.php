@@ -313,6 +313,9 @@ class PedidosController extends Controller
         if ($data['tipo'] === 'Saída') {
             //$data['origem_id'] = null;
             $data['destino_id'] = null;
+            if ($user != 1) {
+                $data['origem_id'] = $user;
+            }
         }
 
         //dd($data);

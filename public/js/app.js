@@ -50,8 +50,8 @@ function alteraFormPedido(tipo){
         $('#div-destino_id').show('slow');
         $('#div-cliente_id').hide('slow')
     }else if(tipo=='Saída'){
-        $('#div-origem_id').hide('slow')
-        $('#div-destino_id').show('slow');
+        $('#div-origem_id').show('slow')
+        $('#div-destino_id').hide('slow');
         $('#div-cliente_id').show('slow');
     }
 }
