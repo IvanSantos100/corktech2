@@ -50,7 +50,9 @@ return [
 
         'estampas_local' => [
             'driver' => 'local',
-            'root' => storage_path('app/estampas')
+            'root' => storage_path('app/estampas_files'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
         ],
 
         'public' => [

@@ -16,6 +16,7 @@ class CreateEstampasTable extends Migration
 		Schema::create('estampas', function(Blueprint $table) {
             $table->increments('id');
             $table->string('descricao', 50);
+            $table->string('estampa', 100)->nullable();;
             $table->timestamps();
 		});
 	}

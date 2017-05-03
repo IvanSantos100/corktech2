@@ -13,7 +13,8 @@ class Estampa extends Model implements Transformable
     protected $table = 'estampas';
 
     protected $fillable = [
-        'descricao'
+        'descricao',
+        'estampa'
     ];
 
     public function produtos()

@@ -25,6 +25,7 @@ class EstampasRequest extends FormRequest
     {
         return [
             'descricao' => "required|max:50",
+            'estampa_file' => 'mimes:jpeg,jpg,png | max:1000'
         ];
     }
 }

@@ -7,7 +7,7 @@
                 <div class="panel-heading">Editar Estampa</div>
                 {!! Form::model($estampa,[
                    'route' => ['admin.estampas.update' , 'class' => $estampa->id],
-                   'class' => 'form', 'method' => 'PUT']) !!}
+                   'class' => 'form', 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
                 <div class="panel-body">
                     @include('admin.estampas._form')
                 </div>

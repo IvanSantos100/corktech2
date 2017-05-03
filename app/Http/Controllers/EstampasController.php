@@ -86,7 +86,10 @@ class EstampasController extends Controller
 
         $estampa = $this->repository->find($id);
 
-        return view('admin.estampas.edit', compact('estampa'));
+        $url = \Storage::url($estampa['estampa']);
+        $caminho = asset($url);
+
+        return view('admin.estampas.edit', compact('estampa','caminho'));
     }
 
 
@@ -100,11 +103,20 @@ class EstampasController extends Controller
      */
     public function update(EstampasRequest $request, $id)
     {
-        $this->repository->update($request->all(), $id);
+
+        if($request->hasFile('estampa_file')){
+            //dd($request->file('estampa_file'));
+            $md5Name = md5_file($request->file('estampa_file')->getRealPath());
+            $guessExtension = $request->file('estampa_file')->guessExtension();
+            $dados['estampa'] = 'estampas_files/'.$request->file('estampa_file')->storeAs('', $md5Name.'.'.$guessExtension  ,'estampas_local');
+        }
+
+        $dados['descricao'] = $request['descricao'];
+
+        $this->repository->update($dados, $id);
+
         $url = $request->get('redirect_to', route('admin.estampas.index'));
         $request->session()->flash('message', 'Estampa cadastrado com sucesso.');
-
-       // \Storage::disk('estampas_local')->put('file.jpg','Contents');
 
         return redirect()->to($url);
     }
