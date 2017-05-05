@@ -5,7 +5,7 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Criar Estampa</div>
-                {!! Form::open(['route' => 'admin.estampas.store', 'class' => 'form']) !!}
+                {!! Form::open(['route' => 'admin.estampas.store', 'class' => 'form', 'enctype' => 'multipart/form-data']) !!}
                 <div class="panel-body">
                     @include('admin.estampas._form')
                 </div>

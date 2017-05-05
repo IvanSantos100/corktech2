@@ -74,6 +74,7 @@
 
                                     {!! form::hidden('produto_id', $produtoId) !!}
                                     {!! form::hidden('lote', $produto->lote) !!}
+                                    {!! form::hidden('max', $produto->quantidade) !!}
 
                                     {!! Form::close() !!}
                                 </td>

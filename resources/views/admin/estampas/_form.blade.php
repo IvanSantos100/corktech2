@@ -16,7 +16,7 @@
 {!! Html::openFormGroup() !!}
 {!! Form::label('estampa', 'Estampa', ['class' => 'control-label']) !!}
 {!! Form::hidden('estampa',null, ['style' => 'witdh:100%']) !!}
-{{ HTML::image($caminho) }}
+{{ HTML::image("/images/thumbnail/Session::get('estampa-26.png')") }}
 {!! Form::error('descricao', $errors) !!}
 {!! Html::closeFormGroup() !!}
 @endif

@@ -51,7 +51,10 @@ class EstampasController extends Controller
      */
     public function store(EstampasRequest $request)
     {
-        $this->repository->create($request->all());
+        $estampa = $this->repository->create($request->all());
+
+        $this->images($request, $estampa);
+
         $url = $request->get('redirect_to', route('admin.estampas.index'));
         $request->session()->flash('message', 'Estampa cadastrado com sucesso.');
 
@@ -137,5 +140,39 @@ class EstampasController extends Controller
         $url = $request->get('redirect_to', route('admin.estampas.index'));
 
         return redirect()->to($url);
+    }
+
+    public function images(Request $request, $estampa){
+
+        $image = $request->file('estampa_file');
+
+        $input['imagename'] = 'estampa-'.$estampa->id.'.'.$image->getClientOriginalExtension();
+
+        $destinationPath = public_path('images/thumbnail');
+
+        $img = \Image::make($image->getRealPath(),array(
+
+            'width' => 100,
+
+            'height' => 100,
+
+            'grayscale' => false
+
+        ));
+
+        $img->save($destinationPath.'/'.$input['imagename']);
+
+        $destinationPath = public_path('images');
+
+        $image->move($destinationPath, $input['imagename']);
+
+        /*Code for create new row in database*/
+
+        return back()
+
+            ->with('success','Image Upload successful')
+
+            ->with('imageName',$input['imagename']);
+
     }
 }

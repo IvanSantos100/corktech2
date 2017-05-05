@@ -100,6 +100,13 @@ class ItensPedidoController extends Controller
 
     public function addProdudo(Request $request, $pedidoId)
     {
+
+
+        if($request->quantidade > $request->max) {
+            \Session::flash('error', 'Produto com quantidade superior ao estoque.');
+            return redirect()->back();
+        }
+
         $produto = $this->produtosRepository->find($request->produto_id);
 
         $pedido = $this->pedidosRepository->find($pedidoId);
