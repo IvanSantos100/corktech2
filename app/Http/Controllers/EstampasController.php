@@ -53,7 +53,8 @@ class EstampasController extends Controller
     {
         $estampa = $this->repository->create($request->all());
 
-        $this->images($request, $estampa);
+        if($request->file('estampa_file'))
+            $this->images($request, $estampa->id);
 
         $url = $request->get('redirect_to', route('admin.estampas.index'));
         $request->session()->flash('message', 'Estampa cadastrado com sucesso.');
@@ -106,17 +107,10 @@ class EstampasController extends Controller
      */
     public function update(EstampasRequest $request, $id)
     {
+        $this->repository->update($request->all(), $id);
 
-        if($request->hasFile('estampa_file')){
-            //dd($request->file('estampa_file'));
-            $md5Name = md5_file($request->file('estampa_file')->getRealPath());
-            $guessExtension = $request->file('estampa_file')->guessExtension();
-            $dados['estampa'] = 'estampas_files/'.$request->file('estampa_file')->storeAs('', $md5Name.'.'.$guessExtension  ,'estampas_local');
-        }
-
-        $dados['descricao'] = $request['descricao'];
-
-        $this->repository->update($dados, $id);
+        if($request->file('estampa_file'))
+            $this->images($request, $id);
 
         $url = $request->get('redirect_to', route('admin.estampas.index'));
         $request->session()->flash('message', 'Estampa cadastrado com sucesso.');
@@ -137,16 +131,22 @@ class EstampasController extends Controller
         $this->repository->delete($id);
         \Session::flash('message', 'Estampas excluída com sucesso.');
 
+        $filename = "estampa-{$id}.png";
+        if (file_exists('images/'.$filename)) {
+            unlink('images/thumbnail/'.$filename);
+            unlink('images/'.$filename);
+        }
+
         $url = $request->get('redirect_to', route('admin.estampas.index'));
 
         return redirect()->to($url);
     }
 
-    public function images(Request $request, $estampa){
+    public function images(Request $request, $id){
 
         $image = $request->file('estampa_file');
 
-        $input['imagename'] = 'estampa-'.$estampa->id.'.'.$image->getClientOriginalExtension();
+        $input['imagename'] = 'estampa-'.$id.'.'.$image->getClientOriginalExtension();
 
         $destinationPath = public_path('images/thumbnail');
 
@@ -165,14 +165,6 @@ class EstampasController extends Controller
         $destinationPath = public_path('images');
 
         $image->move($destinationPath, $input['imagename']);
-
-        /*Code for create new row in database*/
-
-        return back()
-
-            ->with('success','Image Upload successful')
-
-            ->with('imageName',$input['imagename']);
 
     }
 }

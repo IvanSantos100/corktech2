@@ -12,11 +12,7 @@
 {!! Form::error('estampa_file', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
-@if(!empty($estampa))
-{!! Html::openFormGroup() !!}
+@if(file_exists("images/thumbnail/estampa-{$estampa->id}.png"))
 {!! Form::label('estampa', 'Estampa', ['class' => 'control-label']) !!}
-{!! Form::hidden('estampa',null, ['style' => 'witdh:100%']) !!}
-{{ HTML::image("/images/thumbnail/Session::get('estampa-26.png')") }}
-{!! Form::error('descricao', $errors) !!}
-{!! Html::closeFormGroup() !!}
+{{ HTML::image("/images/thumbnail/estampa-{$estampa->id}.png") }}
 @endif
