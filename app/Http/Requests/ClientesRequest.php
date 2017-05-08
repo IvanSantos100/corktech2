@@ -37,10 +37,10 @@ class ClientesRequest extends FormRequest
             'bairro' => "required",
             'cidade' => "required",
             'uf' => "required",
-            'cep' => "required|max:11",
+            'cep' => "required|numeric|digits:8",
             'responsavel' => "required",
-            'fone' => "required",
-            'celular' => "required"
+            'fone' => "required|numeric",
+            'celular' => "required|numeric"
         ];
     }
 }

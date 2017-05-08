@@ -101,15 +101,15 @@ class ItensPedidoController extends Controller
     public function addProdudo(Request $request, $pedidoId)
     {
 
+        $pedido = $this->pedidosRepository->find($pedidoId);
 
-        if($request->quantidade > $request->max) {
+        if($request->quantidade > $request->max && $pedido->tipo !== 'Entrada') {
             \Session::flash('error', 'Produto com quantidade superior ao estoque.');
             return redirect()->back();
         }
 
         $produto = $this->produtosRepository->find($request->produto_id);
 
-        $pedido = $this->pedidosRepository->find($pedidoId);
 
         if ($pedido->tipo === 'Entrada')
         {
