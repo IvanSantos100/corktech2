@@ -14,17 +14,27 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label col-sm-2" >Tipo:</label>
+                            <div class="col-sm-10">
+                                {{ $pedido->tipo }}
+                            </div>
+                        </div>
+                        @if( isset($pedido->origem->descricao) )
+                        <div class="form-group">
                             <label class="control-label col-sm-2" >Origen:</label>
                             <div class="col-sm-10">
                                 {{ $pedido->origem->descricao }}
                             </div>
                         </div>
+                        @endif
+                        @if(isset($pedido->destino->descricao))
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Destino:</label>
                             <div class="col-sm-10">
                                 {{ $pedido->destino->descricao }}
                             </div>
                         </div>
+                        @endif
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Preço:</label>
                             <div class="col-sm-10">

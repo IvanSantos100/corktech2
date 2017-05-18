@@ -77,12 +77,15 @@ class ItensPedidoController extends Controller
 
         $pedido = $this->pedidosRepository->find($pedidoId);
 
+        //dd($pedido);
+
         $tipo = $pedido->tipo === 'Entrada';
         $origemid = $pedido->origem_id;
 
         //$this->produtosRepository->pushCriteria(FindByProdutoEstoque::class);  //centrodistribuicao  CentroDistribuicao
-        $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId, $tipo));
 
+
+        $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId, $tipo));
         if ($tipo) {
             $produtos = $this->produtosRepository->orderBy('descricao')->paginate(10);
         }else {
@@ -110,9 +113,7 @@ class ItensPedidoController extends Controller
 
         $produto = $this->produtosRepository->find($request->produto_id);
 
-
-        if ($pedido->tipo === 'Entrada')
-        {
+        if ($pedido->tipo === 'Entrada') {
             $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco,'prazoentrega' => '2017-01-01']);
 
             $this->pedidosRepository->updateValorPedido($pedidoId);

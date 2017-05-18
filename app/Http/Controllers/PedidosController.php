@@ -283,8 +283,7 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public
-    function store(PedidosRequest $request)
+    public function store(PedidosRequest $request)
     {
         $data = $request->all();
 
@@ -331,8 +330,7 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public
-    function show($id)
+    public function show($id)
     {
         $pedido = $this->repository->find($id);
 
@@ -346,8 +344,7 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public
-    function edit($id)
+    public function edit($id)
     {
         $pedido = $this->repository->find($id);
 
@@ -392,8 +389,7 @@ class PedidosController extends Controller
      *
      * @return Response
      */
-    public
-    function update(PedidosRequest $request, $id)
+    public function update(PedidosRequest $request, $id)
     {
         $this->repository->update($request->all(), $id);
         $url = $request->get('redirect_to', route('admin.pedidos.index'));
@@ -402,7 +398,6 @@ class PedidosController extends Controller
         return redirect()->to($url);
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -410,8 +405,7 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public
-    function destroy($id)
+    public function destroy($id)
     {
         try {
             $this->repository->delete($id);
@@ -423,8 +417,7 @@ class PedidosController extends Controller
         return redirect('admin/pedidos');
     }
 
-    private
-    function opcao()
+    private function opcao()
     {
         $center_id = \Auth::user()->centrodistribuicao_id;
         switch ($center_id) {
@@ -433,6 +426,5 @@ class PedidosController extends Controller
             default:
                 return ['Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
         }
-
     }
 }
