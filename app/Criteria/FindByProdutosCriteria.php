@@ -58,7 +58,7 @@ class FindByProdutosCriteria implements CriteriaInterface
                 ->produtos()
                 ->get()
                 ->pluck('id');
-            dd($produtos);
+
             return $model->whereNotIn('produtos.id', $produtos->all());
         }
         /*

@@ -114,7 +114,7 @@ class PedidosController extends Controller
 
         if ($pedido->tipo === 'Movimentação') {
 
-            $produtos = $pedido->produtos()->get();  //dd($produtos);
+            $produtos = $pedido->produtos()->get();
             foreach ($produtos as $produto){
                 //dd($produto);
                 $estoqueproduto = $this->produtosRepository->find($produto->id)->estoques

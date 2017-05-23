@@ -39,7 +39,7 @@
                                 <td class="col-md-2">{{ $pedido->desconto}} %</td>
                                 <td class="col-md-4">
                                     <ul class="list-inline">
-                                        <li>
+                                        <li> 
                                             <a class='btn btn-primary' href="{{ route('admin.itenspedido.index', ['pedido' => $pedido->id]) }}">Produtos</a>
                                         </li>
                                         <li>

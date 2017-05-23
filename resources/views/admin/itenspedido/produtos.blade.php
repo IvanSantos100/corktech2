@@ -19,9 +19,7 @@
                     @if(!$ver)
                         <div class="pull-right">
                             <a class='btn btn-success pull-right'
-                               href="{{ route('admin.itenspedido.index',['pedidoId' => $pedidoId]) }}">Ver produtos
-                                desse
-                                pedido
+                               href="{{ route('admin.itenspedido.index',['pedidoId' => $pedidoId]) }}">Ver produtos desse pedido
                             </a>
                         </div>
                     @endif
