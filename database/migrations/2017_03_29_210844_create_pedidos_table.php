@@ -19,7 +19,7 @@ class CreatePedidosTable extends Migration
             $table->enum('status', [1, 2]);
             $table->float('valor_base')->default(0);
             $table->float('desconto')->default(0);
-            $table->enum('forma_pagamento', [1, 2]);
+            $table->text('forma_pagamento', 50);
             $table->text('obs')->nullable();
 
             $table->integer('origem_id')->unsigned()->nullable();

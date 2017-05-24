@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Listagem de produto</div>
+                <div class="panel-heading">Inclusão de produtos para o pedido: <b>{{ $pedido->id }}</b> tipo: <b>{{ $pedido->tipo }}</b> destino: <b>{{ $pedido->destino->descricao }}</b></div>
                 <div class="panel-body">
                     <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
@@ -19,7 +19,7 @@
                     @if(!$ver)
                         <div class="pull-right">
                             <a class='btn btn-success pull-right'
-                               href="{{ route('admin.itenspedido.index',['pedidoId' => $pedidoId]) }}">Ver produtos desse pedido
+                               href="{{ route('admin.itenspedido.index',['pedidoId' => $pedido->id]) }}">Ver produtos desse pedido
                             </a>
                         </div>
                     @endif
@@ -62,10 +62,10 @@
                                         $produtoId = $produto->produto_id;
                                     }
 
-                                    $form = "add-form-{$pedidoId}-{$produtoId}";
+                                    $form = "add-form-{$pedido->id}-{$produtoId}";
                                     ?>
 
-                                    {!! Form::open(['route' => ['admin.itenspedido.produtos', $pedidoId],
+                                    {!! Form::open(['route' => ['admin.itenspedido.produtos', $pedido->id],
                                         'class' => 'form', 'id' => "$form"]) !!}
 
                                     {!! form::number('quantidade', 1, ['min' => 1, 'max' => $produto->quantidade]) !!}

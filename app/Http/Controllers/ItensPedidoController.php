@@ -53,18 +53,13 @@ class ItensPedidoController extends Controller
 
         $this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        /*$itenspedido = $this->itensPedidosRepository->scopeQuery(function($query) use($id){
+        $pedido = $this->pedidosRepository->find($id);
 
-            return $query->leftJoin('produtos', 'itens_pedidos.produto_id', '=', 'produtos.id')
-                ->where('pedido_id',$id)
-                ->orderBy('produtos.descricao');
-        })->paginate(10);*/
-
-        $itenspedido = $this->pedidosRepository->find($id)->produtos()->orderBy('descricao')->paginate(10);
+        $itenspedido = $pedido->produtos()->orderBy('descricao')->paginate(10);
 
         if ($itenspedido->isEmpty()) {
 
-            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $id, 'ver' => true]);
+            return redirect()->route('admin.itenspedido.produtos', ['pedido' => $pedido->id, 'ver' => true]);
         }
 
         return view('admin.itenspedido.index', compact('itenspedido', 'search'));
@@ -98,7 +93,7 @@ class ItensPedidoController extends Controller
 
         //dd($produtos);
 
-        return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedidoId', 'ver', 'tipo'));
+        return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedido', 'ver', 'tipo'));
     }
 
     public function addProdudo(Request $request, $pedidoId)

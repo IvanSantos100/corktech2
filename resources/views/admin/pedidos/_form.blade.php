@@ -20,7 +20,7 @@
 {!! Html::closeFormGroup() !!}
 
 {!! Html::openFormGroup('desconto', $errors) !!}
-{!! Form::label('desconto', 'Desconto', ['class' => 'control-label']) !!}
+{!! Form::label('desconto', 'Desconto (%)', ['class' => 'control-label']) !!}
 {!! Form::text('desconto', null, ['class' => 'form-control']) !!}
 {!! Form::error('desconto', $errors) !!}
 {!! Html::closeFormGroup() !!}

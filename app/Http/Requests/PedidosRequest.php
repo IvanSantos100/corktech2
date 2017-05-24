@@ -29,22 +29,26 @@ class PedidosRequest extends FormRequest
             if (\Auth::user()->centrodistribuicao_id != 1) {
                 return [
                     'tipo' => "required",
+                    'forma_pagamento' => "required",
                 ];
             }
             if($request['origem_id'] == $request['destino_id']){
                 return [
-                    'origem' => 'required'
+                    'origem' => 'required',
+                    'forma_pagamento' => 'required'
                 ];
             }
 
             return [
                 'origem_id' => 'required',
-                'destino_id' => 'required'
+                'destino_id' => 'required',
+                'forma_pagamento' => 'required',
             ];
         }
 
         return [
             'tipo' => "required",
+            'forma_pagamento' => "required",
         ];
     }
 }
