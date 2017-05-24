@@ -21,7 +21,7 @@ class CreateItensPedidosTable extends Migration
             $table->integer('produto_id')->unsigned();
             $table->foreign('produto_id')->references('id')->on('produtos');
 
-            $table->integer('quantidade');
+            $table->float('quantidade');
 
             $table->float('preco');
 

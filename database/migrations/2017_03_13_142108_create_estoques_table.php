@@ -17,7 +17,7 @@ class CreateEstoquesTable extends Migration
             $table->increments('id');
             $table->string('lote',30);
             $table->float('valor');
-            $table->integer('quantidade');
+            $table->float('quantidade');
             $table->integer('centrodistribuicao_id')->unsigned();
             $table->foreign('centrodistribuicao_id')->references('id')->on('centro_distribuicoes');
 
