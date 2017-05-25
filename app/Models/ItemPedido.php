@@ -26,8 +26,8 @@ class ItemPedido extends Model implements Transformable
         return $this->belongsTo('CorkTech\Models\Pedido', 'pedido_id', 'id');
     }
 
-    public function produto()
+    public function produtos()
     {
-        return $this->belongsTo('CorkTech\Models\Produto', 'produto_id', 'id');
+        return $this->hasMany(Produto::class,'id', 'produto_id');
     }
 }

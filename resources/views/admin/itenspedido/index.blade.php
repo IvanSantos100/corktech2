@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Itens do pedido: {{ $itenspedido[0]->pivot->pedido_id}}</div>
+                <div class="panel-heading">Itens do pedido: <b>{{ $pedido->id }}</b> tipo: <b>{{ $pedido->tipo }}</b> destino: <b>{{ $pedido->destino->descricao }}</b></div>
                 <div class="panel-body">
                     <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
@@ -29,6 +29,7 @@
                             <th>Descrição</th>
                             <th>Quantidade</th>
                             <th>Valor base</th>
+                            <th>Lote</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,7 @@
                                 <td class="col-md-2">{{ $itempedido->descricao}}</td>
                                 <td class="col-md-2">{{ $itempedido->pivot->quantidade}}</td>
                                 <td class="col-md-2">{{ $itempedido->pivot->preco}}</td>
+                                <td class="col-md-2">{{ $itempedido->pivot->lote}}</td>
                                 <td class="col-md-3">
                                     <ul class="list-inline">
                                         {{--
@@ -68,6 +70,7 @@
                         </tbody>
                     </table>
                     {{$itenspedido->links()}}
+                    <div > <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Fachar pedido</a> </div>
                 </div>
             </div>
         </div>

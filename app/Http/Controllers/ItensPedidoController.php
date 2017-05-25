@@ -62,7 +62,7 @@ class ItensPedidoController extends Controller
             return redirect()->route('admin.itenspedido.produtos', ['pedido' => $pedido->id, 'ver' => true]);
         }
 
-        return view('admin.itenspedido.index', compact('itenspedido', 'search'));
+        return view('admin.itenspedido.index', compact('itenspedido', 'search', 'pedido'));
     }
 
     public function listarProdutos(Request $request, $pedidoId)
@@ -71,8 +71,6 @@ class ItensPedidoController extends Controller
         $ver = $request->get('ver');
 
         $pedido = $this->pedidosRepository->find($pedidoId);
-
-        //dd($pedido);
 
         $tipo = $pedido->tipo === 'Entrada';
         $origemid = $pedido->origem_id;
@@ -90,8 +88,6 @@ class ItensPedidoController extends Controller
                     ->orderBy('descricao');
             })->paginate(10);
         }
-
-        //dd($produtos);
 
         return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedido', 'ver', 'tipo'));
     }

@@ -44,7 +44,7 @@
                         <tbody>
                         @foreach($produtos as $produto)
                             <tr>
-                                <td class="col-md-2">{{ $produto->descricao}}</td>
+                                <td class="col-md-2">{{ $produto->descricao}} </td>
                                 <td class="col-md-2">{{ $produto->estampas->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->tipoprodutos->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->classes->descricao}}</td>
