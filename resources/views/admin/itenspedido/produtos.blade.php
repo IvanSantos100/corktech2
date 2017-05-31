@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Inclusão de produtos para o pedido: <b>{{ $pedido->id }}</b> tipo: <b>{{ $pedido->tipo }}</b> destino: <b>{{ $pedido->destino->descricao }}</b></div>
+                <div class="panel-heading">Inclusão de produtos para o pedido: <b>{{ $pedido->id }}</b> tipo: <b>{{ $pedido->tipo }}</b> destino: <b>{{ $pedido->destino->descricao ?? $pedido->cliente->nome }}</b></div>
                 <div class="panel-body">
                     <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
