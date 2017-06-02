@@ -55,7 +55,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::post('itenspedido/{pedido}/produtos', 'ItensPedidoController@addProdudo')->name('itenspedido.produtos');
     Route::get('itenspedido/{pedido}/produto/{produto}', 'ItensPedidoController@editProdudo')->name('itenspedido.edit');
     Route::put('itenspedido/{pedido}/produto/{produto}', 'ItensPedidoController@updateProdudo')->name('itenspedido.update');
-    Route::delete('itenspedido/{pedido}/produto/{produto}', 'ItensPedidoController@deleteProduto')->name('itenspedido.produto.delete');
+    Route::delete('itenspedido/{pedido}/produto/{produto}/lote/{lote}', 'ItensPedidoController@deleteProduto')->name('itenspedido.produto.delete');
 
     //Route::resource('itenspedidos', 'ItensPedidosController');
 

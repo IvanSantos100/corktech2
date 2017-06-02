@@ -155,13 +155,25 @@ class ItensPedidoController extends Controller
         return redirect()->route('admin.itenspedido.index', ['pedidoId' => $pedidoId]);
     }
 
-    public function deleteProduto($pedidoId, $produtoId)
+    public function deleteProduto(Request $request, $pedidoId, $produtoId, $lote)
     {
-        $pedido = $this->pedidosRepository->find($pedidoId)->produtos()->detach($produtoId);
+        $pedido = $this->itensPedidosRepository->delItemLote($pedidoId, $produtoId, $lote);
+        //$pedido = $this->pedidosRepository->find($pedidoId)->produtos()->where(['itens_pedidos.produto_id' => $produtoId, 'itens_pedidos.lote' => $lote])->get();
+        //dd($pedido);
+        //$pedido = $this->pedidosRepository->find($pedidoId)->produtos()->where(['itens_pedidos.lote' => $lote])->detach($produtoId,$lote);
+        //dd($pedido);
+        //$p = $this->itensPedidosRepository->findByField(['pedido_id' => $pedidoId, 'produto_id' => $produtoId, 'lote' => $lote]);   ->detach($produtoId,['loteasdfasdfasdf' => $lote] );
+        //$p->delete();
 
         $this->pedidosRepository->updateValorPedido($pedidoId);
 
-        \Session::flash('message', 'Produto excluído.');
+        if($pedido == 1) {
+            \Session::flash('message', 'Produto excluído.');
+        }else{
+            \Session::flash('error', 'Produto não excluído.');
+        }
+
+
         return redirect()->route('admin.itenspedido.index', ['pedidoId' => $pedidoId]);
     }
 

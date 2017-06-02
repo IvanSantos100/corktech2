@@ -59,7 +59,7 @@
                                                onclick="event.preventDefault(); document.getElementById({{"\"form-{$itempedido->pivot->pedido_id}-{$itempedido->pivot->produto_id}\""}}).submit();">Excluir</a>
 
                                             {!! Form::open(['route' => ['admin.itenspedido.produto.delete',
-                                                'pedidoId' => $itempedido->pivot->pedido_id, 'produtoId' => $itempedido->pivot->produto_id],
+                                                'pedidoId' => $itempedido->pivot->pedido_id, 'produtoId' => $itempedido->pivot->produto_id, 'lote' => $itempedido->pivot->lote ?? 'null'],
                                                 'id' => "form-{$itempedido->pivot->pedido_id}-{$itempedido->pivot->produto_id}",
                                                 'method' => 'DELETE', 'style' => 'display:nome']) !!}
                                             {!! Form::close() !!}

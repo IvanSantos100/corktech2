@@ -12,4 +12,6 @@ interface ItensPedidosRepository extends RepositoryInterface
 {
     //
     public function findWherePaginate($where, $limit);
+
+    public function delItemLote($perido_id, $produto_id, $lote);
 }
