@@ -58,7 +58,6 @@ class ItensPedidoController extends Controller
         $itenspedido = $pedido->produtos()->orderBy('descricao')->paginate(10);
 
         if ($itenspedido->isEmpty()) {
-
             return redirect()->route('admin.itenspedido.produtos', ['pedido' => $pedido->id, 'ver' => true]);
         }
 
@@ -76,7 +75,6 @@ class ItensPedidoController extends Controller
         $origemid = $pedido->origem_id;
 
         //$this->produtosRepository->pushCriteria(FindByProdutoEstoque::class);  //centrodistribuicao  CentroDistribuicao
-
 
         $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId, $tipo));
         if ($tipo) {
