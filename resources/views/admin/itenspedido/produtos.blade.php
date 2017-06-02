@@ -8,6 +8,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Inclusão de produtos para o pedido: <b>{{ $pedido->id }}</b> tipo: <b>{{ $pedido->tipo }}</b> destino: <b>{{ $pedido->destino->descricao ?? $pedido->cliente->nome }}</b></div>
                 <div class="panel-body">
+                    @if($produtos->total() == 0)
+                        <div class="panel-heading pull-left">NENHUM ITEM EM ESTOQUE</div>
+                        <div class="pull-right">
+                            <a class='btn btn-success pull-right'
+                               href="{{ route('admin.pedidos.index') }}">Pedidos
+                            </a>
+                        </div>
+                    @else
                     <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
@@ -86,6 +94,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @endif
                     {{ $produtos->links() }}
                 </div>
             </div>

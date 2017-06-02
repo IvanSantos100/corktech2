@@ -158,12 +158,6 @@ class ItensPedidoController extends Controller
     public function deleteProduto(Request $request, $pedidoId, $produtoId, $lote)
     {
         $pedido = $this->itensPedidosRepository->delItemLote($pedidoId, $produtoId, $lote);
-        //$pedido = $this->pedidosRepository->find($pedidoId)->produtos()->where(['itens_pedidos.produto_id' => $produtoId, 'itens_pedidos.lote' => $lote])->get();
-        //dd($pedido);
-        //$pedido = $this->pedidosRepository->find($pedidoId)->produtos()->where(['itens_pedidos.lote' => $lote])->detach($produtoId,$lote);
-        //dd($pedido);
-        //$p = $this->itensPedidosRepository->findByField(['pedido_id' => $pedidoId, 'produto_id' => $produtoId, 'lote' => $lote]);   ->detach($produtoId,['loteasdfasdfasdf' => $lote] );
-        //$p->delete();
 
         $this->pedidosRepository->updateValorPedido($pedidoId);
 
@@ -173,11 +167,6 @@ class ItensPedidoController extends Controller
             \Session::flash('error', 'Produto não excluído.');
         }
 
-
         return redirect()->route('admin.itenspedido.index', ['pedidoId' => $pedidoId]);
     }
-
-
 }
-
-//https://www.google.com.br/search?q=impedir+campos+iguais+valides+laravel&oq=impedir+campos+iguais+valides+laravel&aqs=chrome..69i57.33127j0j7&sourceid=chrome&ie=UTF-8
