@@ -60,9 +60,9 @@ class ProdutosController extends Controller
 
     public function create()
     {
-        $estampas = $this->estampasRepository->pluck('descricao', 'id');
-        $classes = $this->classesRepository->pluck('descricao', 'id');
-        $tipoprodutos = $this->tipoProdutosRepository->pluck('descricao', 'id');
+        $estampas = $this->estampasRepository->orderBy('descricao','asc')->pluck('descricao', 'id');
+        $classes = $this->classesRepository->orderBy('descricao')->pluck('descricao', 'id');
+        $tipoprodutos = $this->tipoProdutosRepository->orderBy('descricao')->pluck('descricao', 'id');
 
         return view('admin.produtos.create', compact('estampas', 'classes', 'tipoprodutos') );
     }
@@ -109,9 +109,9 @@ class ProdutosController extends Controller
     public function edit($id)
     {
         $produto = $this->repository->find($id);
-        $estampas = $this->estampasRepository->pluck('descricao', 'id');
-        $classes = $this->classesRepository->pluck('descricao', 'id');
-        $tipoprodutos = $this->tipoProdutosRepository->pluck('descricao', 'id');
+        $estampas = $this->estampasRepository->orderBy('descricao')->pluck('descricao', 'id');
+        $classes = $this->classesRepository->orderBy('descricao')->pluck('descricao', 'id');
+        $tipoprodutos = $this->tipoProdutosRepository->orderBy('descricao')->pluck('descricao', 'id');
 
         return view('admin.produtos.edit', compact('produto', 'estampas', 'classes', 'tipoprodutos'));
     }
