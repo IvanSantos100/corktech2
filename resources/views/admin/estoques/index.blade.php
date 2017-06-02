@@ -25,6 +25,7 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
+                            <th>Código</th>
                             <th>Produto</th>
                             @if(checkPermission(['nacional']))
                                 <th>Centro distribuição</th>
@@ -37,11 +38,12 @@
                         <tbody>
                         @foreach($estoques as $estoque)
                             <tr>
+                                <td class="col-md-1">{{ $estoque->produtos->codigo}}</td>
                                 <td class="col-md-2">{{ $estoque->produtos->descricao}}</td>
                                 @if(checkPermission(['nacional']))
                                     <td class="col-md-2">{{ $estoque->centroDistribuicoes->descricao}}</td>
                                 @endif
-                                <td class="col-md-2">{{ $estoque->lote}}</td>
+                                <td class="col-md-1">{{ $estoque->lote}}</td>
                                 <td class="col-md-1">{{ $estoque->quantidade}}</td>
                                 <td class="col-md-1">R$ {{number_format($estoque->valor,2, ',', '.') }}</td>
                                 <td class="col-md-3">

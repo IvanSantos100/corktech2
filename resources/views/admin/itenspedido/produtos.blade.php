@@ -26,6 +26,7 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
+                            <th>Código</th>
                             <th>Descrição</th>
                             <th>Estampa</th>
                             <th>Tipo produto</th>
@@ -43,6 +44,7 @@
                         <tbody>
                         @foreach($produtos as $produto)
                             <tr>
+                                <td class="col-md-1">{{ $produto->codigo}} </td>
                                 <td class="col-md-2">{{ $produto->descricao}} </td>
                                 <td class="col-md-2">{{ $produto->estampas->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->tipoprodutos->descricao}}</td>
@@ -50,7 +52,7 @@
                                 @if(!$tipo)
                                     <td class="col-md-1">{{ $produto->lote }}</td>
                                 @endif
-                                <td class="col-md-2">R$ {{number_format($produto->preco,2, ',', '.') }}</td>
+                                <td class="col-md-1">R$ {{number_format($produto->preco,2, ',', '.') }}</td>
                                 @if(!$tipo)
                                     <td class="col-md-1">{{ $produto->quantidade }}</td>
                                 @endif

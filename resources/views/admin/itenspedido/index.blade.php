@@ -26,6 +26,7 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
+                            <th>Código</th>
                             <th>Descrição</th>
                             <th>Quantidade</th>
                             <th>Valor base</th>
@@ -36,10 +37,11 @@
                         @foreach($itenspedido as $itempedido)
 
                             <tr>
+                                <td class="col-md-1">{{ $itempedido->codigo}}</td>
                                 <td class="col-md-2">{{ $itempedido->descricao}}</td>
                                 <td class="col-md-2">{{ $itempedido->pivot->quantidade}}</td>
                                 <td class="col-md-2">{{ $itempedido->pivot->preco}}</td>
-                                <td class="col-md-2">{{ $itempedido->pivot->lote}}</td>
+                                <td class="col-md-1">{{ $itempedido->pivot->lote}}</td>
                                 <td class="col-md-3">
                                     <ul class="list-inline">
                                         {{--

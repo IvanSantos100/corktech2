@@ -27,18 +27,18 @@
                             <th>Prazo fabrica</th>
                             <th>Prazo nacional</th>
                             <th>Prazo regional</th>
-                            <th>Valor base</th>
+                            <th>Valor base (%)</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($centrodistribuicoes as $centrodistribuicao)
                             <tr>
                                 <td class="col-md-3">{{ $centrodistribuicao->descricao}}</td>
-                                <td class="col-md-3">{{ $centrodistribuicao->tipo}}</td>
+                                <td class="col-md-2">{{ $centrodistribuicao->tipo}}</td>
                                 <td class="col-md-1">{{ $centrodistribuicao->prazo_fabrica}}</td>
                                 <td class="col-md-1">{{ $centrodistribuicao->prazo_nacional}}</td>
                                 <td class="col-md-1">{{ $centrodistribuicao->prazo_regional}}</td>
-                                <td class="col-md-1">R$ {{number_format($centrodistribuicao->valor_base,2, ',', '.') }}</td>
+                                <td class="col-md-2">{{ $centrodistribuicao->valor_base }}</td>
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>

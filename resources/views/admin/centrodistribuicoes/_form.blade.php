@@ -31,7 +31,7 @@
 {!! Html::closeFormGroup() !!}
 
 {!! Html::openFormGroup('valor_base', $errors) !!}
-{!! Form::label('valor_base', 'Valor base', ['class' => 'control-label']) !!}
+{!! Form::label('valor_base', 'Valor base (%)', ['class' => 'control-label']) !!}
 {!! Form::text('valor_base', null, ['class' => 'form-control']) !!}
 {!! Form::error('valor_base', $errors) !!}
 {!! Html::closeFormGroup() !!}
