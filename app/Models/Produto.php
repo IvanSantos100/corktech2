@@ -14,6 +14,7 @@ class Produto extends Model implements Transformable
 
     protected $fillable = [
         'descricao',
+        'codigo',
         'preco',
         'estampa_id',
         'classe_id',

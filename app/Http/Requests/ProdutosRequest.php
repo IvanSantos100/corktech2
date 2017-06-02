@@ -23,7 +23,10 @@ class ProdutosRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('produto');
+
         return [
+            'codigo' => "required|max:64||unique:produtos,codigo,$id",
             'descricao' => "required|max:50",
             'preco' => "required|numeric",
             'estampa_id' => "exists:estampas,id",

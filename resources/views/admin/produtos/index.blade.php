@@ -24,6 +24,7 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
+                            <th>Codigo</th>
                             <th>Descrição</th>
                             <th>Estampa</th>
                             <th>Tipo produto</th>
@@ -34,11 +35,12 @@
                         <tbody>
                         @foreach($produtos as $produto)
                             <tr>
+                                <td class="col-md-1">{{ $produto->codigo}}</td>
                                 <td class="col-md-2">{{ $produto->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->estampas->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->tipoprodutos->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->classes->descricao}}</td>
-                                <td class="col-md-2">R$ {{number_format($produto->preco,2, ',', '.') }}</td>
+                                <td class="col-md-1">R$ {{number_format($produto->preco,2, ',', '.') }}</td>
                             @if(checkPermission(['nacional']))
                                     <td class="col-md-2">
                                         <ul class="list-inline">
