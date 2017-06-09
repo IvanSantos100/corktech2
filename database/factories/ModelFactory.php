@@ -70,6 +70,7 @@ $factory->define(CorkTech\Models\Produto::class, function (Faker\Generator $fake
         'estampa_id' => rand(1,20),
         'classe_id' => rand(1,20),
         'tipoproduto_id' => rand(1,20),
+        'codigo' => rand(00001,99999),
     ];
 });
 
