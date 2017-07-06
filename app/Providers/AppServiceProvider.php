@@ -2,6 +2,8 @@
 
 namespace CorkTech\Providers;
 
+use Code\Validator\Cnpj;
+use Code\Validator\Cpf;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -14,6 +16,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \Validator::extend('documento', function ($attribute, $value, $parameters, $validador) {
+            if (strlen($value) == 11) {
+                return (new Cpf())->isValid($value);
+            }
+            return (new Cnpj())->isValid($value);
+        });
+
         \Form::macro('error', function ($field, $errors) {
             if (!str_contains($field, '.*') && $errors->has($field) || count($errors->get($field)) > 0) {
                 return view('errors.error_field', compact('field'));
@@ -42,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
             }
             $hasError = $result ? ' has-error' : '';
 
-            if($style != null){
+            if ($style != null) {
                 $hasStyle = "style = '$style'";
             }
 

@@ -48,11 +48,13 @@
 {!! Form::error('cep', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
+@if(isset($opcao[2]))
 {!! Html::openFormGroup('responsavel', $errors) !!}
 {!! Form::label('responsavel', 'Responsavel', ['class' => 'control-label']) !!}
 {!! Form::text('responsavel', null, ['class' => 'form-control']) !!}
 {!! Form::error('responsavel', $errors) !!}
 {!! Html::closeFormGroup() !!}
+@endif
 
 {!! Html::openFormGroup('fone', $errors) !!}
 {!! Form::label('fone', 'Fone', ['class' => 'control-label']) !!}

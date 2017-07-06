@@ -32,13 +32,13 @@ class ClientesRequest extends FormRequest
         return [
             'tipo' => "required",
             'nome' => "required",
-            'documento' => "required|min:$tipo|max:$tipo|unique:clientes,documento,$id",
+            'documento' => "required|min:$tipo|max:$tipo|unique:clientes,documento,$id|documento",
             'endereco' => "required",
             'bairro' => "required",
             'cidade' => "required",
             'uf' => "required",
             'cep' => "required|numeric|digits:8",
-            'responsavel' => "required",
+            'responsavel' => $tipo == 2 ? "required" : '',
             'fone' => "required|numeric",
             'celular' => "required|numeric"
         ];

@@ -40,9 +40,13 @@ class ClientesController extends Controller
         return view('admin.clientes.index', compact('clientes','search'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $opcao = [1 => 'Física', 2 => 'Jurídica'];
+        $opcao = [1 => 'Física'];
+
+        if($request->cnpj)
+            $opcao = [2 => 'Jurídica'];
+
         return view('admin.clientes.create', compact('opcao'));
     }
 
@@ -92,7 +96,11 @@ class ClientesController extends Controller
     public function edit($id)
     {
         $cliente = $this->repository->find($id);
-        $opcao = [1 => 'Física', 2 => 'Jurídica'];
+
+        $opcao = [1 => 'Física'];
+
+        if($cliente->tipo == 2)
+            $opcao = [2 => 'Jurídica'];
 
         return view('admin.clientes.edit', compact('cliente', 'opcao'));
     }

@@ -55,12 +55,14 @@
                                 {{ $cliente->cep }}
                             </div>
                         </div>
+                        @if($cliente->tipo == 2)
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Responsavel:</label>
                             <div class="col-sm-10">
                                 {{ $cliente->responsavel }}
                             </div>
                         </div>
+                        @endif
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Fone:</label>
                             <div class="col-sm-10">

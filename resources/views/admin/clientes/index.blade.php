@@ -18,7 +18,8 @@
                     </div>
                     @if(checkPermission(['nacional']))
                         <div class="pull-right">
-                            <a class="btn btn-primary" href="{{route('admin.clientes.create')}}">Novo cliente</a>
+                            <a class="btn btn-primary" href="{{route('admin.clientes.create', 'cpf=true')}}">Novo cliente físico</a>
+                            <a class="btn btn-primary" href="{{route('admin.clientes.create', 'cnpj=true')}}">Novo cliente jurídico</a>
                         </div>
                     @endif
                     <table class="table table-hover table-striped">

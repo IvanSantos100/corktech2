@@ -24,7 +24,7 @@ class CreateClientesTable extends Migration
             $table->string('uf');
             $table->integer('cep');
             $table->string('senha');
-            $table->string('responsavel');
+            $table->string('responsavel')->nullable();
             $table->integer('fone');
             $table->integer('celular');
             $table->timestamps();

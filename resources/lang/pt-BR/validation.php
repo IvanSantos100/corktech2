@@ -121,6 +121,7 @@ return [
         'price' => 'preço',
         'categories' => 'categorias',
         'categories_*' => 'categorias :num',
+        'documento' => 'Documento inválido'
     ],
 
 ];
