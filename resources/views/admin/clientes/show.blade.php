@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Documento:</label>
                             <div class="col-sm-10">
-                                {{ $cliente->documento }}
+                                {{ $cliente->documento_formatted }}
                             </div>
                         </div>
                         <div class="form-group">

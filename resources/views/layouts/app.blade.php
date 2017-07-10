@@ -131,5 +131,23 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+
+<script src="https://rawgit.com/RobinHerbots/Inputmask/4.x/dist/jquery.inputmask.bundle.js"></script>
+<script src="https://rawgit.com/RobinHerbots/Inputmask/4.x/dist/inputmask/phone-codes/phone.js"></script>
+<script language="JavaScript">
+    $(document).ready(function(){
+        $tipo = $(tipo).val();
+
+        if($tipo == 1){
+            $(documento).inputmask("999.999.999-99");  //static mask
+        }
+        if($tipo == 2){
+            $(documento).inputmask("99.999.999/9999-99");  //static mask
+        }
+        $(cep).inputmask("99.999-999");  //static mask
+        $(fone).inputmask("(99) 9999[9]-9999"); //specifying options
+        $(celular).inputmask("(99) 9999[9]-9999"); //specifying options
+    });
+</script>
 </body>
 </html>

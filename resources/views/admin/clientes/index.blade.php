@@ -35,7 +35,7 @@
                             <tr>
                                 <td class="col-md-2">{{ $cliente->tipo}}</td>
                                 <td class="col-md-2">{{ $cliente->nome}}</td>
-                                <td class="col-md-2">{{ $cliente->documento}}</td>
+                                <td class="col-md-2">{{ $cliente->documento_formatted}}</td>
                                 @if(checkPermission(['nacional']))
                                     <td class="col-md-2">
                                         <ul class="list-inline">

@@ -23,6 +23,7 @@ class ClientesRequest extends FormRequest
      */
     public function rules()
     {
+
         $id = $this->route('cliente');
         $tipo = \Request::input('tipo');
         switch ($tipo){
@@ -43,4 +44,17 @@ class ClientesRequest extends FormRequest
             'celular' => "required|numeric"
         ];
     }
+
+    public function messages()
+    {
+        $tipo = \Request::input('tipo');
+        switch ($tipo){
+            case 1: $tipo = 'CPF'; break;
+            case 2: $tipo = 'CNPJ'; break;
+        }
+        return [
+            'documento.documento' => "$tipo inválido"
+        ];
+    }
+
 }
