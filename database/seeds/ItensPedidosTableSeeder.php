@@ -3,7 +3,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ItensPedidosTableSeeder extends Seeder
+class itempedidosTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

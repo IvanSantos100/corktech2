@@ -2,17 +2,17 @@
 
 namespace CorkTech\Http\Controllers;
 
-use CorkTech\Http\Requests\ItensPedidosRequest;
-use CorkTech\Repositories\ItensPedidosRepository;
+use CorkTech\Http\Requests\itempedidosRequest;
+use CorkTech\Repositories\ItemPedidoRepository;
 use CorkTech\Repositories\PedidosRepository;
 use CorkTech\Repositories\ProdutosRepository;
 use Illuminate\Http\Request;
 
-class ItensPedidosController extends Controller
+class itempedidosController extends Controller
 {
 
     /**
-     * @var ItensPedidosRepository
+     * @var ItemPedidoRepository
      */
     protected $repository;
     /**
@@ -23,7 +23,7 @@ class ItensPedidosController extends Controller
     private $produtosRepository;
 
     public function __construct(
-        ItensPedidosRepository $repository, PedidosRepository $pedidosRepository,ProdutosRepository $produtosRepository
+        ItemPedidoRepository $repository, PedidosRepository $pedidosRepository, ProdutosRepository $produtosRepository
     ){
         $this->repository = $repository;
         $this->pedidosRepository = $pedidosRepository;
@@ -44,30 +44,30 @@ class ItensPedidosController extends Controller
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $this->pedidosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $itenspedidos = $this->repository->findWherePaginate([['pedido_id','=',$pedidorealizado]],10);
+        $itempedidos = $this->repository->findWherePaginate([['pedido_id','=',$pedidorealizado]],10);
         $pedido = $this->pedidosRepository->find($pedidorealizado);
 
-        return view('admin.itenspedidos.index', compact('itenspedidos','search', 'pedido'));
+        return view('admin.itempedidos.index', compact('itempedidos','search', 'pedido'));
     }
 
     public function create()
     {
         $pedidos = $this->pedidosRepository->pluck('descricao', 'id');
 
-        return view('admin.itenspedidos.create', compact('pedidos') );
+        return view('admin.itempedidos.create', compact('pedidos') );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ItensPedidosRequest $request
+     * @param  itempedidosRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(ItensPedidosRequest $request)
+    public function store(itempedidosRequest $request)
     {
         $this->repository->create($request->all());
-        $url = $request->get('redirect_to', route('admin.itenspedidos.index'));
+        $url = $request->get('redirect_to', route('admin.itempedidos.index'));
         $request->session()->flash('message', 'Pedido cadastrado com sucesso.');
 
         return redirect()->to($url);
@@ -87,7 +87,7 @@ class ItensPedidosController extends Controller
 
         $pedido->tipo = $this->opcao($pedido->tipo);
 
-        return view('admin.itenspedidos.show', compact('pedido'));
+        return view('admin.itempedidos.show', compact('pedido'));
     }
 
 
@@ -106,22 +106,22 @@ class ItensPedidosController extends Controller
         $clientes = $this->clientesRepository->pluck('nome', 'id');
         $opcao = [1 => 'Entrada', 2 => 'Movimentação', 3 => 'Saída'];
 
-        return view('admin.itenspedidos.edit', compact('pedido', 'origens', 'destinos', 'clientes', 'opcao'));
+        return view('admin.itempedidos.edit', compact('pedido', 'origens', 'destinos', 'clientes', 'opcao'));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  ItensPedidosRequest $request
+     * @param  itempedidosRequest $request
      * @param  string            $id
      *
      * @return Response
      */
-    public function update(ItensPedidosRequest $request, $id)
+    public function update(itempedidosRequest $request, $id)
     {
         $this->repository->update($request->all(), $id);
-        $url = $request->get('redirect_to', route('admin.itenspedidos.index'));
+        $url = $request->get('redirect_to', route('admin.itempedidos.index'));
         $request->session()->flash('message', ' de pedido cadastrado com sucesso.');
 
         return redirect()->to($url);
@@ -138,9 +138,9 @@ class ItensPedidosController extends Controller
     public function destroy($id)
     {
         $this->repository->delete($id);
-        \Session::flash('message', 'ItensPedidos excluída com sucesso.');
+        \Session::flash('message', 'itempedidos excluída com sucesso.');
 
-        return redirect('admin/itenspedidos');
+        return redirect('admin/itempedidos');
     }
 
     private function opcao($p)

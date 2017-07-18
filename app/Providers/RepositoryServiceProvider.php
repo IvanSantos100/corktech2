@@ -31,7 +31,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\CorkTech\Repositories\EstoquesRepository::class, \CorkTech\Repositories\EstoquesRepositoryEloquent::class);
         $this->app->bind(\CorkTech\Repositories\ClientesRepository::class, \CorkTech\Repositories\ClientesRepositoryEloquent::class);
         $this->app->bind(\CorkTech\Repositories\PedidosRepository::class, \CorkTech\Repositories\PedidosRepositoryEloquent::class);
-        $this->app->bind(\CorkTech\Repositories\ItensPedidosRepository::class, \CorkTech\Repositories\ItensPedidosRepositoryEloquent::class);
+        $this->app->bind(\CorkTech\Repositories\ItemPedidoRepository::class, \CorkTech\Repositories\ItemPedidoRepositoryEloquent::class);
         $this->app->bind(\CorkTech\Repositories\UsuariosRepository::class, \CorkTech\Repositories\UsuariosRepositoryEloquent::class);
         //:end-bindings:
     }

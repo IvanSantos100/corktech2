@@ -18,7 +18,7 @@
                     </div>
                     <div class="pull-right">
                         <a class="btn btn-primary"
-                           href="{{route('admin.itenspedido.produtos', ['pedidoId' => $itenspedido[0]->pivot->pedido_id])}}">Adicionar
+                           href="{{route('admin.itempedido.produtos', ['pedidoId' => $itempedido[0]->pivot->pedido_id])}}">Adicionar
                             Produto</a>
                         <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Pedidos</a>
                     </div>
@@ -34,7 +34,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($itenspedido as $itempedido)
+                        @foreach($itempedido as $itempedido)
 
                             <tr>
                                 <td class="col-md-1">{{ $itempedido->codigo}}</td>
@@ -47,7 +47,7 @@
                                         {{--
                                         <li>
                                             @if ($itempedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-warning' href="{{ route('admin.itenspedido.edit',
+                                                <a class='btn btn-warning' href="{{ route('admin.itempedido.edit',
                                                 ['pedidoId' => $itempedido->pivot->pedido_id, 'produtoId' => $itempedido->pivot->produto_id]) }}">Editar</a>
                                             @else
                                                 <a class='btn btn-warning' disabled="true">Editar</a>
@@ -58,7 +58,7 @@
                                             <a class='btn btn-danger' href="#"
                                                onclick="event.preventDefault(); document.getElementById({{"\"form-{$itempedido->pivot->pedido_id}-{$itempedido->pivot->produto_id}\""}}).submit();">Excluir</a>
 
-                                            {!! Form::open(['route' => ['admin.itenspedido.produto.delete',
+                                            {!! Form::open(['route' => ['admin.itempedido.produto.delete',
                                                 'pedidoId' => $itempedido->pivot->pedido_id, 'produtoId' => $itempedido->pivot->produto_id, 'lote' => $itempedido->pivot->lote ?? 'null'],
                                                 'id' => "form-{$itempedido->pivot->pedido_id}-{$itempedido->pivot->produto_id}",
                                                 'method' => 'DELETE', 'style' => 'display:nome']) !!}
@@ -71,7 +71,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{$itenspedido->links()}}
+                    {{$itempedido->links()}}
                     <div > <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Fachar pedido</a> </div>
                 </div>
             </div>

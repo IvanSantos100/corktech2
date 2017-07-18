@@ -49,7 +49,7 @@
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.itenspedido', ['pedido' => $pedido->id]) }}">Produtos</a>
+                                            <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.itempedido', ['pedido' => $pedido->id]) }}">Produtos</a>
                                         </li>
                                     </ul>
                                 </td>

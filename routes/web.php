@@ -47,17 +47,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('pedidos/{pedido}/status', 'PedidosController@status')->name('pedidos.status');
 
     Route::resource('pedidosencerrados', 'PedidosEncerradosController');
-    Route::get('pedidosencerrados/{pedido}/itenspedido', 'PedidosEncerradosController@itenspedido')->name('pedidosencerrados.itenspedido');
+    Route::get('pedidosencerrados/{pedido}/itempedido', 'PedidosEncerradosController@itempedido')->name('pedidosencerrados.itempedido');
     Route::get('pedidosencerrados/{pedido}/{produto}/details', 'PedidosEncerradosController@details')->name('pedidosencerrados.details');
 
-    Route::get('itenspedido/{pedido}', 'ItensPedidoController@index')->name('itenspedido.index');
-    Route::get('itenspedido/{pedido}/produtos', 'ItensPedidoController@listarProdutos')->name('itenspedido.produtos');
-    Route::post('itenspedido/{pedido}/produtos', 'ItensPedidoController@addProdudo')->name('itenspedido.produtos');
-    Route::get('itenspedido/{pedido}/produto/{produto}', 'ItensPedidoController@editProdudo')->name('itenspedido.edit');
-    Route::put('itenspedido/{pedido}/produto/{produto}', 'ItensPedidoController@updateProdudo')->name('itenspedido.update');
-    Route::delete('itenspedido/{pedido}/produto/{produto}/lote/{lote}', 'ItensPedidoController@deleteProduto')->name('itenspedido.produto.delete');
+    Route::get('itempedido/{pedido}', 'ItemPedidoController@index')->name('itempedido.index');
+    Route::get('itempedido/{pedido}/produtos', 'ItemPedidoController@listarProdutos')->name('itempedido.produtos');
+    Route::post('itempedido/{pedido}/produtos', 'ItemPedidoController@addProdudo')->name('itempedido.produtos');
+    Route::get('itempedido/{pedido}/produto/{produto}', 'ItemPedidoController@editProdudo')->name('itempedido.edit');
+    Route::put('itempedido/{pedido}/produto/{produto}', 'ItemPedidoController@updateProdudo')->name('itempedido.update');
+    Route::delete('itempedido/{pedido}/produto/{produto}/lote/{lote}', 'ItemPedidoController@deleteProduto')->name('itempedido.produto.delete');
 
-    //Route::resource('itenspedidos', 'ItensPedidosController');
+    //Route::resource('itempedidos', 'itempedidosController');
 
     Route::name('usuarios.index')->get('usuarios','UsuariosController@index');
     Route::group(['middleware' => 'check-permission:nacional'], function() {

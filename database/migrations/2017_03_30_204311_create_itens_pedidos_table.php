@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItensPedidosTable extends Migration
+class CreateitempedidosTable extends Migration
 {
     /**
      * Run the migrations.

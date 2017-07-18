@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
                         <div>
-                            <a class="btn btn-primary" href="{{route('admin.itenspedidos.create')}}">Adicionar produto</a>
+                            <a class="btn btn-primary" href="{{route('admin.itempedidos.create')}}">Adicionar produto</a>
                         </div>
                         <br>
                     @endif
@@ -33,25 +33,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($itenspedidos as $itenspedido)
+                        @foreach($itempedidos as $itempedido)
                             <tr>
-                                <td class="col-md-2">{{ $itenspedido->pedido->id}}</td>
-                                <td class="col-md-2">{{ $itenspedido->produto->descricao}}</td>
-                                <td class="col-md-2">{{ $itenspedido->quantidade}}</td>
-                                <td class="col-md-2">{{ $itenspedido->preco}}</td>
-                                <td class="col-md-2">{{ $itenspedido->prazoentrega}}</td>
+                                <td class="col-md-2">{{ $itempedido->pedido->id}}</td>
+                                <td class="col-md-2">{{ $itempedido->produto->descricao}}</td>
+                                <td class="col-md-2">{{ $itempedido->quantidade}}</td>
+                                <td class="col-md-2">{{ $itempedido->preco}}</td>
+                                <td class="col-md-2">{{ $itempedido->prazoentrega}}</td>
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>
                                             @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-warning' href="{{ route('admin.itenspedidos.edit', ['itenspedido' => $itenspedido->id]) }}">Editar</a>
+                                                <a class='btn btn-warning' href="{{ route('admin.itempedidos.edit', ['itempedido' => $itempedido->id]) }}">Editar</a>
                                             @else
                                                 <a class='btn btn-warning' disabled="true">Editar</a>
                                             @endif
                                         </li>
                                         <li>
                                             @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-danger' href="{{ route('admin.itenspedidos.show', ['itenspedido' => $itenspedido->id]) }}">Excluir</a>
+                                                <a class='btn btn-danger' href="{{ route('admin.itempedidos.show', ['itempedido' => $itempedido->id]) }}">Excluir</a>
                                             @else
                                                 <a class='btn btn-danger' disabled="true">Excluir</a>
                                             @endif
@@ -63,7 +63,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{ $itenspedidos->links() }}
+                    {{ $itempedidos->links() }}
                 </div>
             </div>
         </div>

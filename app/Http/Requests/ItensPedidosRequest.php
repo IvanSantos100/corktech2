@@ -4,7 +4,7 @@ namespace CorkTech\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ItensPedidosRequest extends FormRequest
+class itempedidosRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

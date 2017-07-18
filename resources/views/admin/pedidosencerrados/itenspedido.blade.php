@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Itens do pedido: {{ $itenspedido[0]->pivot->pedido_id}}</div>
+                <div class="panel-heading">Itens do pedido: {{ $itempedido[0]->pivot->pedido_id}}</div>
                 <div class="panel-body">
                     <div class="pull-right">
                         <a class='btn btn-primary pull-right' href="{{ route('admin.pedidosencerrados.index') }}">Voltar</a>
@@ -19,7 +19,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($itenspedido as $itempedido)
+                        @foreach($itempedido as $itempedido)
 
                             <tr>
                                 <td class="col-md-1">{{ $itempedido->codigo}}</td>
@@ -39,7 +39,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{$itenspedido->links()}}
+                    {{$itempedido->links()}}
                 </div>
             </div>
         </div>

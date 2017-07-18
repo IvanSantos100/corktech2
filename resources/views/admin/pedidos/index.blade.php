@@ -40,7 +40,7 @@
                                 <td class="col-md-4">
                                     <ul class="list-inline">
                                         <li> 
-                                            <a class='btn btn-primary' href="{{ route('admin.itenspedido.index', ['pedido' => $pedido->id]) }}">Produtos</a>
+                                            <a class='btn btn-primary' href="{{ route('admin.itempedido.index', ['pedido' => $pedido->id]) }}">Produtos</a>
                                         </li>
                                         <li>
                                             @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)

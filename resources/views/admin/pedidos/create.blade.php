@@ -11,6 +11,7 @@
                         @foreach($opcao as $k => $val)
                             <a href="{{ route('admin.pedidos.create',['tipo' => $k]) }}" class="btn {{$tipo == $k ? 'btn-success' : 'btn-default'}}">{{$val}}</a>
                         @endforeach
+                        <br>
                         @include('admin.pedidos._form')
                     </div>
                     <div class="panel-footer text-center">

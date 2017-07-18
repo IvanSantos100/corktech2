@@ -12,6 +12,7 @@ use CorkTech\Repositories\PedidosRepository;
 use CorkTech\Repositories\ClientesRepository;
 use CorkTech\Repositories\ProdutosRepository;
 use Doctrine\DBAL\Query\QueryException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -285,7 +286,7 @@ class PedidosController extends Controller
     {
         $pedido = $this->repository->create($request->all());
 
-        return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedido->id]);
+        return redirect()->route('admin.itempedido.produtos', ['pedidoId' => $pedido->id]);
     }
 
     /**
@@ -298,6 +299,10 @@ class PedidosController extends Controller
     public function show($id)
     {
         $pedido = $this->repository->find($id);
+
+        if(!$pedido){
+            throw new ModelNotFoundException('Pedido não encontrado.');
+        }
 
         return view('admin.pedidos.show', compact('pedido'));
     }

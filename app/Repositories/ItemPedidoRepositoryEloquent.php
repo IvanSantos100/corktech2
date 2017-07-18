@@ -4,15 +4,15 @@ namespace CorkTech\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use CorkTech\Repositories\ItensPedidosRepository;
+use CorkTech\Repositories\ItemPedidoRepository;
 use CorkTech\Models\ItemPedido;
-use CorkTech\Validators\ItensPedidosValidator;
+use CorkTech\Validators\itempedidosValidator;
 
 /**
- * Class ItensPedidosRepositoryEloquent
+ * Class itempedidosRepositoryEloquent
  * @package namespace CorkTech\Repositories;
  */
-class ItensPedidosRepositoryEloquent extends BaseRepository implements ItensPedidosRepository
+class ItemPedidoRepositoryEloquent extends BaseRepository implements ItemPedidoRepository
 {
     /**
      * Specify Model class name

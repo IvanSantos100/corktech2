@@ -6,7 +6,7 @@ use CorkTech\Repositories\CentroDistribuicoesRepository;
 use CorkTech\Repositories\PedidosRepository;
 use CorkTech\Repositories\ClientesRepository;
 use CorkTech\Repositories\ProdutosRepository;
-use CorkTech\Repositories\ItensPedidosRepository;
+use CorkTech\Repositories\ItemPedidoRepository;
 use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +35,7 @@ class PedidosEncerradosController extends Controller
      */
     private $produtosRepository;
 
-    private $itenspedidosRepository;
+    private $itempedidosRepository;
 
 
     public function __construct(
@@ -44,14 +44,14 @@ class PedidosEncerradosController extends Controller
         CentroDistribuicoesRepository $destinosRepository,
         ClientesRepository $clientesRepository,
         ProdutosRepository $produtosRepository,
-        ItensPedidosRepository $itenspedidosRepository
+        ItemPedidoRepository $itempedidosRepository
     ){
         $this->repository = $repository;
         $this->origensRepository = $origensRepository;
         $this->destinosRepository = $destinosRepository;
         $this->clientesRepository = $clientesRepository;
         $this->produtosRepository = $produtosRepository;
-        $this->itenspedidosRepository = $itenspedidosRepository;
+        $this->itempedidosRepository = $itempedidosRepository;
         $this->repository->pushCriteria(new FindByPedidoEncerradoCriteria());
     }
 
@@ -75,20 +75,20 @@ class PedidosEncerradosController extends Controller
         return view('admin.pedidosencerrados.index', compact('pedidos','search'));
     }
 
-    public function itenspedido(Request $request, $id)
+    public function itempedido(Request $request, $id)
     {
         $search = $request->get('search');
 
         $this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $itenspedido = $this->repository->find($id)->produtos()->orderBy('descricao')->paginate(10);
+        $itempedido = $this->repository->find($id)->produtos()->orderBy('descricao')->paginate(10);
 
-        if ($itenspedido->isEmpty()) {
+        if ($itempedido->isEmpty()) {
 
             return 'vazio';
         }
 
-        return view('admin.pedidosencerrados.itenspedido', compact('itenspedido', 'search'));
+        return view('admin.pedidosencerrados.itempedido', compact('itempedido', 'search'));
     }
 
 

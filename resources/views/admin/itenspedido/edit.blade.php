@@ -7,7 +7,7 @@
                 <div class="panel-heading">Editar produto do pedido: {{ $pedidoId }}</div>
                 <div class="panel-body">
                     <div class="pull-right">
-                        <a class="btn btn-primary" href="{{route('admin.itenspedido.index', ['pedidoId' => $pedidoId])}}">Voltar</a>
+                        <a class="btn btn-primary" href="{{route('admin.itempedido.index', ['pedidoId' => $pedidoId])}}">Voltar</a>
                     </div>
                     <br><br>
                     <table class="table table-hover table-striped">
@@ -30,7 +30,7 @@
                                 <td class="col-md-2">{{ $produto->classes->descricao}}</td>
                                 <td class="col-md-2">R$ {{number_format($produto->preco,2, ',', '.') }}</td>
                                 <td class="col-md-1">
-                                    {!! Form::open(['route' => ['admin.itenspedido.update', $pedidoId, $produto->id],
+                                    {!! Form::open(['route' => ['admin.itempedido.update', $pedidoId, $produto->id],
                                       'class' => 'form', 'id' => "add-form-{$pedidoId}-{$produto->id}", 'method' => 'PUT']) !!}
 
                                         {!! form::number('quantidade', $produto->pivot->quantidade, ['min' => 1]) !!}

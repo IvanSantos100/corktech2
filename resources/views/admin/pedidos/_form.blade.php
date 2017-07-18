@@ -1,6 +1,6 @@
 {!! Form::hidden('redirect_to', URL::previous()) !!}
 {!! Form::hidden('tipo', $tipo) !!}
-<br><br>
+<br>
 @if(checkPermission(['nacional']))
     @if($tipo == 2 || $tipo == 3)
         {!! Html::openFormGroup('origem_id', $errors) !!}
