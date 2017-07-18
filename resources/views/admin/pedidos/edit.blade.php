@@ -9,7 +9,7 @@
                 'route' => ['admin.pedidos.update' , 'class' => $pedido->id],
                 'class' => 'form', 'method' => 'PUT']) !!}
                 <div class="panel-body">
-                    <a class="btn btn-success">{{ $pedido->tipo_nome}}</a>
+                    {{--<a class="btn btn-success">{{ $pedido->tipo_nome}}</a>--}}
                     @include('admin.pedidos._form')
                 </div>
                 <div class="panel-footer text-center">

@@ -18,14 +18,14 @@ class TenantScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
+
         $centrodistribuicao = \Auth::user()->centrodistribuicao_id;
+
         if ($centrodistribuicao != 1) {
             $builder->where('origem_id', $centrodistribuicao)
-                ->where('status', 1)
-                ->orWhere(['destino_id' => $centrodistribuicao]);
-        }else{
+                ->where('status', 1);
+        } else {
             $builder->where('status', 1);
         }
-
     }
 }

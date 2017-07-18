@@ -16,35 +16,18 @@ class ItensPedidoController extends Controller
 
 
     /**
-     * @var PedidosRepository
-     */
-    private $pedidosRepository;
-    /**
      * @var ProdutosRepository
      */
     private $produtosRepository;
     /**
      * @var ItensPedidosRepository
      */
-    private $itensPedidosRepository;
-    /**
-     * @var CentroDistribuicoesRepository
-     */
-    private $centroDistribuicoesRepository;
+    private $repository;
 
-    public function __construct(
-        PedidosRepository $pedidosRepository,
-        ProdutosRepository $produtosRepository,
-        ItensPedidosRepository $itensPedidosRepository,
-        CentroDistribuicoesRepository $centroDistribuicoesRepository
-    )
+    public function __construct(ItensPedidosRepository $repository, ProdutosRepository $produtosRepository)
     {
-        $this->pedidosRepository = $pedidosRepository;
         $this->produtosRepository = $produtosRepository;
-        $this->itensPedidosRepository = $itensPedidosRepository;
-
-        $this->pedidosRepository->pushCriteria(new FindByPedidoPendenteCriteria());
-        $this->centroDistribuicoesRepository = $centroDistribuicoesRepository;
+        $this->repository = $repository;
     }
 
     public function index(Request $request, $id)
@@ -53,134 +36,45 @@ class ItensPedidoController extends Controller
 
         $this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $pedido = $this->pedidosRepository->find($id);
+        $produtos = $this->produtosRepository->scopeQuery(function ($query){
+            return $query->orderBy('descricao','asc');
+        })->paginate(10);
 
-        $itenspedido = $pedido->produtos()->orderBy('descricao')->paginate(10);
-
-        if ($itenspedido->isEmpty()) {
-            return redirect()->route('admin.itenspedido.produtos', ['pedido' => $pedido->id, 'ver' => true]);
-        }
-
-        return view('admin.itenspedido.index', compact('itenspedido', 'search', 'pedido'));
+        return view('admin.itenspedido.produtos', compact('produtos', 'search'));
     }
 
-    public function listarProdutos(Request $request, $pedidoId)
+    public function listarProdutos(Request $request, $pedidoId)   ///http://localhost:8000/admin/itenspedido/10/produtos
     {
         $search = $request->get('search');
-        $ver = $request->get('ver');
 
-        $pedido = $this->pedidosRepository->find($pedidoId);
+        $this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $tipo = $pedido->tipo === 'Entrada';
-        $origemid = $pedido->origem_id;
+        $produtos = $this->produtosRepository->scopeQuery(function ($query){
+            return $query->orderBy('descricao','asc');
+        })->paginate(10);
 
-        //$this->produtosRepository->pushCriteria(FindByProdutoEstoque::class);  //centrodistribuicao  CentroDistribuicao
-
-        $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId, $tipo));
-        if ($tipo) {
-            $produtos = $this->produtosRepository->orderBy('descricao')->paginate(10);
-        }else {
-            $produtos = $this->produtosRepository->scopeQuery(function ($query) use ($origemid) {
-                return $query->join('estoques', 'produtos.id', '=', 'estoques.produto_id')
-                    ->where('estoques.centrodistribuicao_id', $origemid)
-                    ->orderBy('descricao');
-            })->paginate(10);
-        }
-
-        return view('admin.itenspedido.produtos', compact('produtos', 'search', 'pedido', 'ver', 'tipo'));
+        //dd($produtos);
+        return view('admin.itenspedido.produtos', compact('produtos', 'search'));
     }
 
     public function addProdudo(Request $request, $pedidoId)
     {
 
-        $pedido = $this->pedidosRepository->find($pedidoId);
-
-        if($request->quantidade > $request->max && $pedido->tipo !== 'Entrada') {
-            \Session::flash('error', 'Produto com quantidade superior ao estoque.');
-            return redirect()->back();
-        }
-
-        $produto = $this->produtosRepository->find($request->produto_id);
-
-        if ($pedido->tipo === 'Entrada') {
-            /*
-            $pedido->produtos()->attach(
-                $request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco,'prazoentrega' => '2017-01-01']);
-            */
-
-            $this->itensPedidosRepository->create([
-                'quantidade' => $request->quantidade,
-                'preco' => $produto->preco,
-                'pedido_id' => $pedidoId,
-                'produto_id' => $request->produto_id,
-                'preco' => 20124,
-                'lote' => 123456,
-                'prazoentrega' => '2017-01-01'
-            ]);
-
-
-            $this->pedidosRepository->updateValorPedido($pedidoId);
-
-            \Session::flash('message', 'Produto incluido no pedido.');
-            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedidoId]);
-        }
-
-        if ($pedido->tipo === 'Movimentação') {
-
-            //dd($produto, $pedido);
-            $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco, 'lote' => $request->lote,'prazoentrega' => '2017-01-01']);
-
-            $this->pedidosRepository->updateValorPedido($pedidoId);
-
-            \Session::flash('message', 'Produto incluido no pedido.');
-            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedidoId]);
-
-        }
-        if ($pedido->tipo === 'Saída') {
-
-            //dd($produto, $pedido);
-            $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco, 'lote' => $request->lote,'prazoentrega' => '2017-01-01']);
-
-            $this->pedidosRepository->updateValorPedido($pedidoId);
-
-            \Session::flash('message', 'Produto incluido no pedido.');
-            return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedidoId]);
-
-        }
 
     }
 
     public function editProdudo($pedidoId, $produtoId)
     {
 
-        $produtos = $this->pedidosRepository->find($pedidoId)->produtos()->where('produtos.id', $produtoId)->get();
-
-        return view('admin.itenspedido.edit', compact('produtos', 'pedidoId'));
     }
 
     public function updateProdudo(Request $request, $pedidoId, $produtoId)
     {
 
-        $this->itensPedidosRepository->updateOrCreate(['pedido_id' => $pedidoId, 'produto_id' => $produtoId], ['quantidade' => $request->quantidade]);
-
-        $this->pedidosRepository->updateValorPedido($pedidoId);
-
-        \Session::flash('message', 'Produto atualizado.');
-        return redirect()->route('admin.itenspedido.index', ['pedidoId' => $pedidoId]);
     }
 
     public function deleteProduto(Request $request, $pedidoId, $produtoId, $lote)
     {
-        $pedido = $this->itensPedidosRepository->delItemLote($pedidoId, $produtoId, $lote);
 
-        $this->pedidosRepository->updateValorPedido($pedidoId);
-
-        if($pedido == 1) {
-            \Session::flash('message', 'Produto excluído.');
-        }else{
-            \Session::flash('error', 'Produto não excluído.');
-        }
-
-        return redirect()->route('admin.itenspedido.index', ['pedidoId' => $pedidoId]);
     }
 }
