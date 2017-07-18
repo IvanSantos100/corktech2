@@ -25,30 +25,33 @@ class PedidosRequest extends FormRequest
     {
         $request = \Request::all();  //ntrada Movimentação  Saída
 
-        if($request['tipo'] === 'Movimentação'){
-            if (\Auth::user()->centrodistribuicao_id != 1) {
-                return [
-                    'tipo' => "required",
-                    'forma_pagamento' => "required",
+        $rules = [];
+        if (\Auth::user()->centrodistribuicao_id == 1) {
+            if($request['tipo'] == 2){
+                $rules =  [
+                    'origem_id' => 'required',
+                    'destino_id' => 'required|different:origem_id',
                 ];
             }
-            if($request['origem_id'] == $request['destino_id']){
-                return [
-                    'origem' => 'required',
-                    'forma_pagamento' => 'required'
+            if($request['tipo'] == 3){
+                $rules =  [
+                    'origem_id' => 'required',
+                    'cliente_id' => 'required',
                 ];
             }
-
-            return [
-                'origem_id' => 'required',
-                'destino_id' => 'required',
-                'forma_pagamento' => 'required',
-            ];
+        }else{
+            if($request['tipo'] == 3){
+                $rules =  [
+                    'cliente_id' => 'required',
+                ];
+            }
         }
 
-        return [
+        $rules = array_merge($rules, [
             'tipo' => "required",
             'forma_pagamento' => "required",
-        ];
+        ]);
+
+        return $rules;
     }
 }

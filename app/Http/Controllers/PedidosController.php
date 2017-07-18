@@ -4,6 +4,8 @@ namespace CorkTech\Http\Controllers;
 
 use CorkTech\Criteria\FindByPedidoPendenteCriteria;
 use CorkTech\Http\Requests\PedidosRequest;
+use CorkTech\Models\Pedido;
+use CorkTech\Models\Produto;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use CorkTech\Repositories\EstoquesRepository;
 use CorkTech\Repositories\PedidosRepository;
@@ -57,7 +59,7 @@ class PedidosController extends Controller
         $this->clientesRepository = $clientesRepository;
         $this->produtosRepository = $produtosRepository;
 
-        $this->repository->pushCriteria(new FindByPedidoPendenteCriteria());
+        //$this->repository->pushCriteria(new FindByPedidoPendenteCriteria());
         $this->estoquesRepository = $estoquesRepository;
     }
 
@@ -89,6 +91,14 @@ class PedidosController extends Controller
 
     public function status(Request $request, $pedidoId)
     {
+        $pedido['status'] = 2;
+        $this->repository->update($pedido, $pedidoId);
+        $url = $request->get('redirect_to', route('admin.pedidos.index'));
+        $request->session()->flash('message', "Pedido {$pedidoId} finalizado com sucesso." );
+
+        return redirect()->to($url);
+
+
         $error = '';
         $pedidofeito = false;
 
@@ -241,7 +251,7 @@ class PedidosController extends Controller
             $pedido = ['status' => 2];
             $this->repository->update($pedido, $pedidoId);
             $url = $request->get('redirect_to', route('admin.pedidos.index'));
-            $request->session()->flash('message', "Pedido {$pedidoId} finalizado. <br> {$error}" );
+            //$request->session()->flash('message', "Pedido {$pedidoId} finalizado. <br> {$error}" );
 
             return redirect()->to($url);
         }
@@ -252,28 +262,16 @@ class PedidosController extends Controller
         return redirect()->to($url);
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $origens = $this->origensRepository->pluck('descricao', 'id');
         $destinos = $this->destinosRepository->pluck('descricao', 'id');
         $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
         $opcao = $this->opcao();
 
-        if (\Auth::user()->centrodistribuicao_id == 1) {
-            $style = [
-                "display: none",
-                "display: none",
-                "display: none"
-            ];
-        } else {
-            $style = [
-                "",
-                "",
-                "display: none"
-            ];
-        }
+        $tipo = $request->get('tipo') ?: array_keys($opcao)[0];
 
-        return view('admin.pedidos.create', compact('origens', 'destinos', 'clientes', 'opcao', 'style'));
+        return view('admin.pedidos.create', compact('origens', 'destinos', 'clientes', 'opcao', 'tipo'));
     }
 
     /**
@@ -285,40 +283,7 @@ class PedidosController extends Controller
      */
     public function store(PedidosRequest $request)
     {
-        $data = $request->all();
-
-        $user = \Auth::user()->centrodistribuicao_id;
-        $data['status'] = 1;
-        $data['desconto'] = $data['desconto'] ?? 0;
-        $data['forma_pagamento'] = $data['forma_pagamento'] ?? 1;
-
-        if ($data['tipo'] === 'Entrada') {
-            $data['origem_id'] = null;
-            $data['destino_id'] = $user;
-            $data['cliente_id'] = null;
-        }
-
-        if ($data['tipo'] === 'Movimentação') {
-            //$data['origem_id'] = 1;
-            //$data['destino_id'] = 1;
-            $data['cliente_id'] = null;
-
-            if ($user != 1) {
-                $data['origem_id'] = 1;
-                $data['destino_id'] = $user;
-            }
-        }
-
-        if ($data['tipo'] === 'Saída') {
-            //$data['origem_id'] = null;
-            $data['destino_id'] = null;
-            if ($user != 1) {
-                $data['origem_id'] = $user;
-            }
-        }
-
-        //dd($data);
-        $pedido = $this->repository->create($data);
+        $pedido = $this->repository->create($request->all());
 
         return redirect()->route('admin.itenspedido.produtos', ['pedidoId' => $pedido->id]);
     }
@@ -350,34 +315,12 @@ class PedidosController extends Controller
 
         $origens = $this->origensRepository->pluck('descricao', 'id');
         $destinos = $this->destinosRepository->pluck('descricao', 'id');
-
-
-        $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');;
-
-
+        $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
         $opcao = $this->opcao();
 
-        if ($pedido['tipo'] == 'Entrada') {
-            $style = [
-                "display: none",
-                "display: none",
-                "display: none"
-            ];
-        } else if ($pedido['tipo'] == 'Movimentação') {
-            $style = [
-                "",
-                "",
-                "display: none"
-            ];
-        } else if ($pedido['tipo'] == 'Saída') {
-            $style = [
-                "",
-                "display: none",
-                ""
-            ];
-        }
+        $tipo = $pedido->tipo;
 
-        return view('admin.pedidos.edit', compact('pedido', 'origens', 'destinos', 'clientes', 'opcao', 'style'));
+        return view('admin.pedidos.edit', compact('pedido', 'origens', 'destinos', 'clientes', 'opcao', 'tipo'));
     }
 
 
@@ -393,7 +336,7 @@ class PedidosController extends Controller
     {
         $this->repository->update($request->all(), $id);
         $url = $request->get('redirect_to', route('admin.pedidos.index'));
-        $request->session()->flash('message', ' de pedido cadastrado com sucesso.');
+        $request->session()->flash('message', 'Pedido atualizado com sucesso.');
 
         return redirect()->to($url);
     }
@@ -422,9 +365,9 @@ class PedidosController extends Controller
         $center_id = \Auth::user()->centrodistribuicao_id;
         switch ($center_id) {
             case 1:
-                return ['Entrada' => 'Entrada', 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
+                return  Pedido::TIPO;
             default:
-                return ['Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
+                return  Pedido::TIPO_2;
         }
     }
 }

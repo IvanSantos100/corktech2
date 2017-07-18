@@ -121,7 +121,11 @@ return [
         'price' => 'preço',
         'categories' => 'categorias',
         'categories_*' => 'categorias :num',
-        'documento' => 'Documento inválido'
+        'documento' => 'Documento inválido',
+        'origem_id' => 'origem',
+        'destino_id' => 'destino',
+        'cliente_id' => 'cliente',
+        'forma_pagamento' => 'forma de pagamento',
     ],
 
 ];

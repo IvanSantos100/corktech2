@@ -27,6 +27,10 @@ class Cliente extends Model implements Transformable
         'celular',
     ];
 
+    protected $hidden = [
+        'senha'
+    ];
+
     public function estampas()
     {
         return $this->belongsTo('CorkTech\Models\Estampa', 'estampa_id', 'id');

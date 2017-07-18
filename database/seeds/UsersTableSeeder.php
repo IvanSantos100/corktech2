@@ -23,5 +23,12 @@ class UsersTableSeeder extends Seeder
             'centrodistribuicao_id' => 2,
             'is_permission' => 2
         ]);
+
+        factory(User::class, 1)->create([
+            'name' => 'User2',
+            'email' => 'user2@corktech.com',
+            'centrodistribuicao_id' => 3,
+            'is_permission' => 3
+        ]);
     }
 }

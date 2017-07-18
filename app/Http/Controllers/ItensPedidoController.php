@@ -103,7 +103,21 @@ class ItensPedidoController extends Controller
         $produto = $this->produtosRepository->find($request->produto_id);
 
         if ($pedido->tipo === 'Entrada') {
-            $pedido->produtos()->attach($request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco,'prazoentrega' => '2017-01-01']);
+            /*
+            $pedido->produtos()->attach(
+                $request->produto_id, ['quantidade' => $request->quantidade, 'preco' => $produto->preco,'prazoentrega' => '2017-01-01']);
+            */
+
+            $this->itensPedidosRepository->create([
+                'quantidade' => $request->quantidade,
+                'preco' => $produto->preco,
+                'pedido_id' => $pedidoId,
+                'produto_id' => $request->produto_id,
+                'preco' => 20124,
+                'lote' => 123456,
+                'prazoentrega' => '2017-01-01'
+            ]);
+
 
             $this->pedidosRepository->updateValorPedido($pedidoId);
 

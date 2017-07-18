@@ -15,11 +15,11 @@ class CreatePedidosTable extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('tipo', ['Entrada', 'Movimentação', 'Saída']);  //1 = entrada, 2 = movimentação e 3 = saída
-            $table->enum('status', [1, 2]);
+            $table->enum('tipo', array_keys(\CorkTech\Models\Pedido::TIPO));  //1 = entrada, 2 = movimentação e 3 = saída
+            $table->enum('status', [1, 2])->default(1);
             $table->float('valor_base')->default(0);
             $table->float('desconto')->default(0);
-            $table->text('forma_pagamento', 50);
+            $table->text('forma_pagamento', 50)->nullable();
             $table->text('obs')->nullable();
 
             $table->integer('origem_id')->unsigned()->nullable();

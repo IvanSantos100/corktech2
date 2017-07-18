@@ -2,15 +2,28 @@
 
 namespace CorkTech\Models;
 
+use CorkTech\Scopes\TenanModels;
+use CorkTech\Scopes\TenantScope;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 class Pedido extends Model implements Transformable
 {
-    use TransformableTrait;
+    use TransformableTrait, TenanModels;
 
     protected $table = 'pedidos';
+
+    //Nacional
+    const TIPO = [
+        1 => 'Entrada',
+        2 => 'Movimentação',
+        3 => 'Saída'];
+
+    //Distribuidora e Revenda
+    const TIPO_2 = [
+        2 => 'Movimentação',
+        3 => 'Saída'];
 
     protected $fillable = [
         'tipo',
@@ -24,6 +37,11 @@ class Pedido extends Model implements Transformable
         'origem_id',
         'destino_id'
     ];
+
+    public function getTipoNomeAttribute()
+    {
+        return array_values(Pedido::TIPO)[$this->tipo -1];
+    }
 
     public function origem()
     {
@@ -42,8 +60,7 @@ class Pedido extends Model implements Transformable
 
     public function produtos()
     {
-        return $this->belongsToMany(Produto::class, 'itens_pedidos', 'pedido_id', 'produto_id')
-            ->withPivot('quantidade', 'preco', 'prazoentrega', 'lote');
+        return $this->hasMany(ItemPedido::class);
     }
 }
 

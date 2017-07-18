@@ -1,37 +1,35 @@
 {!! Form::hidden('redirect_to', URL::previous()) !!}
-
-{!! Html::openFormGroup('tipo', $errors) !!}
-{!! Form::label('tipo', 'Tipo', ['class' => 'control-label']) !!}
-{!! Form::select('tipo', $opcao, null, ['class' => 'form-control', 'onchange' => 'alteraFormPedido(this.value)']) !!}
-{!! Form::error('tipo', $errors) !!}
-{!! Html::closeFormGroup() !!}
-
+{!! Form::hidden('tipo', $tipo) !!}
+<br><br>
 @if(checkPermission(['nacional']))
-{!! Html::openFormGroup('origem_id', $errors, $style[0]) !!}
-{!! Form::label('origem_id', 'Origem', ['class' => 'control-label']) !!}
-{!! Form::select('origem_id', $origens, null, ['class' => 'form-control']) !!}
-{!! Form::error('origem_id', $errors) !!}
-{!! Html::closeFormGroup() !!}
-
-{!! Html::openFormGroup('destino_id', $errors, $style[1]) !!}
-{!! Form::label('destino_id', 'Destino', ['class' => 'control-label']) !!}
-{!! Form::select('destino_id', $destinos, null, ['class' => 'form-control']) !!}
-{!! Form::error('destino_id', $errors) !!}
-{!! Html::closeFormGroup() !!}
-
-{!! Html::openFormGroup('desconto', $errors) !!}
-{!! Form::label('desconto', 'Desconto (%)', ['class' => 'control-label']) !!}
-{!! Form::text('desconto', null, ['class' => 'form-control']) !!}
-{!! Form::error('desconto', $errors) !!}
-{!! Html::closeFormGroup() !!}
+    @if($tipo == 2 || $tipo == 3)
+        {!! Html::openFormGroup('origem_id', $errors) !!}
+        {!! Form::label('origem_id', 'Origem', ['class' => 'control-label']) !!}
+        {!! Form::select('origem_id', $origens, null, ['class' => 'form-control']) !!}
+        {!! Form::error('origem_id', $errors) !!}
+        {!! Html::closeFormGroup() !!}
+    @endif
+    @if($tipo == 2 )
+        {!! Html::openFormGroup('destino_id', $errors) !!}
+        {!! Form::label('destino_id', 'Destino', ['class' => 'control-label']) !!}
+        {!! Form::select('destino_id', $destinos, null, ['class' => 'form-control']) !!}
+        {!! Form::error('destino_id', $errors) !!}
+        {!! Html::closeFormGroup() !!}
+    @endif
+    {!! Html::openFormGroup('desconto', $errors) !!}
+    {!! Form::label('desconto', 'Desconto (%)', ['class' => 'control-label']) !!}
+    {!! Form::text('desconto', null, ['class' => 'form-control']) !!}
+    {!! Form::error('desconto', $errors) !!}
+    {!! Html::closeFormGroup() !!}
 @endif
 
-
-{!! Html::openFormGroup('cliente_id', $errors, $style[2]) !!}
-{!! Form::label('cliente_id', 'Cliente', ['class' => 'control-label']) !!}
-{!! Form::select('cliente_id', $clientes, null, ['class' => 'form-control']) !!}
-{!! Form::error('cliente_id', $errors) !!}
-{!! Html::closeFormGroup() !!}
+@if($tipo == 3)
+    {!! Html::openFormGroup('cliente_id', $errors) !!}
+    {!! Form::label('cliente_id', 'Cliente', ['class' => 'control-label']) !!}
+    {!! Form::select('cliente_id', $clientes, null, ['class' => 'form-control']) !!}
+    {!! Form::error('cliente_id', $errors) !!}
+    {!! Html::closeFormGroup() !!}
+@endif
 
 {!! Html::openFormGroup('forma_pagamento', $errors) !!}
 {!! Form::label('forma_pagamento', 'Forma de pagamento', ['class' => 'control-label']) !!}

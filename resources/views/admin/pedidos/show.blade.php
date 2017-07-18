@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Tipo:</label>
                             <div class="col-sm-10">
-                                {{ $pedido->tipo }}
+                                {{ $pedido->tipo_nome }}
                             </div>
                         </div>
                         @if( isset($pedido->origem->descricao) )
@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2" >Preço:</label>
                             <div class="col-sm-10">
-                                {{ $pedido->valor_base }}
+                                R$ {{number_format($pedido->valor_base,2, ',', '.') }}
                             </div>
                         </div>
                         <div class="form-group">

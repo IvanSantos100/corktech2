@@ -50,7 +50,4 @@ class User extends Model implements AuthenticatableContracts, CanResetPasswordCo
     {
         return $this->belongsTo(CentroDistribuicao::class, 'centrodistribuicao_id', 'id');
     }
-
-
-
 }

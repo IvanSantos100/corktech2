@@ -34,7 +34,7 @@
                         @foreach($pedidos as $pedido)
                             <tr>
                                 <td class="col-md-2">{{ $pedido->id}}</td>
-                                <td class="col-md-2">{{ $pedido->tipo}}</td>
+                                <td class="col-md-2">{{ $pedido->tipo_nome}}</td>
                                 <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
                                 <td class="col-md-2">{{ $pedido->desconto}} %</td>
                                 <td class="col-md-4">

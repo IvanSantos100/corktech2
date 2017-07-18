@@ -12,6 +12,11 @@ class ItemPedido extends Model implements Transformable
 
     protected $table = 'itens_pedidos';
 
+    protected $casts = [
+        'preco' => 'float',
+        'quantidade' => 'float'
+    ];
+
     protected $fillable = [
         'pedido_id',
         'produto_id',
@@ -23,11 +28,11 @@ class ItemPedido extends Model implements Transformable
 
     public function pedido()
     {
-        return $this->belongsTo('CorkTech\Models\Pedido', 'pedido_id', 'id');
+        return $this->belongsTo(Pedido::class, 'pedido_id');
     }
 
-    public function produtos()
+    public function produto()
     {
-        return $this->hasMany(Produto::class,'id', 'produto_id');
+        return $this->belongsTo(Produto::class, 'produto_id');
     }
 }

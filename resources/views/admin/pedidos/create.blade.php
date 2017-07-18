@@ -7,17 +7,19 @@
                 <div class="panel-heading">Criar pedido</div>
                 {!! Form::open(['route' => 'admin.pedidos.store', 'class' => 'form']) !!}
                 <div class="panel-body">
-                    @include('admin.pedidos._form')
-                </div>
-                <div class="panel-footer">
-                    <center>
+                    <div class="panel-body">
+                        @foreach($opcao as $k => $val)
+                            <a href="{{ route('admin.pedidos.create',['tipo' => $k]) }}" class="btn {{$tipo == $k ? 'btn-success' : 'btn-default'}}">{{$val}}</a>
+                        @endforeach
+                        @include('admin.pedidos._form')
+                    </div>
+                    <div class="panel-footer text-center">
                         {!! Html::openFormGroup() !!}
                         {!! form::submit('Criar pedido', ['class' => 'btn btn-primary']) !!}
                         {!! Html::closeFormGroup() !!}
-                    </center>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
-                {!! Form::close() !!}
             </div>
         </div>
-    </div>
 @endsection
