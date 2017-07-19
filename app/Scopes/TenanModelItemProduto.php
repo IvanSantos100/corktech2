@@ -10,7 +10,7 @@ trait TenanModelItemProduto
     {
         parent::boot();
 
-        static::addGlobalScope(new TenantScope());
+        //static::addGlobalScope(new TenantScope());
 
 
         static::creating(function(Model $model){

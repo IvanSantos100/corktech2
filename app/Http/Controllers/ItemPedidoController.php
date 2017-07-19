@@ -43,48 +43,45 @@ class ItemPedidoController extends Controller
         $this->tipoProdutosRepository = $tipoProdutosRepository;
     }
 
-    public function index(Request $request, $id)
+    public function index(Request $request, $pedidoId)
     {
-        dd($this->repository->all());
-        /*$search = $request->get('search');
+        $this->pedidosRepository->find($pedidoId);
 
-        $this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $itens_pedidos = $this->repository->scopeQuery(function ($query) use($pedidoId){
+            return $query->Where('pedido_id',$pedidoId);
+        })->paginate(10);;
 
-        $produtos = $this->produtosRepository->scopeQuery(function ($query){
-            return $query->orderBy('descricao','asc');
-        })->paginate(10);
-
-        return view('admin.itenspedido.produtos', compact('produtos', 'search'));*/
+        return view('admin.itempedido.index', compact('itens_pedidos'));
     }
 
-    public function listarProdutos($pedidoId)   ///http://localhost:8000/admin/itempedido/10/produtos
+    public function listarProdutos($pedidoId)
     {
-        //$this->pedidosRepository->find($pedidoId);
+        $this->pedidosRepository->find($pedidoId);
 
         $tipo = $this->tipoProdutosRepository->scopeQuery(function ($query) {
             return $query->orderBy('descricao', 'asc');
         })->all();
 
-        $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId));
+        $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId, $this->pedidosRepository));
 
         $produtos = $this->produtosRepository->scopeQuery(function ($query) {
             return $query->orderBy('descricao', 'asc');
         })->paginate(10);
 
-        return view('admin.itenspedido.produtos', compact('produtos', 'pedidoId', 'tipo'));
+        return view('admin.itempedido.produtos', compact('produtos', 'pedidoId', 'tipo'));
     }
 
     public function addProdudo(Request $request, $pedidoId)
     {
+        //dd($request->produto_id);
         $this->repository->create([
             'pedido_id' => $pedidoId,
-            'produto_id' => 1,
-            'quantidade' => 1,
+            'produto_id' => $request->produto_id,
+            'quantidade' => $request->quantidade,
             'preco' => 1,
             'desconto' => 1,
             'prazoentrega' => '2017-07-07'
         ]);
-        ///dd($request);
 
         $url = $request->get('redirect_to', route('admin.itempedido.produtos',['pedidoId' => $pedidoId]));
         $request->session()->flash('message', "Produto incluido com sucesso." );
@@ -104,6 +101,14 @@ class ItemPedidoController extends Controller
 
     public function deleteProduto(Request $request, $pedidoId, $produtoId, $lote)
     {
+        $pedido = $this->repository->delItemLote($pedidoId, $produtoId, $lote);
 
+        if($pedido == 1) {
+            \Session::flash('message', 'Produto excluído.');
+        }else{
+            \Session::flash('error', 'Produto não excluído.');
+        }
+
+        return redirect()->route('admin.itempedido.index', ['pedidoId' => $pedidoId]);
     }
 }

@@ -5,14 +5,14 @@
     @if($tipo == 2 || $tipo == 3)
         {!! Html::openFormGroup('origem_id', $errors) !!}
         {!! Form::label('origem_id', 'Origem', ['class' => 'control-label']) !!}
-        {!! Form::select('origem_id', $origens, null, ['class' => 'form-control']) !!}
+        {!! Form::select('origem_id', $centroDistribuicao, null, ['class' => 'form-control']) !!}
         {!! Form::error('origem_id', $errors) !!}
         {!! Html::closeFormGroup() !!}
     @endif
     @if($tipo == 2 )
         {!! Html::openFormGroup('destino_id', $errors) !!}
         {!! Form::label('destino_id', 'Destino', ['class' => 'control-label']) !!}
-        {!! Form::select('destino_id', $destinos, null, ['class' => 'form-control']) !!}
+        {!! Form::select('destino_id', $centroDistribuicao, null, ['class' => 'form-control']) !!}
         {!! Form::error('destino_id', $errors) !!}
         {!! Html::closeFormGroup() !!}
     @endif

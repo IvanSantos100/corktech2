@@ -9,7 +9,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 class ItemPedido extends Model implements Transformable
 {
-    use TransformableTrait, TenanModelItemProduto;
+    use TransformableTrait;
 
     protected $table = 'itens_pedidos';
 

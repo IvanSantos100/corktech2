@@ -65,12 +65,7 @@
 
                                     <td class="col-md-1">
                                         <?php
-                                        $produtoId = $produto->id;
-
-                                        $produtoId = $produto->produto_id;
-
-
-                                        $form = "add-form-{$pedidoId}-{$produtoId}";
+                                            $form = "add-form-{$pedidoId}-{$produto->id}";
                                         ?>
 
                                         {!! Form::open(['route' => ['admin.itempedido.produtos', $pedidoId],
