@@ -2,6 +2,7 @@
 
 namespace CorkTech\Http\Controllers;
 
+use CorkTech\Criteria\FindByProdutosCriteria;
 use CorkTech\Repositories\ItemPedidoRepository;
 use CorkTech\Repositories\PedidosRepository;
 use CorkTech\Repositories\ProdutosRepository;
@@ -58,13 +59,13 @@ class ItemPedidoController extends Controller
 
     public function listarProdutos($pedidoId)   ///http://localhost:8000/admin/itempedido/10/produtos
     {
-        $this->pedidosRepository->find($pedidoId);
+        //$this->pedidosRepository->find($pedidoId);
 
         $tipo = $this->tipoProdutosRepository->scopeQuery(function ($query) {
             return $query->orderBy('descricao', 'asc');
         })->all();
 
-        $this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $this->produtosRepository->pushCriteria(new FindByProdutosCriteria($pedidoId));
 
         $produtos = $this->produtosRepository->scopeQuery(function ($query) {
             return $query->orderBy('descricao', 'asc');
@@ -75,7 +76,20 @@ class ItemPedidoController extends Controller
 
     public function addProdudo(Request $request, $pedidoId)
     {
-        dd($request);
+        $this->repository->create([
+            'pedido_id' => $pedidoId,
+            'produto_id' => 1,
+            'quantidade' => 1,
+            'preco' => 1,
+            'desconto' => 1,
+            'prazoentrega' => '2017-07-07'
+        ]);
+        ///dd($request);
+
+        $url = $request->get('redirect_to', route('admin.itempedido.produtos',['pedidoId' => $pedidoId]));
+        $request->session()->flash('message', "Produto incluido com sucesso." );
+
+        return redirect()->to($url);
     }
 
     public function editProdudo($pedidoId, $produtoId)

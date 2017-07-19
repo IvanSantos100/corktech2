@@ -4,7 +4,7 @@ namespace CorkTech\Scopes;
 
 use Illuminate\Database\Eloquent\Model;
 
-trait TenanModelProduto
+trait TenanModelItemProduto
 {
     protected static function boot()
     {

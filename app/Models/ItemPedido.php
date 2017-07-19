@@ -2,14 +2,14 @@
 
 namespace CorkTech\Models;
 
-use CorkTech\Scopes\TenanModelPedido;
+use CorkTech\Scopes\TenanModelItemProduto;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 class ItemPedido extends Model implements Transformable
 {
-    use TransformableTrait, TenanModelPedido;
+    use TransformableTrait, TenanModelItemProduto;
 
     protected $table = 'itens_pedidos';
 
