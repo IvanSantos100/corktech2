@@ -47,11 +47,4 @@ class ItemPedidoRepositoryEloquent extends BaseRepository implements ItemPedidoR
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    public function delItemLote($perido_id, $produto_id, $lote)
-    {
-        if($lote !== 'null') {
-            return $this->model->where(['pedido_id' => $perido_id, 'produto_id' => $produto_id, 'lote' => $lote])->delete();
-        }
-        return $this->model->where(['pedido_id' => $perido_id, 'produto_id' => $produto_id])->delete();
-    }
 }

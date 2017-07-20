@@ -54,13 +54,13 @@
                                         </li>
                                         <li>
                                             <?php
-                                                $form = "form-$itens_pedido->produto_id-$itens_pedido->lote";
+                                                $form = "form-$itens_pedido->id";
                                             ?>
                                            <a class='btn btn-danger' href="#"
                                                onclick="event.preventDefault(); document.getElementById({{"\"$form\""}}).submit();">Excluir</a>
 
                                                 {!! Form::open(['route' => ['admin.itempedido.produto.delete',
-                                                    'pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id, 'lote' => $itens_pedido->lote ?? 'null'],
+                                                    'pedidoId' => $pedidoId,'itempedido' => $itens_pedido->id],
                                                     'id' => "$form",
                                                     'method' => 'DELETE', 'style' => 'display:nome']) !!}
                                                 {!! Form::close() !!}

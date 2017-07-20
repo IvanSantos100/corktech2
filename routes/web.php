@@ -50,12 +50,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('pedidosencerrados/{pedido}/itempedido', 'PedidosEncerradosController@itempedido')->name('pedidosencerrados.itempedido');
     Route::get('pedidosencerrados/{pedido}/{produto}/details', 'PedidosEncerradosController@details')->name('pedidosencerrados.details');
 
-    Route::get('itempedido/{pedido}', 'ItemPedidoController@index')->name('itempedido.index');
+    Route::get('itempedido/{pedido}/index', 'ItemPedidoController@index')->name('itempedido.index');
     Route::get('itempedido/{pedido}/produtos', 'ItemPedidoController@listarProdutos')->name('itempedido.produtos');
     Route::post('itempedido/{pedido}/produtos', 'ItemPedidoController@addProdudo')->name('itempedido.produtos');
     Route::get('itempedido/{pedido}/produto/{produto}', 'ItemPedidoController@editProdudo')->name('itempedido.edit');
     Route::put('itempedido/{pedido}/produto/{produto}', 'ItemPedidoController@updateProdudo')->name('itempedido.update');
-    Route::delete('itempedido/{pedido}/produto/{produto}/lote/{lote}', 'ItemPedidoController@deleteProduto')->name('itempedido.produto.delete');
+    Route::delete('itempedido/{pedidoId}/produto/{itempedido}/delete', 'ItemPedidoController@deleteProduto')->name('itempedido.produto.delete');
 
     //Route::resource('itempedidos', 'itempedidosController');
 

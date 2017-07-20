@@ -2,6 +2,7 @@
 
 namespace CorkTech\Scopes;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 trait TenanModelPedido
@@ -12,12 +13,12 @@ trait TenanModelPedido
 
         static::addGlobalScope(new TenantScope());
 
-        static::creating(function(Model $model){
+        static::creating(function (Model $model) {
 
             $centrodistribuicao_id = \Auth::user()->centrodistribuicao_id;
             $model->desconto = $model->desconto ?? 0;
 
-            if($centrodistribuicao_id == 1){
+            if ($centrodistribuicao_id == 1) {
                 if ($model->tipo == 1) {
                     $model->origem_id = null;
                     $model->destino_id = $centrodistribuicao_id;
@@ -32,7 +33,6 @@ trait TenanModelPedido
                     $model->destino_id = $centrodistribuicao_id;
                 }
             }
-
             if ($model->tipo == 3) {
 
                 $model->destino_id = null;
@@ -42,17 +42,38 @@ trait TenanModelPedido
             }
         });
 
-        static::updating(function (Model $model){
-            dd($model);
-           if ($model->status == 2){
-               if($model->produtos->isEmpty()){
-                   \Session::flash('error', 'Pedidos não tem produto cadastrado.');
-                   return false;
-               }
-           }
+        static::updating(function (Model $model) {
+            //dd($model->produtos[0]->produto_id);
 
-            if ($model->tipo == 1){
 
+            ///dd($model->produtos[0]->estoques);
+            if ($model->status == 2) {
+                if ($model->produtos->isEmpty()) {
+                    \Session::flash('error', 'Pedidos não tem produto cadastrado.');
+                    return false;
+                }
+            }
+
+            if ($model->tipo != 1) {
+
+            }
+
+            $model->date_confirmacao = Carbon::now();
+        });
+
+        static::updated(function (Model $model) {
+            //dd($model);
+            if ($model->status == 2) {
+                $itensPedido = $model->produtos;
+                foreach ($itensPedido as $itemPedido) {
+                    $itemPedido->estoques()->create([
+                        'lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                        'valor' => $itemPedido->preco,
+                        'quantidade' => $itemPedido->quantidade,
+                        'centrodistribuicao_id' => $model->destino_id,
+                        'produto_id' => $itemPedido->produto_id,
+                    ]);
+                }
             }
         });
     }

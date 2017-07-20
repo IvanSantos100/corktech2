@@ -13,6 +13,8 @@ class Pedido extends Model implements Transformable
 
     protected $table = 'pedidos';
 
+    protected $dates = ['date_confirmacao'];
+
     //Nacional
     const TIPO = [
         1 => 'Entrada',

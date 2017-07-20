@@ -9,7 +9,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 class ItemPedido extends Model implements Transformable
 {
-    use TransformableTrait;
+    use TransformableTrait, TenanModelItemProduto;
 
     protected $table = 'itens_pedidos';
 
@@ -35,5 +35,10 @@ class ItemPedido extends Model implements Transformable
     public function produto()
     {
         return $this->belongsTo(Produto::class, 'produto_id');
+    }
+
+    public function estoques()
+    {
+        return $this->belongsTo(Estoque::class, 'produto_id', 'produto_id');
     }
 }

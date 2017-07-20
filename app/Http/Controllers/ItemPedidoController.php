@@ -51,12 +51,16 @@ class ItemPedidoController extends Controller
             return $query->Where('pedido_id',$pedidoId);
         })->paginate(10);
 
+        if ($itens_pedidos->isEmpty()) {
+            return redirect()->route('admin.itempedido.produtos', ['pedido' => $pedidoId]);
+        }
+
         return view('admin.itempedido.index', compact('itens_pedidos','pedidoId'));
     }
 
     public function listarProdutos($pedidoId)
     {
-        $this->pedidosRepository->find($pedidoId);
+        $pedido = $this->pedidosRepository->find($pedidoId);
 
         $tipo = $this->tipoProdutosRepository->scopeQuery(function ($query) {
             return $query->orderBy('descricao', 'asc');
@@ -68,7 +72,10 @@ class ItemPedidoController extends Controller
             return $query->orderBy('descricao', 'asc');
         })->paginate(10);
 
-        return view('admin.itempedido.produtos', compact('produtos', 'pedidoId', 'tipo'));
+        //dd($pedido);
+        //dd($estoque = $produtos[6]->estoques->where('centrodistribuicao_id', $pedido->origem_id));
+
+        return view('admin.itempedido.produtos', compact('produtos', 'pedido', 'tipo'));
     }
 
     public function addProdudo(Request $request, $pedidoId)
@@ -99,9 +106,9 @@ class ItemPedidoController extends Controller
 
     }
 
-    public function deleteProduto(Request $request, $pedidoId, $produtoId, $lote)
+    public function deleteProduto($pedidoId, $itempedido)
     {
-        $pedido = $this->repository->delItemLote($pedidoId, $produtoId, $lote);
+        $pedido = $this->repository->delete($itempedido);
 
         if($pedido == 1) {
             \Session::flash('message', 'Produto excluído.');

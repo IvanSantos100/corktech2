@@ -25,7 +25,7 @@ class CreateitenspedidosTable extends Migration
 
             $table->float('preco');
 
-            $table->date('prazoentrega');
+            $table->integer('prazoentrega');
 
 
             $table->timestamps();
