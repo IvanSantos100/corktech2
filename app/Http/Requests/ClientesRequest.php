@@ -34,13 +34,13 @@ class ClientesRequest extends FormRequest
             'tipo' => "required",
             'nome' => "required",
             'documento' => "required|min:$tipo|max:$tipo|unique:clientes,documento,$id|documento",
-            'endereco' => "required",
+            /*'endereco' => "required",
             'bairro' => "required",
             'cidade' => "required",
             'uf' => "required",
             'cep' => "required|numeric|digits:8",
             'responsavel' => $tipo == 2 ? "required" : '',
-            'fone' => "required|numeric",
+            'fone' => "required|numeric",*/
             'celular' => "required|numeric"
         ];
     }

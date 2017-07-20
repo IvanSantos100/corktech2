@@ -43,12 +43,17 @@ trait TenanModelPedido
         });
 
         static::updating(function (Model $model){
+            dd($model);
            if ($model->status == 2){
                if($model->produtos->isEmpty()){
                    \Session::flash('error', 'Pedidos não tem produto cadastrado.');
                    return false;
                }
            }
+
+            if ($model->tipo == 1){
+
+            }
         });
     }
 }

@@ -49,9 +49,9 @@ class ItemPedidoController extends Controller
 
         $itens_pedidos = $this->repository->scopeQuery(function ($query) use($pedidoId){
             return $query->Where('pedido_id',$pedidoId);
-        })->paginate(10);;
+        })->paginate(10);
 
-        return view('admin.itempedido.index', compact('itens_pedidos'));
+        return view('admin.itempedido.index', compact('itens_pedidos','pedidoId'));
     }
 
     public function listarProdutos($pedidoId)

@@ -18,7 +18,7 @@
                     </div>
                     <div class="pull-right">
                         <a class="btn btn-primary"
-                           href="{{route('admin.itempedido.produtos', ['pedidoId' => 1])}}">Adicionar
+                           href="{{route('admin.itempedido.produtos', ['pedidoId' => $pedidoId])}}">Adicionar
                             Produto</a>
                         <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Pedidos</a>
                     </div>

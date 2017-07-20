@@ -25,7 +25,7 @@
 {!! Html::closeFormGroup() !!}
 
 {!! Html::openFormGroup('bairro', $errors) !!}
-{!! Form::label('bairro', 'Endereço', ['class' => 'control-label']) !!}
+{!! Form::label('bairro', 'Bairro', ['class' => 'control-label']) !!}
 {!! Form::text('bairro', null, ['class' => 'form-control']) !!}
 {!! Form::error('bairro', $errors) !!}
 {!! Html::closeFormGroup() !!}
