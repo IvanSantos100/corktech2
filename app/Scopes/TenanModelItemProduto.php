@@ -14,15 +14,29 @@ trait TenanModelItemProduto
 
 
         static::creating(function(Model $model){
-            //dd($model);
+
             if($model->pedido->tipo == 1){
                 $model->prazoentrega = $model->pedido->destino->prazo_fabrica;
                 $model->preco = $model->produto->preco;
+                return true;
             }
-            if($model->pedido->tipo == 2){
-                $model->prazoentrega = $model->pedido->origem->prazo_nacional;
-                $model->preco = $model->produto->preco;
+
+            $lotes = $model->lote;
+            foreach ($lotes as $lote){
+                if($model->pedido->tipo == 2){
+                    $pedido_id[] = $model->pedido->id;
+                    $produto_id[] = $model->produto->id;
+                    $prazoentrega[] = $model->pedido->origem->prazo_nacional;
+                    $preco[] = $model->produto->preco;
+                }
             }
+            $model->pedido_id = $pedido_id;
+            $model->produto_id = $produto_id;
+            $model->prazoentrega = $prazoentrega;
+            $model->preco = $preco;
+
+            dd($model);
+
         });
 
         static::created(function (Model $model){

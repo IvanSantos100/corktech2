@@ -24,7 +24,7 @@ class ItemPedido extends Model implements Transformable
         'quantidade',
         'preco',
         'prazoentrega',
-        'lote'
+        'lote',
     ];
 
     public function pedido()

@@ -31,14 +31,14 @@ class ItemPedidoController extends Controller
     private $tipoProdutosRepository;
 
     public function __construct(
-        PedidosRepository $pedidosRepository,
         ItemPedidoRepository $repository,
+        PedidosRepository $pedidosRepository,
         ProdutosRepository $produtosRepository,
         TipoProdutosRepository $tipoProdutosRepository
     )
     {
-        $this->pedidosRepository = $pedidosRepository;
         $this->repository = $repository;
+        $this->pedidosRepository = $pedidosRepository;
         $this->produtosRepository = $produtosRepository;
         $this->tipoProdutosRepository = $tipoProdutosRepository;
     }
@@ -58,8 +58,10 @@ class ItemPedidoController extends Controller
         return view('admin.itempedido.index', compact('itens_pedidos','pedidoId'));
     }
 
-    public function listarProdutos($pedidoId)
+    public function listarProdutos(Request $request, $pedidoId)
     {
+        $search = explode(':',$request->get('search'));
+
         $pedido = $this->pedidosRepository->find($pedidoId);
 
         $tipo = $this->tipoProdutosRepository->scopeQuery(function ($query) {
@@ -72,22 +74,19 @@ class ItemPedidoController extends Controller
             return $query->orderBy('descricao', 'asc');
         })->paginate(10);
 
-        //dd($pedido);
-        //dd($estoque = $produtos[6]->estoques->where('centrodistribuicao_id', $pedido->origem_id));
+        //dd($produtos[0]->estoques);
 
-        return view('admin.itempedido.produtos', compact('produtos', 'pedido', 'tipo'));
+        return view('admin.itempedido.produtos', compact('produtos', 'pedido', 'search', 'tipo'));
     }
 
     public function addProdudo(Request $request, $pedidoId)
     {
-        //dd($request->produto_id);
+        //dd($request);
         $this->repository->create([
             'pedido_id' => $pedidoId,
             'produto_id' => $request->produto_id,
             'quantidade' => $request->quantidade,
-            'preco' => 1,
-            'desconto' => 1,
-            'prazoentrega' => '2017-07-07'
+            'lote' => $request->lote
         ]);
 
         $url = $request->get('redirect_to', route('admin.itempedido.produtos',['pedidoId' => $pedidoId]));
