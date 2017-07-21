@@ -35,15 +35,22 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th>Código</th>
-                            <th>Descrição</th>
-                            <th>Estampa</th>
-                            <th>Tipo produto</th>
-                            <th>Classe</th>
-                            <th>Lote</th>
-                            <th>Preço</th>
-                            <th>Estoque</th>
-                            <th>Quantidade</th>
+                            <th class="col-md-1">Código</th>
+                            <th class="col-md-2">Descrição</th>
+                            <th class="col-md-2">Estampa</th>
+                            <th class="col-md-2">Tipo produto</th>
+                            <th class="col-md-2">Classe</th>
+                            <th class="col-md-3">
+                                <table>
+                                    <tr>
+                                        <th class="col-md-1">Lote</th>
+                                        <th class="col-md-1">Estoque</th>
+                                        <th class="col-md-1">Preço</th>
+                                        <th class="col-md-1">Qnt</th>
+                                    </tr>
+                                </table>
+                            <th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -56,43 +63,69 @@
                                 <td class="col-md-2">{{ $produto->classes->descricao}}</td>
                                 <?php $estoques = $produto->estoques->where('centrodistribuicao_id', $pedido->origem_id)?>
                                 @if(!$estoques->isEmpty())
-                                    <td class="col-md-1">
-                                    <tr>
-                                    @foreach($estoques as $estoque)
-                                    <td class="col-md-1">{{$estoque->lote}}</td>
-                                    <td class="col-md-1">{{$estoque->quantidade}}</td>
-                                    <td class="col-md-1">R$ {{number_format($estoque->valor,2, ',', '.') }}</td>
-                                    <td class="col-md-1">s</td>
-                                    <td class="col-md-1">s</td>
-                                    @endforeach
-                                    </tr>
-                                    <td>
-                                @else
-                                    <td class="col-md-1">{{ $produto->lote }}</td>
-                                    <td class="col-md-1">{{ $produto->quantidade }}</td>
-                                    <td class="col-md-1">R$ {{number_format($produto->preco,2, ',', '.') }}</td>
-                                    <td class="col-md-1">
-                                        <?php
-                                        $form = "add-form-{$pedido->id}-{$produto->id}";
-                                        ?>
+                                    <td class="col-md-3">
+                                        <table>
+                                            @foreach($estoques as $estoque)
+                                                <tr>
+                                                    <td class="col-md-1">{{ $estoque->lote}}</td>
+                                                    <td class="col-md-1">{{$estoque->quantidade}}</td>
+                                                    <td class="col-md-1">R$ {{number_format($estoque->valor,2, ',', '.') }}</td>
+                                                    <td class="col-md-1">
+                                                        <?php
+                                                        $form = "add-form-{$pedido->id}-{$produto->id}";
+                                                        ?>
 
-                                        {!! Form::open(['route' => ['admin.itempedido.produtos', $pedido->id],
-                                            'class' => 'form', 'id' => "$form"]) !!}
+                                                        {!! Form::open(['route' => ['admin.itempedido.produtos', $pedido->id],
+                                                            'class' => 'form', 'id' => "$form"]) !!}
 
-                                        {!! form::number('quantidade', 1, ['min' => 1, 'max' => $produto->quantidade]) !!}
+                                                        {!! form::number('quantidade', 1, ['min' => 1, 'max' => $produto->quantidade]) !!}
 
-                                        {!! form::hidden('produto_id', $produto->id) !!}
-                                        {!! form::hidden('lote', $produto->lote) !!}
-                                        {!! form::hidden('max', $produto->quantidade) !!}
+                                                        {!! form::hidden('produto_id', $produto->id) !!}
+                                                        {!! form::hidden('lote', $produto->lote) !!}
+                                                        {!! form::hidden('max', $produto->quantidade) !!}
 
-                                        {!! Form::close() !!}
+                                                        {!! Form::close() !!}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
                                     </td>
                                     <td class="col-md-1">
                                         <a class='btn btn-success' href="#"
                                            onclick="document.getElementById({{"\"$form\""}}).submit();">Add
                                         </a>
                                     </td>
+                                @else
+                                    <td class="col-md-3">
+                                        <table>
+                                            <tr>
+                                                <td class="col-md-1">{{ $produto->lote}}</td>
+                                                <td class="col-md-1">{{ $produto->quantidade}}</td>
+                                                <td class="col-md-1">R$ {{number_format($produto->preco,2, ',', '.') }}</td>
+                                                <td class="col-md-1">
+                                                    <?php
+                                                    $form = "add-form-{$pedido->id}-{$produto->id}";
+                                                    ?>
 
+                                                    {!! Form::open(['route' => ['admin.itempedido.produtos', $pedido->id],
+                                                        'class' => 'form', 'id' => "$form"]) !!}
+
+                                                    {!! form::number('quantidade', 1, ['min' => 1, 'max' => $produto->quantidade]) !!}
+
+                                                    {!! form::hidden('produto_id', $produto->id) !!}
+                                                    {!! form::hidden('lote', $produto->lote) !!}
+                                                    {!! form::hidden('max', $produto->quantidade) !!}
+
+                                                    {!! Form::close() !!}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <a class='btn btn-success' href="#"
+                                           onclick="document.getElementById({{"\"$form\""}}).submit();">Add
+                                        </a>
+                                    </td>
                                 @endif
                             </tr>
                         @endforeach

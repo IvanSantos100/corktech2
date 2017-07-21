@@ -40,8 +40,8 @@ class ClientesRequest extends FormRequest
             'uf' => "required",
             'cep' => "required|numeric|digits:8",
             'responsavel' => $tipo == 2 ? "required" : '',
-            'fone' => "required|numeric",*/
-            'celular' => "required|numeric"
+            'fone' => "required|numeric",
+            'celular' => "required|numeric"*/
         ];
     }
 
