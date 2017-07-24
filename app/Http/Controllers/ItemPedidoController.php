@@ -81,13 +81,17 @@ class ItemPedidoController extends Controller
 
     public function addProdudo(Request $request, $pedidoId)
     {
-        //dd($request);
-        $this->repository->create([
-            'pedido_id' => $pedidoId,
-            'produto_id' => $request->produto_id,
-            'quantidade' => $request->quantidade,
-            'lote' => $request->lote
-        ]);
+        //dd($request->all());
+
+        foreach ($request->quantidade as $key => $qnt) {
+
+            $this->repository->create([
+                'pedido_id' => $pedidoId,
+                'produto_id' => $request->produto_id,
+                'lote' => $request->lote[$key],
+                'quantidade' => $qnt,
+            ]);
+        }
 
         $url = $request->get('redirect_to', route('admin.itempedido.produtos',['pedidoId' => $pedidoId]));
         $request->session()->flash('message', "Produto incluido com sucesso." );
