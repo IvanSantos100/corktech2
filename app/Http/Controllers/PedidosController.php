@@ -55,8 +55,8 @@ class PedidosController extends Controller
     {
         $pedido['status'] = 2;
         $this->repository->update($pedido, $pedidoId);
+
         $url = $request->get('redirect_to', route('admin.pedidos.index'));
-        $request->session()->flash('message', "Pedido {$pedidoId} finalizado com sucesso." );
 
         return redirect()->to($url);
 

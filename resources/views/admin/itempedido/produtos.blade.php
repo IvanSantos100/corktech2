@@ -76,7 +76,7 @@
                                                     <td class="col-md-1">{{$estoque->quantidade}}</td>
                                                     <td class="col-md-1">R$ {{number_format($estoque->valor,2, ',', '.') }}</td>
                                                     <td class="col-md-1">
-                                                        {!! form::number("quantidade[]", 1, ['min' => 1, 'style' => 'width:100%', 'form' => $form]) !!}
+                                                        {!! form::number("quantidade[]", 0, ['min' => 1, 'style' => 'width:100%', 'form' => $form]) !!}
                                                         {!! form::hidden("lote[]", $estoque->lote) !!}
                                                     </td>
                                                 </tr>

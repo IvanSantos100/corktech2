@@ -43,10 +43,9 @@ trait TenanModelPedido
         });
 
         static::updating(function (Model $model) {
-            //dd($model->produtos[0]->produto_id);
 
+            //dd($model->produtos[0]->estoques);
 
-            ///dd($model->produtos[0]->estoques);
             if ($model->status == 2) {
                 if ($model->produtos->isEmpty()) {
                     \Session::flash('error', 'Pedidos não tem produto cadastrado.');
@@ -55,25 +54,35 @@ trait TenanModelPedido
             }
 
             if ($model->tipo != 1) {
-
+                $itensPedido = $model->produtos;
+                foreach ($itensPedido as $itemPedido) {
+                    //dd($itemPedido->estoques());
+                }
+                //dd($itensPedido);
             }
-
             $model->date_confirmacao = Carbon::now();
+
         });
 
         static::updated(function (Model $model) {
-            //dd($model);
+
+
             if ($model->status == 2) {
                 $itensPedido = $model->produtos;
                 foreach ($itensPedido as $itemPedido) {
-                    $itemPedido->estoques()->create([
-                        'lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
-                        'valor' => $itemPedido->preco,
-                        'quantidade' => $itemPedido->quantidade,
-                        'centrodistribuicao_id' => $model->destino_id,
-                        'produto_id' => $itemPedido->produto_id,
-                    ]);
+                    $itemPedido->estoques()->updateOrCreate(
+                        [
+                            'lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                            'centrodistribuicao_id' => $model->destino_id,
+                            'produto_id' => $itemPedido->produto_id,
+                            'valor' => $itemPedido->preco,
+                        ],
+                        [
+                            'quantidade' => $itemPedido->quantidade,
+                        ]
+                    );
                 }
+                \Session::flash('message', "Pedido {$model->id} finalizado com sucesso.");
             }
         });
     }

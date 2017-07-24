@@ -44,6 +44,7 @@ trait TenanModelItemProduto
 
             $model->pedido->update(['valor_base' => $sum]);
 
+            \Session::flash('message', "Produto incluido com sucesso." );
         });
 
         static::deleted(function (Model $model) {
@@ -55,7 +56,6 @@ trait TenanModelItemProduto
             }
 
             $model->pedido->update(['valor_base' => $sum]);
-
         });
 
 

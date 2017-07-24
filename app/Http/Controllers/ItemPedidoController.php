@@ -47,20 +47,20 @@ class ItemPedidoController extends Controller
     {
         $this->pedidosRepository->find($pedidoId);
 
-        $itens_pedidos = $this->repository->scopeQuery(function ($query) use($pedidoId){
-            return $query->Where('pedido_id',$pedidoId);
+        $itens_pedidos = $this->repository->scopeQuery(function ($query) use ($pedidoId) {
+            return $query->Where('pedido_id', $pedidoId);
         })->paginate(10);
 
         if ($itens_pedidos->isEmpty()) {
             return redirect()->route('admin.itempedido.produtos', ['pedido' => $pedidoId]);
         }
 
-        return view('admin.itempedido.index', compact('itens_pedidos','pedidoId'));
+        return view('admin.itempedido.index', compact('itens_pedidos', 'pedidoId'));
     }
 
     public function listarProdutos(Request $request, $pedidoId)
     {
-        $search = explode(':',$request->get('search'));
+        $search = explode(':', $request->get('search'));
 
         $pedido = $this->pedidosRepository->find($pedidoId);
 
@@ -85,16 +85,20 @@ class ItemPedidoController extends Controller
 
         foreach ($request->quantidade as $key => $qnt) {
 
-            $this->repository->create([
-                'pedido_id' => $pedidoId,
-                'produto_id' => $request->produto_id,
-                'lote' => $request->lote[$key],
-                'quantidade' => $qnt,
-            ]);
+            if ($qnt > 0) {
+                $this->repository->create([
+                    'pedido_id' => $pedidoId,
+                    'produto_id' => $request->produto_id,
+                    'lote' => $request->lote[$key],
+                    'quantidade' => $qnt,
+                ]);
+            }
         }
 
-        $url = $request->get('redirect_to', route('admin.itempedido.produtos',['pedidoId' => $pedidoId]));
-        $request->session()->flash('message', "Produto incluido com sucesso." );
+        $url = $request->get('redirect_to', route('admin.itempedido.produtos', ['pedidoId' => $pedidoId]));
+        if (!$request->session()->has('message')) {
+            $request->session()->flash('error', "Produto não incluido.");
+        }
 
         return redirect()->to($url);
     }
@@ -113,9 +117,9 @@ class ItemPedidoController extends Controller
     {
         $pedido = $this->repository->delete($itempedido);
 
-        if($pedido == 1) {
+        if ($pedido == 1) {
             \Session::flash('message', 'Produto excluído.');
-        }else{
+        } else {
             \Session::flash('error', 'Produto não excluído.');
         }
 
