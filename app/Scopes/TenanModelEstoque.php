@@ -17,6 +17,11 @@ trait TenanModelEstoque
 
         static::creating(function (Model $model) {
 
+
+
+        });
+
+        static::updating(function (Model $model) {
             $quantidade = $model->whereLote($model->lote)
                 ->whereValor($model->valor)
                 ->whereProduto_id($model->produto_id)
@@ -24,11 +29,6 @@ trait TenanModelEstoque
             ;
 
             $model->quantidade = $quantidade + $model->quantidade;
-
-        });
-
-        static::updating(function (Model $model) {
-
 
         });
 
