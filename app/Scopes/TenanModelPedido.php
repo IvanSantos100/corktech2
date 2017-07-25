@@ -57,9 +57,13 @@ trait TenanModelPedido
                 //verifica produto disponivel do estoque
                 $itensPedido = $model->produtos;
                 foreach ($itensPedido as $itemPedido) {
-                    if($itensPedido[0]->quantidade > $itensPedido[0]->estoques->quantidade){
+                    if($itensPedido[0]->estoques->quantidade < $itensPedido[0]->quantidade){
                         \Session::flash('error', 'Há produto indisponível no estoque.');
                         return false;
+                    }
+
+                    if($itensPedido[0]->estoques->quantidade = $itensPedido[0]->quantidade){
+
                     }
                 }
                 //dd($itensPedido);
@@ -71,9 +75,13 @@ trait TenanModelPedido
         static::updated(function (Model $model) {
 
 
-            if ($model->status == 2) {
+            if ($model->status == 2 && $model->tipo != 1) {
                 $itensPedido = $model->produtos;
+
+
                 foreach ($itensPedido as $itemPedido) {
+                    //decrementa estoque origem
+                    //incrementa estoque destino
                     $itemPedido->estoques()->updateOrCreate(
                         [
                             'lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
