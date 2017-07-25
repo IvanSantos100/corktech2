@@ -81,7 +81,6 @@ class ItemPedidoController extends Controller
 
     public function addProdudo(Request $request, $pedidoId)
     {
-        //dd($request->all());
 
         foreach ($request->quantidade as $key => $qnt) {
 

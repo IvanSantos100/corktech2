@@ -44,55 +44,90 @@ trait TenanModelPedido
 
         static::updating(function (Model $model) {
 
-            //dd($model->produtos[0]->estoques);
-
             if ($model->status == 2) {
                 if ($model->produtos->isEmpty()) {
                     \Session::flash('error', 'Pedidos não tem produto cadastrado.');
                     return false;
                 }
-            }
 
-            if ($model->tipo != 1) {
-                //verifica produto disponivel do estoque
-                $itensPedido = $model->produtos;
-                foreach ($itensPedido as $itemPedido) {
-                    if($itensPedido[0]->estoques->quantidade < $itensPedido[0]->quantidade){
+                if ($model->tipo != 1) {
+                    //verifica produto disponivel do estoque
+                    $estoqueMenor = [];
+                    $itensPedido = $model->produtos;
+                    foreach ($itensPedido as $itemPedido) {
+                        if ($itemPedido->lote) {
+                            $estoqueQnt = $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)->first()->quantidade;
+
+                            if ($itemPedido->quantidade > $estoqueQnt) {
+                                $estoqueMenor[] = true;
+                            }
+                        }
+                    }
+
+                    if (!empty($estoqueMenor)) {
                         \Session::flash('error', 'Há produto indisponível no estoque.');
                         return false;
                     }
-
-                    if($itensPedido[0]->estoques->quantidade = $itensPedido[0]->quantidade){
-
-                    }
                 }
-                //dd($itensPedido);
             }
+
             $model->date_confirmacao = Carbon::now();
 
         });
 
         static::updated(function (Model $model) {
 
-
-            if ($model->status == 2 && $model->tipo != 1) {
+            if ($model->status == 2) {
                 $itensPedido = $model->produtos;
 
+                foreach ($itensPedido as $itemPedido) { //dd($model, $itemPedido);    updateOrCreate
 
-                foreach ($itensPedido as $itemPedido) {
-                    //decrementa estoque origem
+                    if ($itemPedido->lote) {
+                        $estoqueQnt = $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)->first()->quantidade;
+
+                        //deleta estoque origem
+                        if ($itemPedido->quantidade = $estoqueQnt) {
+                            $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)->first()->delete();
+                        }
+                        //update estoque origem
+                        if ($itemPedido->quantidade < $estoqueQnt) {
+                            $qnt = $estoqueQnt - $itemPedido->quantidade;
+                            $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)->first()->update(['quantidade', $qnt]);
+                        }
+                    }
+
                     //incrementa estoque destino
-                    $itemPedido->estoques()->updateOrCreate(
-                        [
-                            'lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                    $estoqueOrigem = $itemPedido->estoques()->where(
+                        ['lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
                             'centrodistribuicao_id' => $model->destino_id,
                             'produto_id' => $itemPedido->produto_id,
                             'valor' => $itemPedido->preco,
-                        ],
-                        [
-                            'quantidade' => $itemPedido->quantidade,
+                            'quantidade' => $itemPedido->quantidade
                         ]
-                    );
+                    )->get();
+
+                    if($estoqueOrigem->isEmpty()) {
+
+                        $itemPedido->estoques()->create(
+                            ['lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                                'centrodistribuicao_id' => $model->destino_id,
+                                'produto_id' => $itemPedido->produto_id,
+                                'valor' => $itemPedido->preco,
+                                'quantidade' => $itemPedido->quantidade
+                            ]
+                        );
+                    }else{
+                        $itemPedido->estoques()->update(
+                            ['lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                                'centrodistribuicao_id' => $model->destino_id,
+                                'produto_id' => $itemPedido->produto_id,
+                                'valor' => $itemPedido->preco,
+                                'quantidade' => $itemPedido->quantidade
+                            ]
+                        );
+
+                    }
+
                 }
                 \Session::flash('message', "Pedido {$model->id} finalizado com sucesso.");
             }
