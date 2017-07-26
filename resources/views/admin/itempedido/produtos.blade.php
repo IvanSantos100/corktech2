@@ -12,7 +12,7 @@
                     <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
-                        {!! Form::text('search', current($search), ['class' => 'form-control']) !!}
+                        {!! Form::text('%253Ddescricao:', current($search), ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
                     </div>

@@ -55,6 +55,7 @@ trait TenanModelPedido
                     $estoqueMenor = [];
                     $itensPedido = $model->produtos;
                     foreach ($itensPedido as $itemPedido) {
+
                         if ($itemPedido->lote) {
                             $estoqueQnt = $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)->first()->quantidade;
 
@@ -83,16 +84,19 @@ trait TenanModelPedido
                 foreach ($itensPedido as $itemPedido) { //dd($model, $itemPedido);    updateOrCreate
 
                     if ($itemPedido->lote) {
-                        $estoqueQnt = $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)->first()->quantidade;
+                        $estoqueQnt = $itemPedido->estoques
+                            ->whereLote($itemPedido->lote)
+                            ->whereCentrodistribuicao_id($model->origem_id)
+                            ->whereProduto_id($itemPedido->produto_id)->first();
 
                         //deleta estoque origem
-                        if ($itemPedido->quantidade = $estoqueQnt) {
-                            $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)->first()->delete();
+                        if ($itemPedido->quantidade == $estoqueQnt->quantidade) {
+                            $estoqueQnt->delete();
                         }
                         //update estoque origem
-                        if ($itemPedido->quantidade < $estoqueQnt) {
-                            $qnt = $estoqueQnt - $itemPedido->quantidade;
-                            $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)->first()->update(['quantidade', $qnt]);
+                        if ($itemPedido->quantidade < $estoqueQnt->quantidade) {
+                            $qnt = $estoqueQnt->quantidade - $itemPedido->quantidade;
+                            $estoqueQnt->update(['quantidade' => $qnt]);
                         }
                     }
 
@@ -102,30 +106,31 @@ trait TenanModelPedido
                             'centrodistribuicao_id' => $model->destino_id,
                             'produto_id' => $itemPedido->produto_id,
                             'valor' => $itemPedido->preco,
-                            'quantidade' => $itemPedido->quantidade
                         ]
-                    )->get();
+                    )->first();
 
-                    if($estoqueOrigem->isEmpty()) {
+                    if(!$model->cliente_id) {
+                        if (!$estoqueOrigem) {
 
-                        $itemPedido->estoques()->create(
-                            ['lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
-                                'centrodistribuicao_id' => $model->destino_id,
-                                'produto_id' => $itemPedido->produto_id,
-                                'valor' => $itemPedido->preco,
-                                'quantidade' => $itemPedido->quantidade
-                            ]
-                        );
-                    }else{
-                        $itemPedido->estoques()->update(
-                            ['lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
-                                'centrodistribuicao_id' => $model->destino_id,
-                                'produto_id' => $itemPedido->produto_id,
-                                'valor' => $itemPedido->preco,
-                                'quantidade' => $itemPedido->quantidade
-                            ]
-                        );
+                            $itemPedido->estoques()->create(
+                                ['lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                                    'centrodistribuicao_id' => $model->destino_id,
+                                    'produto_id' => $itemPedido->produto_id,
+                                    'valor' => $itemPedido->preco,
+                                    'quantidade' => $itemPedido->quantidade
+                                ]
+                            );
+                        } else {
+                            $itemPedido->estoques()->update(
+                                ['lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                                    'centrodistribuicao_id' => $model->destino_id,
+                                    'produto_id' => $itemPedido->produto_id,
+                                    'valor' => $itemPedido->preco,
+                                    'quantidade' => $itemPedido->quantidade + $estoqueOrigem->quantidade
+                                ]
+                            );
 
+                        }
                     }
 
                 }
