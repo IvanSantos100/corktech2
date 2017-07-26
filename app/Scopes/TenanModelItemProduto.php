@@ -60,14 +60,5 @@ trait TenanModelItemProduto
 
             $model->pedido->update(['valor_base' => $sum]);
         });
-
-
-        /*      "pedido_id" => "21"
-                "produto_id" => "80"
-                "quantidade" => "1"
-                "preco" => 1
-                "prazoentrega" => "2017-07-07"
-        */
-
     }
 }

@@ -23,7 +23,7 @@ class PedidosRequest extends FormRequest
      */
     public function rules()
     {
-        $request = \Request::all();  //ntrada Movimentação  Saída
+        $request = \Request::all();
 
         $rules = [];
         if (\Auth::user()->centrodistribuicao_id == 1) {

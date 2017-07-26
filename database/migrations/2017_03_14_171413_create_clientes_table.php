@@ -18,15 +18,15 @@ class CreateClientesTable extends Migration
             $table->enum('tipo', [1, 2]); //// 1 => fisica, 2 => jurídica
             $table->string('nome');
             $table->string('documento',14)->unique();
-            $table->string('endereco');
-            $table->string('bairro');
-            $table->string('cidade');
-            $table->string('uf');
-            $table->integer('cep');
+            $table->string('endereco')->nullable();
+            $table->string('bairro')->nullable();
+            $table->string('cidade')->nullable();
+            $table->string('uf')->nullable();
+            $table->integer('cep')->nullable();
             $table->string('senha');
             $table->string('responsavel')->nullable();
-            $table->integer('fone');
-            $table->integer('celular');
+            $table->integer('fone')->nullable();
+            $table->integer('celular')->nullable();
             $table->timestamps();
         });
     }

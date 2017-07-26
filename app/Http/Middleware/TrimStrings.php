@@ -18,6 +18,12 @@ class TrimStrings extends BaseTrimmer
 
     protected function transform($key, $value)
     {
+
+        if($key === 'desconto'){
+            //$value = str_replace(',','.', str_replace('.','', $value));
+            return parent::transform($key, $value);
+        }
+
         $array = ['documento', 'cep', 'fone', 'celular'];
 
         ///if($key === 'cep') dd(preg_replace('/[\D]/', '', $value));

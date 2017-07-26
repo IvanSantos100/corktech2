@@ -18,7 +18,7 @@
     @endif
     {!! Html::openFormGroup('desconto', $errors) !!}
     {!! Form::label('desconto', 'Desconto (%)', ['class' => 'control-label']) !!}
-    {!! Form::text('desconto', null, ['class' => 'form-control']) !!}
+    {!! Form::text('desconto', 0, ['class' => 'form-control']) !!}
     {!! Form::error('desconto', $errors) !!}
     {!! Html::closeFormGroup() !!}
 @endif
