@@ -16,7 +16,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Preço:</label><br>
-                                {{ $produto->preco }}
+                                R$ {{ number_format($produto->preco,2, ',', '.')}}
                             </div>
                         </div>
                         <div class="col-lg-6">

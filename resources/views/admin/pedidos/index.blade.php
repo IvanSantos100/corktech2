@@ -18,7 +18,7 @@
                     </div>
                     <div class="pull-right">
                         <a class="btn btn-primary" href="{{route('admin.pedidos.create')}}">Novo Pedido</a>
-                        <a class='btn btn-primary' href="{{route('admin.pedidosencerrados.index')}}">Encerrados</a>
+                        <a class='btn btn-primary' href="{{route('admin.pedidosencerrados.index',['status' => 2])}}">Encerrados</a>
                     </div>
                     <br><br>
                     <table class="table table-hover table-striped">

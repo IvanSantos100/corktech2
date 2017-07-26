@@ -24,9 +24,8 @@ class TenantScope implements Scope
         $status = 1;
         $destino = 'destino_id';
 
-        //dd(\Route::current()->parameterNames);
-
-        if(\Route::get('pedidosencerrados')->uri() === 'pedidosencerrados'){
+        //pedido encerrado
+        if(\Request::route('status') == 2){
             $status = 2;
             $destino = 'origem_id';
         }

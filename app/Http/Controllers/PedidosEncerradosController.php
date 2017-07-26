@@ -75,20 +75,20 @@ class PedidosEncerradosController extends Controller
         return view('admin.pedidosencerrados.index', compact('pedidos','search'));
     }
 
-    public function itempedido(Request $request, $id)
+    public function itempedido(Request $request, $t, $id)
     {
         $search = $request->get('search');
 
-        $this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        ///$this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $itempedido = $this->repository->find($id)->produtos()->orderBy('descricao')->paginate(10);
+        $itenspedido = $this->repository->find($id)->produtos()->paginate(10);
 
-        if ($itempedido->isEmpty()) {
+        if ($itenspedido->isEmpty()) {
 
             return 'vazio';
         }
 
-        return view('admin.pedidosencerrados.itempedido', compact('itempedido', 'search'));
+        return view('admin.pedidosencerrados.itempedido', compact('itenspedido', 'search'));
     }
 
 

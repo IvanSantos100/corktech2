@@ -46,9 +46,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('pedidos', 'PedidosController');
     Route::get('pedidos/{pedido}/status', 'PedidosController@status')->name('pedidos.status');
 
+    /*
     Route::resource('pedidosencerrados', 'PedidosEncerradosController');
     Route::get('pedidosencerrados/{pedido}/itempedido', 'PedidosEncerradosController@itempedido')->name('pedidosencerrados.itempedido');
     Route::get('pedidosencerrados/{pedido}/{produto}/details', 'PedidosEncerradosController@details')->name('pedidosencerrados.details');
+    */
+
+    Route::group(['prefix' => 'pedidosencerrados/{status}', 'as' => 'pedidosencerrados.'], function () {
+       Route::get('index', 'PedidosEncerradosController@index')->name('index');
+       Route::get('itempedido/{pedido}', 'PedidosEncerradosController@itempedido')->name('itempedido');
+       Route::get('itempedido/{pedido}/details', 'PedidosEncerradosController@details')->name('details');
+    });
 
     Route::get('itempedido/{pedido}/index', 'ItemPedidoController@index')->name('itempedido.index');
     Route::get('itempedido/{pedido}/produtos', 'ItemPedidoController@listarProdutos')->name('itempedido.produtos');

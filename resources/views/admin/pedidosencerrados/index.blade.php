@@ -32,7 +32,7 @@
                         @foreach($pedidos as $pedido)
                             <tr>
                                 <td class="col-md-2">{{ $pedido->id}}</td>
-                                <td class="col-md-2">{{ $pedido->tipo}}</td>
+                                <td class="col-md-2">{{ $pedido->tipoNome}}</td>
                                 @if($pedido->origem_id=="")
                                     <td class="col-md-2">Fábrica</td>
                                 @else
@@ -49,7 +49,7 @@
                                 <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.itempedido', ['pedido' => $pedido->id]) }}">Produtos</a>
+                                            <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.itempedido', ['status' => 2, 'pedido' => $pedido->id]) }}">Produtos</a>
                                         </li>
                                     </ul>
                                 </td>
