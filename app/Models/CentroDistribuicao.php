@@ -12,6 +12,11 @@ class CentroDistribuicao extends Model implements Transformable
 
     protected $table = 'centro_distribuicoes';
 
+    const TIPO = [
+        1 => 'Nacional',
+        2 => 'Distribuidora',
+        3 => 'Revenda'];
+
     protected $fillable = [
         'descricao',
         'tipo',
@@ -20,6 +25,11 @@ class CentroDistribuicao extends Model implements Transformable
         'prazo_regional',
         'valor_base',
     ];
+
+    public function getTipoNomeAttribute()
+    {
+        return array_values(CentroDistribuicao::TIPO)[$this->tipo -1];
+    }
 
     public function produtos()
     {

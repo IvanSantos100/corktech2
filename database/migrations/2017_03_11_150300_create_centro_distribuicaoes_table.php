@@ -1,5 +1,6 @@
 <?php
 
+use CorkTech\Models\CentroDistribuicao;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -16,7 +17,7 @@ class CreateCentroDistribuicaoesTable extends Migration
         Schema::create('centro_distribuicoes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descricao');
-            $table->enum('tipo', [ 1, 2, 3]); // 1 => Nacional , 2 => Distribuidora, 3 => Revenda
+            $table->enum('tipo', array_keys(CentroDistribuicao::TIPO)); // 1 => Nacional , 2 => Distribuidora, 3 => Revenda
             $table->integer('prazo_fabrica');
             $table->integer('prazo_nacional');
             $table->integer('prazo_regional');

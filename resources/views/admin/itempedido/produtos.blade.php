@@ -6,13 +6,13 @@
         </div>
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Inclusão de produtos para o pedido: </div>
+                <?php $nomeTipoDestino = $pedido->origem_id ? $pedido->destino_id ? $pedido->destino->TipoNome : 'o cliente' : null ?>
+                <div class="panel-heading">Inclusão de produtos para o pedido: <b>{{$pedido->id}}</b> de <b>{{$pedido->TipoNome}}</b> para {{$nomeTipoDestino}} <b>{{$pedido->destino->descricao ?? $pedido->cliente->nome}}</b></div>
                 <div class="panel-body">
-
                     <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
-                        {!! Form::text('%253Ddescricao:', current($search), ['class' => 'form-control']) !!}
+                        {!! Form::text('search', current($search), ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
                     </div>

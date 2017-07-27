@@ -34,7 +34,7 @@
                         @foreach($centrodistribuicoes as $centrodistribuicao)
                             <tr>
                                 <td class="col-md-3">{{ $centrodistribuicao->descricao}}</td>
-                                <td class="col-md-2">{{ $centrodistribuicao->tipo}}</td>
+                                <td class="col-md-2">{{ $centrodistribuicao->tipo_nome}}</td>
                                 <td class="col-md-1">{{ $centrodistribuicao->prazo_fabrica}}</td>
                                 <td class="col-md-1">{{ $centrodistribuicao->prazo_nacional}}</td>
                                 <td class="col-md-1">{{ $centrodistribuicao->prazo_regional}}</td>

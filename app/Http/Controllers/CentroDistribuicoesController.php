@@ -35,10 +35,6 @@ class CentroDistribuicoesController extends Controller
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $centrodistribuicoes = $this->repository->paginate(10);
 
-        $centrodistribuicoes->each(function ($item, $key) {
-            $item->tipo = $this->opcao($item->tipo);
-        });
-
         return view('admin.centrodistribuicoes.index', compact('centrodistribuicoes','search'));
     }
 
