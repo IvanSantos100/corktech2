@@ -24,6 +24,7 @@ class ProdutosRepositoryEloquent extends BaseRepository implements ProdutosRepos
         'tipoprodutos.descricao' => 'like',
         'estampas.descricao' => 'like',
         'classes.descricao' => 'like',
+        'tipoproduto_id'
     ];
 
 

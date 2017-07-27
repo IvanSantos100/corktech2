@@ -1,1 +1,4 @@
 itens_pedidos > prazoentrega integer
+
+mysql -unetia_sgcork -psgcork#2017 -h186.202.152.176 netiarpainel_sgcork > netiarpainel_sgcork.sql
+mysql -unetia_sgcork -psgcork#2017 -h186.202.152.176 corktech2 < banco.sql

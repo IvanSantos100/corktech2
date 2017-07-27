@@ -18,6 +18,7 @@ class TipoProdutosRepositoryEloquent extends BaseRepository implements TipoProdu
      * @return string
      */
     protected $fieldSearchable = [
+        'id' => 'like',
         'descricao' => 'like'
     ];
 

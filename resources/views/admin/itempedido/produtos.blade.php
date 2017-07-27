@@ -105,7 +105,7 @@
                                                     {!! Form::open(['route' => ['admin.itempedido.produtos', $pedido->id],
                                                         'class' => 'form', 'id' => "$form"]) !!}
 
-                                                    {!! form::number('quantidade[]', 0, ['style' => 'width:100%', 'step' => '0.01']) !!}
+                                                    {!! form::number('quantidade[]', 0, ['min' => 1, 'style' => 'width:100%', 'step' => '0.1']) !!}
 
                                                     {!! form::hidden('produto_id', $produto->id) !!}
                                                     {!! form::hidden('lote[]', $produto->lote) !!}
