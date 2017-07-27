@@ -49,12 +49,23 @@ class EstoquesController extends Controller
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        if(Auth::user()->centrodistribuicao_id==1){
-            $estoques = $this->repository->paginate(10);
+        $centrodis = Auth::user()->centrodistribuicao_id;
+
+        if($centrodis==1){
+            $estoques = $this->repository->scopeQuery(function ($query) {
+                return $query->join('produtos', 'estoques.produto_id', '=', 'produtos.id')
+                    ->orderBy('estoques.centrodistribuicao_id')
+                    ->orderBy('produtos.descricao');
+            })->paginate(10);
         }else{
-           $centrodis = Auth::user()->centrodistribuicao_id;
-           $estoques = $this->repository->findWherePaginate([['centrodistribuicao_id','=',$centrodis]],10);
+            $estoques = $this->repository->scopeQuery(function ($query) use($centrodis){
+                return $query->join('produtos', 'estoques.produto_id', '=', 'produtos.id')
+                    ->where('centrodistribuicao_id', $centrodis)
+                    ->orderBy('produtos.descricao');
+            })->paginate(10);
         }
+
+        //dd($estoques);
 
         return view('admin.estoques.index', compact('estoques','search'));
     }
