@@ -56,7 +56,7 @@ trait TenanModelPedido
                     $itensPedido = $model->produtos;
                     foreach ($itensPedido as $itemPedido) {
 
-                        if ($itemPedido->lote) {
+                        if ($itemPedido->lote && $itemPedido->estoques) {
                             $estoqueQnt = $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)
                                 ->whereProduto_id($itemPedido->produto_id)->first()->quantidade;
 
