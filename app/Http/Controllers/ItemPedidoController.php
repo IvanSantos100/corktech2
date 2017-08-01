@@ -64,7 +64,7 @@ class ItemPedidoController extends Controller
 
         $pedido = $this->pedidosRepository->find($pedidoId);
 
-        $tipo = $this->tipoProdutosRepository->scopeQuery(function ($query) {
+        $tipo = $this->tipoProdutosRepository->resetCriteria()->scopeQuery(function ($query) {
             return $query->orderBy('descricao', 'asc');
         })->all();
 
