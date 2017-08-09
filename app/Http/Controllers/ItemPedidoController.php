@@ -45,7 +45,7 @@ class ItemPedidoController extends Controller
 
     public function index(Request $request, $pedidoId)
     {
-        $this->pedidosRepository->find($pedidoId);
+        $this->pedidosRepository->resetCriteria()->find($pedidoId);
 
         $itens_pedidos = $this->repository->scopeQuery(function ($query) use ($pedidoId) {
             return $query->Where('pedido_id', $pedidoId);
