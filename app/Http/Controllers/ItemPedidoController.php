@@ -62,7 +62,7 @@ class ItemPedidoController extends Controller
     {
         $search = explode(':', $request->get('search'));
 
-        $pedido = $this->pedidosRepository->find($pedidoId);
+        $pedido = $this->pedidosRepository->resetCriteria()->find($pedidoId);
 
         $tipo = $this->tipoProdutosRepository->resetCriteria()->scopeQuery(function ($query) {
             return $query->orderBy('descricao', 'asc');

@@ -18,6 +18,8 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
      * @return string
      */
     protected $fieldSearchable = [
+        'cliente.nome' => 'like',
+        'produtos.produto.descricao' => 'like'
     ];
 
 
