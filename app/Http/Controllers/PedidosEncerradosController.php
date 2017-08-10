@@ -92,13 +92,16 @@ class PedidosEncerradosController extends Controller
     }
 
 
-    public function details($id)
-    {
+    public function details($status, $id, $produto)
+    {   //dd($status, $id, $produto);
         $produto = $this->produtosRepository->find($id);
+        /*$itemPedido = $this->itempedidosRepository->findWhere([
+            'pedido_id' => $id,
+            'produto_id' => $produto,
+        ]);*/
 
         return view('admin.pedidosencerrados.details', compact('produto'));
     }
-
 
     private function opcao()
     {

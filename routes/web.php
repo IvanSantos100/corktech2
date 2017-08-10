@@ -55,7 +55,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::group(['prefix' => 'pedidosencerrados/{status}', 'as' => 'pedidosencerrados.'], function () {
        Route::get('index', 'PedidosEncerradosController@index')->name('index');
        Route::get('itempedido/{pedido}', 'PedidosEncerradosController@itempedido')->name('itempedido');
-       Route::get('itempedido/{pedido}/details', 'PedidosEncerradosController@details')->name('details');
+       Route::get('itempedido/{pedido}/details/{produto}', 'PedidosEncerradosController@details')->name('details');
     });
 
     Route::get('itempedido/{pedido}/index', 'ItemPedidoController@index')->name('itempedido.index');

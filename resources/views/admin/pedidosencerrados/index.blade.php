@@ -40,7 +40,7 @@
                                 @endif
                                 @if($pedido->destino_id=="")
                                     <td class="col-md-2">
-                                        <a onclick="popupcliente('{{$pedido->cliente->nome}}','{{$pedido->cliente->tipo}}','{{$pedido->cliente->fone}}')">Cliente</a>
+                                        <a onclick="popupcliente('{{$pedido->cliente->nome}}','{{$pedido->cliente->tipo}}','{{$pedido->cliente->fone}}')">Cliente - {{$pedido->cliente->nome}}</a>
                                     </td>
                                 @else
                                     <td class="col-md-2">{{ $pedido->destino->descricao}}</td>
