@@ -12,6 +12,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style >
+        @media print {
+            .hidden-print {
+                display: none !important;
+            }
+        }
+    </style>
 
     <!-- Scripts -->
     <script>
@@ -149,5 +156,6 @@
         $(celular).inputmask("(99) 9999[9]-9999"); //specifying options
     });
 </script>
+@stack('scripts')
 </body>
 </html>

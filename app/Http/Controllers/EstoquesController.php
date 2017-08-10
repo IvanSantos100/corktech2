@@ -46,6 +46,7 @@ class EstoquesController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $limit = $request->get('limit') ?: 10;
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
@@ -56,18 +57,18 @@ class EstoquesController extends Controller
                 return $query->join('produtos', 'estoques.produto_id', '=', 'produtos.id')
                     ->orderBy('estoques.centrodistribuicao_id')
                     ->orderBy('produtos.descricao');
-            })->paginate(10);
+            })->paginate($limit);
         }else{
             $estoques = $this->repository->scopeQuery(function ($query) use($centrodis){
                 return $query->join('produtos', 'estoques.produto_id', '=', 'produtos.id')
                     ->where('centrodistribuicao_id', $centrodis)
                     ->orderBy('produtos.descricao');
-            })->paginate(10);
+            })->paginate($limit);
         }
 
         //dd($estoques);
 
-        return view('admin.estoques.index', compact('estoques','search'));
+        return view('admin.estoques.index', compact('estoques','search', 'limit'));
     }
 
     public function create()

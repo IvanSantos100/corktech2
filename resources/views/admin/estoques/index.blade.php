@@ -9,19 +9,23 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de estoque</div>
                 <div class="panel-body">
-                    <div class="pull-left">
+                    <div class="pull-left hidden-print">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
                     </div>
-                    @if(checkPermission(['nacional']))
-                       {{-- <div class="pull-right">
-                            <a class="btn btn-primary" href="{{route('admin.estoques.create')}}">Novo estoque</a>
-                        </div>
-                        <br>--}}
-                    @endif
+                    <div class="pull-right form-inline hidden-print">
+                        {!! Form::label('limit', 'Qnt por paginas', ['class' => 'control-label']) !!}
+                        <select onChange="window.location.href=this.value" class='form-control'>
+                            <option value="estoques?limit=25">25</option>
+                            <option value="estoques?limit=50">50</option>
+                            <option value="estoques?limit=75">75</option>
+                            <option value="estoques?limit=100">100</option>
+                        </select>
+                    </div>
+                    <br>
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
@@ -46,7 +50,7 @@
                                 <td class="col-md-1">{{ $estoque->lote}}</td>
                                 <td class="col-md-1">{{ $estoque->quantidade}}</td>
                                 <td class="col-md-1">R$ {{number_format($estoque->valor,2, ',', '.') }}</td>
-                                <td class="col-md-3">
+                                <td class="col-md-3 hidden-print">
                                     <ul class="list-inline">
                                         <li>
                                             <a class='btn btn-primary' href="{{ route('admin.estoques.details', ['estoque' => $estoque->id]) }}">Detalhar</a>
@@ -65,7 +69,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{ $estoques->links() }}
+                    {{ $estoques->appends(['limit' => $limit])->links() }}
                 </div>
             </div>
         </div>
