@@ -48,6 +48,8 @@ class PedidosController extends Controller
 
         $pedidos = $this->repository->paginate(10);
 
+        ///dd($pedidos[0]->cliente->nome);
+
         return view('admin.pedidos.index', compact('pedidos', 'search'));
     }
 

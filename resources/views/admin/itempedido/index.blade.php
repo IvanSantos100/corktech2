@@ -73,7 +73,7 @@
                         </tbody>
                     </table>
                     {{$itens_pedidos->links()}}
-                    <div > <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Fachar pedido</a> </div>
+                    <div > <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Fechar pedido</a> </div>
                 </div>
             </div>
         </div>

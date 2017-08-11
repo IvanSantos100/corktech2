@@ -26,6 +26,8 @@
                         <tr>
                             <th>Id</th>
                             <th>Tipo</th>
+                            <th>Origem</th>
+                            <th>Destino</th>
                             <th>Valor base</th>
                             <th>Desconto</th>
                         </tr>
@@ -33,10 +35,12 @@
                         <tbody>
                         @foreach($pedidos as $pedido)
                             <tr>
-                                <td class="col-md-2">{{ $pedido->id}}</td>
-                                <td class="col-md-2">{{ $pedido->tipo_nome}}</td>
+                                <td class="col-md-1">{{ $pedido->id}}</td>
+                                <td class="col-md-1">{{ $pedido->tipo_nome}}</td>
+                                <td class="col-md-1">{{ $pedido->origem->descricao}}</td>
+                                <td class="col-md-1">{{ $pedido->destino->descricao ?? "cliente - ".$pedido->cliente->nome}}</td>
                                 <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
-                                <td class="col-md-2">{{ $pedido->desconto}} %</td>
+                                <td class="col-md-1">{{ $pedido->desconto}} %</td>
                                 <td class="col-md-4">
                                     <ul class="list-inline">
                                         <li>
