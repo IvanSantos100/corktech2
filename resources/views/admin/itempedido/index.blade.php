@@ -41,6 +41,14 @@
                                 <td class="col-md-2">{{ $itens_pedido->quantidade}}</td>
                                 <td class="col-md-2">R$ {{number_format($itens_pedido->preco,2, ',', '.') }}</td>
                                 <td class="col-md-1">{{ $itens_pedido->lote}}</td>
+                                <td class="col-md-1">
+                                    <ul class="list-inline">
+                                        <li>
+                                            <a class='btn btn-primary' href="{{ route('admin.itempedido.details',
+                                            ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id]) }}">Detalhar</a>
+                                        </li>
+                                    </ul>
+                                </td>
                                 <td class="col-md-3">
                                     <ul class="list-inline">
 

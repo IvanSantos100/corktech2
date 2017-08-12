@@ -63,6 +63,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::post('itempedido/{pedido}/produtos', 'ItemPedidoController@addProdudo')->name('itempedido.produtos');
     Route::get('itempedido/{pedido}/produto/{produto}', 'ItemPedidoController@editProdudo')->name('itempedido.edit');
     Route::put('itempedido/{pedido}/produto/{produto}', 'ItemPedidoController@updateProdudo')->name('itempedido.update');
+    Route::get('itempedido/{pedido}/details/{produto}', 'ItemPedidoController@details')->name('itempedido.details');
     Route::delete('itempedido/{pedidoId}/produto/{itempedido}/delete', 'ItemPedidoController@deleteProduto')->name('itempedido.produto.delete');
 
     //Route::resource('itempedidos', 'itempedidosController');
@@ -77,4 +78,3 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         \Auth::loginUsingId($request->get('user'));
     });
 });
-

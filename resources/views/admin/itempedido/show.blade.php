@@ -4,49 +4,39 @@
     <div class="container">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Visualizar produto</div>
+                <div class="panel-heading">
+                    Visualizar produto
+                </div>
                 <div class="panel-body">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" >Descrição:</label>
-                            <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Descrição:</label><br>
                                 {{ $produto->descricao }}
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" >Preço:</label>
-                            <div class="col-sm-10">
-                                {{ $produto->preco }}
+                            <div class="form-group">
+                                <label>Preço:</label><br>
+                                R$ {{ number_format($produto->preco,2, ',', '.')}}
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" >Estampa:</label>
-                            <div class="col-sm-10">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Estampa:</label><br>
                                 {{ $produto->estampas->descricao }}
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" >Tipo produto:</label>
-                            <div class="col-sm-10">
+                            <div class="form-group">
+                                <label>Tipo produto:</label><br>
                                 {{ $produto->tipoprodutos->descricao }}
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" >Classe:</label>
-                            <div class="col-sm-10">
+                            <div class="form-group">
+                                <label>Classe:</label><br>
                                 {{ $produto->classes->descricao }}
                             </div>
                         </div>
-                    </form>
-                    <div class="alert alert-danger">
-                        Deseja realmente excluir?.
                     </div>
-                    <div>
-                        {!! Form::open(['route' => ['admin.produtos.destroy', 'produto' => $produto->id], 'id' => $produto->id, 'method' => 'DELETE']) !!}
-                        <a href="{{ route('admin.produtos.index') }}" class="btn btn-success">Voltar</a>
-                        {!! Form::submit('Excluir', ['class' => 'btn btn-danger']) !!}
-                        {!! Form::close() !!}
-                    </div>
+                </div>
+                <div class="panel-footer">
+                    <center><a class='btn btn-primary' href="{{ URL::previous() }}">Voltar</a></center>
                 </div>
             </div>
         </div>

@@ -102,6 +102,17 @@ class ItemPedidoController extends Controller
         return redirect()->to($url);
     }
 
+    public function details($pedido,$id)
+    {   //dd($status, $id, $produto);
+        $produto = $this->produtosRepository->find($id);
+        /*$itemPedido = $this->itempedidosRepository->findWhere([
+            'pedido_id' => $id,
+            'produto_id' => $produto,
+        ]);*/
+
+        return view('admin.itempedido.show', compact('produto'));
+    }
+
     public function editProdudo($pedidoId, $produtoId)
     {
 
