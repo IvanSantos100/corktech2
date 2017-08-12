@@ -20,7 +20,7 @@ class ItemPedidoRepositoryEloquent extends BaseRepository implements ItemPedidoR
      * @return string
      */
     protected $fieldSearchable = [
-        'id' => 'like',
+        'lote' => '=',
         'produto.descricao' => 'like'
     ];
 

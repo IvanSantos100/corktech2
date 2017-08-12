@@ -20,7 +20,9 @@ class ProdutosRepositoryEloquent extends BaseRepository implements ProdutosRepos
      * @return string
      */
     protected $fieldSearchable = [
+        'codigo' => '=',
         'descricao' => 'like',
+        'estoques.lote' => '=',
         'tipoprodutos.descricao' => 'like',
         'estampas.descricao' => 'like',
         'classes.descricao' => 'like',

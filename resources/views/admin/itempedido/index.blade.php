@@ -43,14 +43,9 @@
                                 <td class="col-md-1">{{ $itens_pedido->lote}}</td>
                                 <td class="col-md-3">
                                     <ul class="list-inline">
-
                                         <li>
-                                            {{--@if ($itens_pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-warning' href="--}}{{-- route('admin.pedido.edit',
-                                                ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id])--}}{{--">Editar</a>
-                                            @else
-                                                <a class='btn btn-warning' disabled="true">Editar</a>
-                                            @endif--}}
+                                            <a class='btn btn-warning' href=" route('admin.pedido.edit',
+                                            ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id])">Detalhar</a>
                                         </li>
                                         <li>
                                             <?php

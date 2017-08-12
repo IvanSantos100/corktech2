@@ -37,7 +37,7 @@
                             <tr>
                                 <td class="col-md-1">{{ $pedido->id}}</td>
                                 <td class="col-md-1">{{ $pedido->tipo_nome}}</td>
-                                <td class="col-md-1">{{ $pedido->origem->descricao}}</td>
+                                <td class="col-md-1">{{ $pedido->origem->descricao ?? 'Fabrica'}}</td>
                                 <td class="col-md-1">{{ $pedido->destino->descricao ?? "cliente - ".$pedido->cliente->nome}}</td>
                                 <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
                                 <td class="col-md-1">{{ $pedido->desconto}} %</td>
