@@ -72,6 +72,8 @@ class PedidosEncerradosController extends Controller
             $pedidos = $this->repository->findOrWherePaginate([['origem_id', '=', $centrodis], ['destino_id', '=', $centrodis]], 10);
         }
 
+        //dd($pedidos[0]->produtos[0]->produto);
+
         return view('admin.pedidosencerrados.index', compact('pedidos','search'));
     }
 
@@ -92,13 +94,9 @@ class PedidosEncerradosController extends Controller
     }
 
 
-    public function details($status, $id, $produto)
-    {   //dd($status, $id, $produto);
-        $produto = $this->produtosRepository->find($id);
-        /*$itemPedido = $this->itempedidosRepository->findWhere([
-            'pedido_id' => $id,
-            'produto_id' => $produto,
-        ]);*/
+    public function details($status, $id, $produtoId)
+    {
+        $produto = $this->repository->find($id)->produtos->where('produto_id', $produtoId)->first()->produto;
 
         return view('admin.pedidosencerrados.details', compact('produto'));
     }

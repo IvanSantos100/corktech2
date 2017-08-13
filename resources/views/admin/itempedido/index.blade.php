@@ -7,7 +7,8 @@
         </div>
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Itens do pedido: {{--<b>{{ $itens_pedido->id }}</b> tipo: <b>{{ $itens_pedido->tipo }}</b> destino: <b>{{ $itens_pedido->destino->descricao ?? $itens_pedido->cliente->nome }}</b>--}}</div>
+                <div class="panel-heading">Itens do
+                    pedido: {{--<b>{{ $itens_pedido->id }}</b> tipo: <b>{{ $itens_pedido->tipo }}</b> destino: <b>{{ $itens_pedido->destino->descricao ?? $itens_pedido->cliente->nome }}</b>--}}</div>
                 <div class="panel-body">
                     <div class="pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
@@ -37,38 +38,37 @@
                         @foreach($itens_pedidos as $itens_pedido)
                             <tr>
                                 <td class="col-md-1">{{ $itens_pedido->produto->id}}</td>
-                                <td class="col-md-2">{{ $itens_pedido->produto->descricao}}</td>
+                                <td class="col-md-3">{{ $itens_pedido->produto->descricao}}</td>
                                 <td class="col-md-2">{{ $itens_pedido->quantidade}}</td>
                                 <td class="col-md-2">R$ {{number_format($itens_pedido->preco,2, ',', '.') }}</td>
                                 <td class="col-md-1">{{ $itens_pedido->lote}}</td>
-                                <td class="col-md-3">
+                                <td class="col-md-2">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-warning' href=" route('admin.pedido.edit',
-                                            ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id])">Detalhar</a>
+                                            <a class='btn btn-primary' href="{{ route('admin.itempedido.details',
+                                            ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id]) }}">Detalhar</a>
                                         </li>
                                         <li>
                                             <?php
-                                                $form = "form-$itens_pedido->id";
+                                            $form = "form-$itens_pedido->id";
                                             ?>
-                                           <a class='btn btn-danger' href="#"
+                                            <a class='btn btn-danger' href="#"
                                                onclick="event.preventDefault(); document.getElementById({{"\"$form\""}}).submit();">Excluir</a>
 
-                                                {!! Form::open(['route' => ['admin.itempedido.produto.delete',
-                                                    'pedidoId' => $pedidoId,'itempedido' => $itens_pedido->id],
-                                                    'id' => "$form",
-                                                    'method' => 'DELETE', 'style' => 'display:nome']) !!}
-                                                {!! Form::close() !!}
+                                            {!! Form::open(['route' => ['admin.itempedido.produto.delete',
+                                                'pedidoId' => $pedidoId,'itempedido' => $itens_pedido->id],
+                                                'id' => "$form",
+                                                'method' => 'DELETE', 'style' => 'display:nome']) !!}
+                                            {!! Form::close() !!}
                                         </li>
                                     </ul>
-
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                     {{$itens_pedidos->links()}}
-                    <div > <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Fechar pedido</a> </div>
+                    <div><a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Fechar pedido</a></div>
                 </div>
             </div>
         </div>
