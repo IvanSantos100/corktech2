@@ -56,22 +56,18 @@ trait TenanModelPedido
                     $itensPedido = $model->produtos;
                     foreach ($itensPedido as $itemPedido) {
 
-                        if ($itemPedido->lote && $itemPedido->estoques) {
-                            $estoqueQnt = $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)
-                                ->whereProduto_id($itemPedido->produto_id)->first()->quantidade;
+                        $estoqueQnt = $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)
+                            ->whereProduto_id($itemPedido->produto_id)->get();
 
-                            if ($itemPedido->quantidade > $estoqueQnt) {
-                                $estoqueMenor[] = true;
-                            }
+                        if ($estoqueQnt->isEmpty() || $itemPedido->quantidade > $estoqueQnt->first()->quantidade) {
 
-                        } else {
-                            \Session::flash('error', 'Há produto indisponível no estoque.');
-                            return false;
+                            $estoqueMenor[] = $itemPedido->produto->descricao;
                         }
-
                     }
                     if (!empty($estoqueMenor)) {
-                        \Session::flash('error', 'Há produto indisponível no estoque.');
+                        $error = array_merge(["Produto sem estoque:"],$estoqueMenor);
+
+                        \Session::flash('error', $error);
                         return false;
                     }
                 }

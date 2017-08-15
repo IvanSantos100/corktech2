@@ -126,10 +126,23 @@
 
     @if(Session::has('error'))
         <div class="container">
-            <div class="alert alert-danger">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {!! Session::get('error') !!}
-            </div>
+            @if(!is_array(Session::get('error')))
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {!! Session::get('error') !!}
+                </div>
+            @else
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    @foreach(Session::get('error') as $key => $error)
+                        @if($key == 0)
+                            {!! $error !!}
+                        @else
+                            <li>{!! $error !!}</li>
+                        @endif
+                    @endforeach
+                </div>
+            @endif
         </div>
     @endif
 
