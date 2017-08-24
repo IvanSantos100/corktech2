@@ -31,7 +31,7 @@
                         <tbody>
                         @foreach($pedidos as $pedido)
                             <tr>
-                                <td class="col-md-2">{{ $pedido->id}}</td>
+                                <td class="col-md-1">{{ $pedido->id}}</td>
                                 <td class="col-md-2">{{ $pedido->tipoNome}}</td>
                                 @if($pedido->origem_id=="")
                                     <td class="col-md-2">Fábrica</td>
@@ -46,10 +46,13 @@
                                     <td class="col-md-2">{{ $pedido->destino->descricao}}</td>
                                 @endif
                                 <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
-                                <td class="col-md-2">
+                                <td class="col-md-3">
                                     <ul class="list-inline">
                                         <li>
                                             <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.itempedido', ['status' => 2, 'pedido' => $pedido->id]) }}">Produtos</a>
+                                        </li>
+                                        <li>
+                                            <a class='btn btn-danger' href="{{ route('admin.pedidosencerrados.extornar', ['status' => 2, 'pedido' => $pedido->id]) }}">Extornar</a>
                                         </li>
                                     </ul>
                                 </td>

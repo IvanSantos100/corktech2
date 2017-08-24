@@ -58,7 +58,7 @@ class PedidosEncerradosController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     *pedido
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -99,6 +99,14 @@ class PedidosEncerradosController extends Controller
         $produto = $this->repository->find($id)->produtos->where('produto_id', $produtoId)->first()->produto;
 
         return view('admin.pedidosencerrados.details', compact('produto'));
+    }
+
+    public function extornar($status, $pedidoId)
+    {
+        $pedido['status'] = 1;
+        $this->repository->update($pedido, $pedidoId);
+
+        return back()->withInput();
     }
 
     private function opcao()

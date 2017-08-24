@@ -56,6 +56,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
        Route::get('index', 'PedidosEncerradosController@index')->name('index');
        Route::get('itempedido/{pedido}', 'PedidosEncerradosController@itempedido')->name('itempedido');
        Route::get('itempedido/{pedido}/details/{produto}', 'PedidosEncerradosController@details')->name('details');
+       Route::get('itempedido/{pedido}/extornar', 'PedidosEncerradosController@extornar')->name('extornar');
     });
 
     Route::get('itempedido/{pedido}/index', 'ItemPedidoController@index')->name('itempedido.index');
@@ -72,6 +73,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         Route::put('usuarios/{usuario}/updatepassword', 'UsuariosController@updatepassword')->name('usuarios.updatepassword');
         Route::resource('usuarios', 'UsuariosController', ['except' => 'index']);
     });
+
     Route::get('/user', function (\Illuminate\Http\Request $request){
         \Auth::loginUsingId($request->get('user'));
     });

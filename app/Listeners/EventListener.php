@@ -44,6 +44,8 @@ class EventListener
          * de exeução ao arquivo /storage/log/laravel.log
          *
          * tail -f storage/logs/laravel.log
+         * tail -f storage/app/logs/queries.log
+
          *
          */
         \Log::info("${connectionName} | ${time}ms | ${fullQuery}" . PHP_EOL);

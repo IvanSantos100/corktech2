@@ -44,28 +44,38 @@ trait TenanModelPedido
 
         static::updating(function (Model $model) {
 
-            if ($model->status == 2) {
+            $orig = $model->getOriginal();
+
+            if (($model->status == 2) || ($model->status == 1 && $orig['status'] == 2)) {
                 if ($model->produtos->isEmpty()) {
                     \Session::flash('error', 'Pedidos não tem produto cadastrado.');
                     return false;
                 }
-
-                if ($model->tipo != 1) {
+                $estorno = null;
+                if (($model->tipo != 1 && $model->status == 2) || ($estorno = $orig['status'] == 2 && $orig['tipo'] != 3)) {
                     //verifica produto disponivel do estoque
                     $estoqueMenor = [];
                     $itensPedido = $model->produtos;
                     foreach ($itensPedido as $itemPedido) {
+                        if ($itemPedido->estoques) {
+                            $estoqueQnt = $itemPedido->estoques->where(
+                                [
+                                    'lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                                    'centrodistribuicao_id' => !$estorno ? $model->origem_id : $model->destino_id,
+                                    'produto_id' => $itemPedido->produto_id,
+                                ]
+                            )->get();
+                        }
+                        //dd($model, $itemPedido, $estoqueQnt);
+                        if (!$itemPedido->estoques || $estoqueQnt->isEmpty() || $itemPedido->quantidade > $estoqueQnt->first()->quantidade) {
 
-                        $estoqueQnt = $itemPedido->estoques->whereLote($itemPedido->lote)->whereCentrodistribuicao_id($model->origem_id)
-                            ->whereProduto_id($itemPedido->produto_id)->get();
-
-                        if ($estoqueQnt->isEmpty() || $itemPedido->quantidade > $estoqueQnt->first()->quantidade) {
 
                             $estoqueMenor[] = $itemPedido->produto->descricao;
                         }
                     }
+
                     if (!empty($estoqueMenor)) {
-                        $error = array_merge(["Produto sem estoque:"],$estoqueMenor);
+                        $error = array_merge(["Pedido <b>{$itemPedido->pedido_id}</b>, sem produto em estoque:"], $estoqueMenor);
 
                         \Session::flash('error', $error);
                         return false;
@@ -82,14 +92,13 @@ trait TenanModelPedido
             if ($model->status == 2) {
                 $itensPedido = $model->produtos;
 
-                foreach ($itensPedido as $itemPedido) { //dd($model, $itemPedido);    updateOrCreate
+                foreach ($itensPedido as $itemPedido) { //dd($model, $itemPedido, $model->pedido);    //updateOrCreate
 
-                    if ($itemPedido->lote) {
+                    if ($model->tipo != 1) {
                         $estoqueQnt = $itemPedido->estoques
                             ->whereLote($itemPedido->lote)
                             ->whereCentrodistribuicao_id($model->origem_id)
                             ->whereProduto_id($itemPedido->produto_id)->first();
-
                         //deleta estoque origem
                         if ($itemPedido->quantidade == $estoqueQnt->quantidade) {
                             $estoqueQnt->delete();
@@ -103,7 +112,8 @@ trait TenanModelPedido
 
                     //incrementa estoque destino
                     $estoqueOrigem = $itemPedido->estoques()->where(
-                        ['lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                        [
+                            'lote' => $itemPedido->lote,
                             'centrodistribuicao_id' => $model->destino_id,
                             'produto_id' => $itemPedido->produto_id,
                             'valor' => $itemPedido->preco,
@@ -114,7 +124,8 @@ trait TenanModelPedido
                         if (!$estoqueOrigem) {
 
                             $itemPedido->estoques()->create(
-                                ['lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                                [
+                                    'lote' => $itemPedido->lote,
                                     'centrodistribuicao_id' => $model->destino_id,
                                     'produto_id' => $itemPedido->produto_id,
                                     'valor' => $itemPedido->preco,
@@ -123,7 +134,8 @@ trait TenanModelPedido
                             );
                         } else {
                             $itemPedido->estoques()->update(
-                                ['lote' => $itemPedido->lote ?? $itemPedido->pedido_id,
+                                [
+                                    'lote' => $itemPedido->lote,
                                     'centrodistribuicao_id' => $model->destino_id,
                                     'produto_id' => $itemPedido->produto_id,
                                     'valor' => $itemPedido->preco,
@@ -137,6 +149,77 @@ trait TenanModelPedido
                 }
                 \Session::flash('message', "Pedido {$model->id} finalizado com sucesso.");
             }
+
+            $orig = $model->getOriginal();
+            if ($model->status == 1 && $orig['status'] == 2) {
+                $itensPedido = $model->produtos;
+
+                foreach ($itensPedido as $itemPedido) {
+                    //dd($model, $itemPedido);    //updateOrCreate
+
+                    if ($model->tipo != 3) {
+                        $estoqueQnt = $itemPedido->estoques
+                            ->whereLote($itemPedido->lote)
+                            ->whereCentrodistribuicao_id($model->destino_id)
+                            ->whereProduto_id($itemPedido->produto_id)->first();
+
+                        //deleta estoque origem
+                        if ($itemPedido->quantidade == $estoqueQnt->quantidade) {
+                            $estoqueQnt->delete();
+                        }
+
+                        //update estoque origem
+                        if ($itemPedido->quantidade < $estoqueQnt->quantidade) {
+                            $qnt = $estoqueQnt->quantidade - $itemPedido->quantidade;
+                            $estoqueQnt->update(['quantidade' => $qnt]);
+                        }
+                    }
+                    if ($model->tipo != 1) {
+                        //incrementa estoque origem
+                        $estoqueOrigem = $itemPedido->estoques()->where(
+                            [
+                                'lote' => $itemPedido->lote,
+                                'centrodistribuicao_id' => $model->origem_id,
+                                'produto_id' => $itemPedido->produto_id,
+                                'valor' => $itemPedido->preco,
+                            ]
+                        )->first();
+
+                        if (!$estoqueOrigem) {
+
+                            $itemPedido->estoques()->create(
+                                [
+                                    'lote' => $itemPedido->lote,
+                                    'centrodistribuicao_id' => $model->origem_id,
+                                    'produto_id' => $itemPedido->produto_id,
+                                    'valor' => $itemPedido->preco,
+                                    'quantidade' => $itemPedido->quantidade
+                                ]
+                            );
+                        } else {
+                            $itemPedido->estoques()->where(
+                                [
+                                    'lote' => $itemPedido->lote,
+                                    'centrodistribuicao_id' => $model->origem_id,
+                                    'produto_id' => $itemPedido->produto_id,
+                                    'valor' => $itemPedido->preco,
+                                ])
+                                ->update(
+                                [
+                                    'quantidade' => $itemPedido->quantidade + $estoqueOrigem->quantidade
+                                ]
+                            );
+                        }
+                    }
+
+                }
+            \Session::flash('message', "Pedido {$model->id} Extornado com sucesso.");
+        }
         });
-    }
+}
+
+public
+function checkProdutos(Model $model)
+{
+}
 }
