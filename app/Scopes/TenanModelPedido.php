@@ -142,7 +142,6 @@ trait TenanModelPedido
                                     'quantidade' => $itemPedido->quantidade + $estoqueOrigem->quantidade
                                 ]
                             );
-
                         }
                     }
 
@@ -205,21 +204,20 @@ trait TenanModelPedido
                                     'valor' => $itemPedido->preco,
                                 ])
                                 ->update(
-                                [
-                                    'quantidade' => $itemPedido->quantidade + $estoqueOrigem->quantidade
-                                ]
-                            );
+                                    [
+                                        'quantidade' => $itemPedido->quantidade + $estoqueOrigem->quantidade
+                                    ]
+                                );
                         }
                     }
 
                 }
-            \Session::flash('message', "Pedido {$model->id} Extornado com sucesso.");
-        }
+                \Session::flash('message', "Pedido {$model->id} Extornado com sucesso.");
+            }
         });
-}
+    }
 
-public
-function checkProdutos(Model $model)
-{
-}
+    public function checkProdutos(Model $model)
+    {
+    }
 }
