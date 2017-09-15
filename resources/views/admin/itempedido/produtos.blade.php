@@ -3,8 +3,6 @@
 @section('content')
     <div class="container">
         <div class="row">
-        </div>
-        <div class="row">
             <div class="panel panel-default">
                 <?php $nomeTipoDestino = $pedido->origem_id ? $pedido->destino_id ? $pedido->destino->TipoNome : 'o cliente' : null ?>
                 <div class="panel-heading">Inclusão de produtos para o pedido: <b>{{$pedido->id}}</b> de <b>{{$pedido->TipoNome}}</b> para {{$nomeTipoDestino}} <b>{{$pedido->destino->descricao ?? $pedido->cliente->nome}}</b></div>
@@ -129,6 +127,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
