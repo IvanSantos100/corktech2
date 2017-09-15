@@ -55,12 +55,14 @@ class EstoquesController extends Controller
         if($centrodis==1){
             $estoques = $this->repository->scopeQuery(function ($query) {
                 return $query->join('produtos', 'estoques.produto_id', '=', 'produtos.id')
+                    ->select('estoques.*', 'produtos.id as produto_id', 'produtos.descricao','produtos.codigo','produtos.preco','produtos.estampa_id','produtos.classe_id','produtos.tipoproduto_id')
                     ->orderBy('estoques.centrodistribuicao_id')
                     ->orderBy('produtos.descricao');
             })->paginate($limit);
         }else{
             $estoques = $this->repository->scopeQuery(function ($query) use($centrodis){
                 return $query->join('produtos', 'estoques.produto_id', '=', 'produtos.id')
+                    ->select('estoques.*', 'produtos.id as produto_id', 'produtos.descricao','produtos.codigo','produtos.preco','produtos.estampa_id','produtos.classe_id','produtos.tipoproduto_id')
                     ->where('centrodistribuicao_id', $centrodis)
                     ->orderBy('produtos.descricao');
             })->paginate($limit);
