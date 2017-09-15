@@ -3,9 +3,6 @@
 @section('content')
     <div class="container">
         <div class="row">
-
-        </div>
-        <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de estoque</div>
                 <div class="panel-body">
@@ -13,16 +10,17 @@
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
+                        {!! Form::hidden('limit', $limit, ['class' => 'form-control'])!!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
                     </div>
                     <div class="pull-right form-inline hidden-print">
                         {!! Form::label('limit', 'Qnt por paginas', ['class' => 'control-label']) !!}
-                        <select onChange="window.location.href=this.value" class='form-control'>
-                            <option value="estoques?limit=25">25</option>
-                            <option value="estoques?limit=50">50</option>
-                            <option value="estoques?limit=75">75</option>
-                            <option value="estoques?limit=100">100</option>
+                        <select onChange="window.location.href='estoques?limit='+this.value+'{{$linkredirect}}'" class='form-control'>
+                            <option @if($limit==25) selected="selected" @endif value="25">25</option>
+                            <option @if($limit==50) selected="selected" @endif value="50">50</option>
+                            <option @if($limit==75) selected="selected" @endif value="75">75</option>
+                            <option @if($limit==100) selected="selected" @endif value="100">100</option>
                         </select>
                     </div>
                     <br>

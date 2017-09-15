@@ -67,10 +67,14 @@ class EstoquesController extends Controller
                     ->orderBy('produtos.descricao');
             })->paginate($limit);
         }
+        $linkredirect='';
+        if($search!=""){
+            $linkredirect ="&search=".$search;
+        }
 
-        //dd($estoques);
+        //dd($linkredirect);
 
-        return view('admin.estoques.index', compact('estoques','search', 'limit'));
+        return view('admin.estoques.index', compact('estoques','search', 'limit', 'linkredirect'));
     }
 
     public function create()
