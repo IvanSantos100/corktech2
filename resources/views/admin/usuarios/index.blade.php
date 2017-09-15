@@ -3,13 +3,10 @@
 @section('content')
     <div class="container">
         <div class="row">
-
-        </div>
-        <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de usuários</div>
                 <div class="panel-body">
-                    <div class="pull-left">
+                    <div class="pull-left hidden-print">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
@@ -17,7 +14,7 @@
                         {!! Form::close()!!}
                     </div>
                     @if(checkPermission(['nacional']))
-                        <div class="pull-right">
+                        <div class="pull-right hidden-print">
                             <a class="btn btn-primary" href="{{route('admin.usuarios.create')}}">Novo usuário</a>
                         </div>
                     @endif
@@ -36,7 +33,7 @@
                                 <td class="col-md-2">{{ $usuario->email}}</td>
                                 <td class="col-md-2">{{ $usuario->centroDistribuicoes->descricao}}</td>
                                 @if(checkPermission(['nacional']))
-                                    <td class="col-md-2">
+                                    <td class="col-md-2  hidden-print">
                                         <ul class="list-inline">
                                             <li>
                                                 <a class='btn btn-warning'
@@ -53,7 +50,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{ $usuarios->links() }}
+                    <div class="hidden-print">{{ $usuarios->links() }}</div>
                 </div>
             </div>
         </div>

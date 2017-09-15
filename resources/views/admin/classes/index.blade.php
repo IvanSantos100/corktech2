@@ -9,14 +9,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de Classes</div>
                 <div class="panel-body">
-                    <div class="pull-left">
+                    <div class="pull-left  hidden-print">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
                     </div>
-                    <div class="pull-right">
+                    <div class="pull-right  hidden-print">
                         <a class="btn btn-primary" href="{{route('admin.classes.create')}}">Nova classe</a>
                     </div>
                     <table class="table table-hover table-striped">
@@ -39,7 +39,7 @@
                                 <td class="col-md-1">{{ $classe->atacado}}</td>
                                 <td class="col-md-1">{{ $classe->varejo}}</td>
                                 <td class="col-md-1">{{ $classe->granel}}</td>
-                                <td class="col-md-2">
+                                <td class="col-md-2  hidden-print">
                                     <ul class="list-inline">
                                         <li>
                                             <a class='btn btn-warning' href="{{ route('admin.classes.edit', ['classe' => $classe->id]) }}">Editar</a>
@@ -54,10 +54,9 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{ $classes->links() }}
+                    <div class="hidden-print">{{ $classes->links() }}</div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

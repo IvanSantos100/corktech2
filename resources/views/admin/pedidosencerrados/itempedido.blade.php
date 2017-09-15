@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Itens do pedido: {{ $itenspedido[0]->pedido_id}}</div>
                 <div class="panel-body">
-                    <div class="pull-right">
+                    <div class="pull-right hidden-print">
                         <a class='btn btn-primary pull-right' href="{{ route('admin.pedidosencerrados.index', ['status' => 2]) }}">Voltar</a>
                     </div>
                     <table class="table table-hover table-striped">
@@ -21,14 +21,13 @@
                         </thead>
                         <tbody>
                         @foreach($itenspedido as $itempedido)
-
                             <tr>
                                 <td class="col-md-1">{{ $itempedido->produto->codigo}}</td>
                                 <td class="col-md-3">{{ $itempedido->produto->descricao}}</td>
                                 <td class="col-md-3">{{ $itempedido->quantidade}}</td>
                                 <td class="col-md-3">R$ {{ number_format($itempedido->preco,2, ',', '.')}}</td>
                                 <td class="col-md-3">{{ $itempedido->lote}}</td>
-                                <td class="col-md-1">
+                                <td class="col-md-1 hidden-print">
                                     <ul class="list-inline">
                                         <li>
                                             <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.details',
@@ -41,10 +40,9 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{$itenspedido->links()}}
+                    <div class="hidden-print">{{ $itenspedido->links() }}</div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
