@@ -55,14 +55,14 @@
                                     <ul class="list-inline">
                                         <li>
                                             <a class='btn btn-primary' href="{{ route('admin.itempedido.details',
-                                            ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id]) }}">Detalhar</a>
+                                            ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id]) }}"><span class='glyphicon glyphicon-list-alt'></span></a>
                                         </li>
                                         <li>
                                             <?php
                                             $form = "form-$itens_pedido->id";
                                             ?>
                                             <a class='btn btn-danger' href="#"
-                                               onclick="event.preventDefault(); document.getElementById({{"\"$form\""}}).submit();">Excluir</a>
+                                               onclick="event.preventDefault(); document.getElementById({{"\"$form\""}}).submit();"><span class='glyphicon glyphicon-trash'></span></a>
 
                                             {!! Form::open(['route' => ['admin.itempedido.produto.delete',
                                                 'pedidoId' => $pedidoId,'itempedido' => $itens_pedido->id],
@@ -89,7 +89,9 @@
                         </tbody>
                     </table>
                     <div class="hidden-print">{{ $itens_pedidos->links() }}</div>
-                    <div><a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Fechar pedido</a></div>
+                </div>
+                <div class="panel-footer hidden-print">
+                    <center><a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Salvar</a></center>
                 </div>
             </div>
         </div>

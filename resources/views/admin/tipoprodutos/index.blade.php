@@ -32,10 +32,10 @@
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-warning' href="{{ route('admin.tipoprodutos.edit', ['tipoproduto' => $tipoproduto->id]) }}">Editar</a>
+                                            <a class='btn btn-warning' href="{{ route('admin.tipoprodutos.edit', ['tipoproduto' => $tipoproduto->id]) }}"><span class='glyphicon glyphicon-edit'></span></a>
                                         </li>
                                         <li>
-                                            <a class='btn btn-danger' href="{{ route('admin.tipoprodutos.show', ['tipoproduto' => $tipoproduto->id]) }}">Excluir</a>
+                                            <a class='btn btn-danger' href="{{ route('admin.tipoprodutos.show', ['tipoproduto' => $tipoproduto->id]) }}"><span class='glyphicon glyphicon-trash'></span></a>
                                         </li>
                                     </ul>
 

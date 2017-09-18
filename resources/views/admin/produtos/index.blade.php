@@ -43,11 +43,11 @@
                                         <ul class="list-inline">
                                             <li>
                                                 <a class='btn btn-warning'
-                                                   href="{{ route('admin.produtos.edit', ['produto' => $produto->id]) }}">Editar</a>
+                                                   href="{{ route('admin.produtos.edit', ['produto' => $produto->id]) }}"><span class='glyphicon glyphicon-edit'></span></a>
                                             </li>
                                             <li>
                                                 <a class='btn btn-danger'
-                                                   href="{{ route('admin.produtos.show', ['produto' => $produto->id]) }}">Excluir</a>
+                                                   href="{{ route('admin.produtos.show', ['produto' => $produto->id]) }}"><span class='glyphicon glyphicon-trash'></span></a>
                                             </li>
                                         </ul>
                                     </td>
