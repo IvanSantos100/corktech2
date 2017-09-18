@@ -44,13 +44,13 @@
                                 <td class="col-md-4 hidden-print">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.itempedido.index', ['pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-cog'></span></a>
+                                            <a class='btn btn-primary' href="{{ route('admin.itempedido.index', ['pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-folder-open'></span></a>
                                         </li>
                                         <li>
                                             @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
                                                 <a class='btn btn-warning' href="{{ route('admin.pedidos.edit', ['pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-edit'></span></a>
                                             @else
-                                                <a class='btn btn-warning' disabled="true">Editar</a>
+                                                <a class='btn btn-warning' disabled="true"><span class='glyphicon glyphicon-edit'></span></a>
                                             @endif
                                         </li>
                                         <li>
@@ -59,7 +59,7 @@
                                         </li>
                                         <li>
                                             @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-danger' href="{{ route('admin.pedidos.show', ['pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-remove'></span></a>
+                                                <a class='btn btn-danger' href="{{ route('admin.pedidos.show', ['pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-trash'></span></a>
                                             @else
                                                 <a class='btn btn-danger' disabled="true">Excluir</a>
                                             @endif

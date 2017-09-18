@@ -124,7 +124,7 @@
                                     </td>
                                     <td class="col-md-1">
                                         <a class='btn btn-success' href="#"
-                                           onclick="document.getElementById({{"\"$form\""}}).submit();">Add
+                                           onclick="document.getElementById({{"\"$form\""}}).submit();"><span class='glyphicon glyphicon-plus'></span>
                                         </a>
                                     </td>
                                 @endif

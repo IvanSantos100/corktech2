@@ -42,10 +42,10 @@
                                 <td class="col-md-2  hidden-print">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-warning' href="{{ route('admin.classes.edit', ['classe' => $classe->id]) }}">Editar</a>
+                                            <a class='btn btn-warning' href="{{ route('admin.classes.edit', ['classe' => $classe->id]) }}"><span class='glyphicon glyphicon-edit'></span></a>
                                         </li>
                                         <li>
-                                            <a class='btn btn-danger' href="{{ route('admin.classes.show', ['classe' => $classe->id]) }}">Excluir</a>
+                                            <a class='btn btn-danger' href="{{ route('admin.classes.show', ['classe' => $classe->id]) }}"><span class='glyphicon glyphicon-trash'></span></a>
                                         </li>
                                     </ul>
 

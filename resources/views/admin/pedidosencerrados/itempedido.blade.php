@@ -31,7 +31,7 @@
                                     <ul class="list-inline">
                                         <li>
                                             <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.details',
-                                            ['status'=> 2, 'pedidoId' => $itempedido->pedido_id, 'produtoId' => $itempedido->produto_id]) }}">Detalhar</a>
+                                            ['status'=> 2, 'pedidoId' => $itempedido->pedido_id, 'produtoId' => $itempedido->produto_id]) }}"><span class='glyphicon glyphicon-list-alt'></span></a>
 
                                         </li>
                                     </ul>

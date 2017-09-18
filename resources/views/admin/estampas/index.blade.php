@@ -29,10 +29,10 @@
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-warning' href="{{ route('admin.estampas.edit', ['estampa' => $estampa->id]) }}">Editar</a>
+                                            <a class='btn btn-warning' href="{{ route('admin.estampas.edit', ['estampa' => $estampa->id]) }}"><span class='glyphicon glyphicon-edit'></span></a>
                                         </li>
                                         <li>
-                                            <a class='btn btn-danger' href="{{ route('admin.estampas.show', ['estampa' => $estampa->id]) }}">Excluir</a>
+                                            <a class='btn btn-danger' href="{{ route('admin.estampas.show', ['estampa' => $estampa->id]) }}"><span class='glyphicon glyphicon-trash'></span></a>
                                         </li>
                                     </ul>
 

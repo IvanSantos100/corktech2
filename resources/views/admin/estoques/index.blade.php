@@ -51,7 +51,7 @@
                                 <td class="col-md-3 hidden-print">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.estoques.details', ['estoque' => $estoque->id]) }}">Detalhar</a>
+                                            <a class='btn btn-primary' href="{{ route('admin.estoques.details', ['estoque' => $estoque->id]) }}"><span class='glyphicon glyphicon-list-alt'></span></a>
                                         </li>
                                        {{-- @if(checkPermission(['nacional']))
                                             <li>

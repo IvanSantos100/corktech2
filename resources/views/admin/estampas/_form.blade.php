@@ -12,7 +12,9 @@
 {!! Form::error('estampa_file', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
+@if(!empty($estampa))
 @if(file_exists("images/thumbnail/estampa-{$estampa->id}.png"))
 {!! Form::label('estampa', 'Estampa', ['class' => 'control-label']) !!}
 {{ HTML::image("/images/thumbnail/estampa-{$estampa->id}.png") }}
+@endif
 @endif
