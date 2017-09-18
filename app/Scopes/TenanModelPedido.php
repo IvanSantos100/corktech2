@@ -66,8 +66,13 @@ trait TenanModelPedido
                                 ]
                             )->get();
                         }
-                        //dd($model, $itemPedido, $estoqueQnt);
-                        if (!$itemPedido->estoques || $estoqueQnt->isEmpty() || $itemPedido->quantidade > $estoqueQnt->first()->quantidade) {
+
+                        //$estoqueQnt->first()->quantidade = 0.1;
+                        //$itemPedido->quantidade = 0.1;
+                       /* dd($model, $itemPedido, $estoqueQnt,
+                            (double)($estoqueQnt->first()->quantidade) == $itemPedido->quantidade,
+                            $estoqueQnt->first()->quantidade, $itemPedido->quantidade);*/
+                        if (!$itemPedido->estoques || $estoqueQnt->isEmpty() || $estoqueQnt->first()->quantidade < $itemPedido->quantidade) {
 
 
                             $estoqueMenor[] = $itemPedido->produto->descricao;
@@ -100,7 +105,7 @@ trait TenanModelPedido
                             ->whereCentrodistribuicao_id($model->origem_id)
                             ->whereProduto_id($itemPedido->produto_id)->first();
                         //deleta estoque origem
-                        if ($itemPedido->quantidade == $estoqueQnt->quantidade) {
+                        if ($estoqueQnt->quantidade == $itemPedido->quantidade) {
                             $estoqueQnt->delete();
                         }
                         //update estoque origem

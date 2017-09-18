@@ -4,8 +4,8 @@
     <div class="container">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Itens do
-                    pedido:
+                <div class="panel-heading">
+                    Itens do pedido:
                         <b>{{$pedido->id}} </b>
                     tipo:
                         <b>{{ $pedido->tipo_nome }}</b>
