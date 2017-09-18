@@ -51,6 +51,8 @@ class ItemPedidoController extends Controller
             return $query->Where('pedido_id', $pedidoId);
         })->paginate(10);
 
+        //dd($itens_pedidos, $pedido);
+
         if ($itens_pedidos->isEmpty()) {
             return redirect()->route('admin.itempedido.produtos', ['pedido' => $pedidoId]);
         }
@@ -81,7 +83,6 @@ class ItemPedidoController extends Controller
 
     public function addProdudo(Request $request, $pedidoId)
     {
-
         foreach ($request->quantidade as $key => $qnt) {
 
             if ($qnt > 0) {

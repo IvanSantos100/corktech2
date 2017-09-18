@@ -5,7 +5,15 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Itens do
-                    pedido: {{$pedido->id}} {{--<b>{{ $itens_pedido->id }}</b> tipo: <b>{{ $itens_pedido->tipo }}</b> destino: <b>{{ $itens_pedido->destino->descricao ?? $itens_pedido->cliente->nome }}</b>--}}</div>
+                    pedido:
+                        <b>{{$pedido->id}} </b>
+                    tipo:
+                        <b>{{ $pedido->tipo_nome }}</b>
+                    Origem:
+                        <b>{{ $pedido->origem->descricao ?? 'Fabrica' }}</b>
+                    destino:
+                        <b>{{ $pedido->destino->descricao ?? $pedido->cliente->nome }}</b>
+                </div>
                 <div class="panel-body">
                     <div class="pull-left hidden-print">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
@@ -72,11 +80,11 @@
                         </tr>
                         <tr>
                             <td colspan="5"><b>DESCONTO:</b></td>
-                            <td><b>R$ {{number_format(($total/$pedido->desconto),2, ',', '.') }}</b></td>
+                            <td><b>R$ {{--{{number_format(($total/$pedido->desconto),2, ',', '.') }}--}}</b></td>
                         </tr>
                         <tr>
                             <td colspan="5"><b>VALOR FINAL:</b></td>
-                            <td><b>R$ {{number_format(($total)-($total/$pedido->desconto),2, ',', '.') }}</b></td>
+                            <td><b>R$ {{--{{number_format(($total)-($total/$pedido->desconto),2, ',', '.') }}--}}</b></td>
                         </tr>
                         </tbody>
                     </table>

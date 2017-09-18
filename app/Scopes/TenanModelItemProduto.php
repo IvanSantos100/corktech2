@@ -21,7 +21,7 @@ trait TenanModelItemProduto
                     ->where('lote', $model->lote)->first()->valor;
             }else{
                 $model->preco = $model->produto->preco;
-                $model->lote = $model->pedido_id;
+                $model->lote = null; //$model->pedido_id;
             }
 
             if ($model->pedido->tipo == 1) {
