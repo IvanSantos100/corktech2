@@ -23,9 +23,8 @@ class TenantScope implements Scope
 
         $status = 1;
         $destino = 'destino_id';
-
         //pedido encerrado
-        if(\Request::route('status') == 2){
+        if ( \Request::route('status') == 2 ) {
             $status = 2;
             $destino = 'origem_id';
         }

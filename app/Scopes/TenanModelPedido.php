@@ -52,7 +52,8 @@ trait TenanModelPedido
                     return false;
                 }
                 $estorno = null;
-                if (($model->tipo != 1 && $model->status == 2) || ($estorno = $orig['status'] == 2 && $orig['tipo'] != 3)) {
+                if (($model->tipo != 1 && $model->status == 2) ||
+                    ($estorno = $orig['status'] == 2 && $orig['tipo'] != 3)) {
                     //verifica produto disponivel do estoque
                     $estoqueMenor = [];
                     $itensPedido = $model->produtos;
@@ -67,37 +68,33 @@ trait TenanModelPedido
                             )->get();
                         }
 
-                        //$estoqueQnt->first()->quantidade = 0.1;
-                        //$itemPedido->quantidade = 0.1;
-                       /*dd($model, $itemPedido, $estoqueQnt,
-                           (double)$estoqueQnt->first()->quantidade == $itemPedido->quantidade,
-                             $estoqueQnt->first()->quantidade, $itemPedido->quantidade);*/
-                        if (!$itemPedido->estoques || $estoqueQnt->isEmpty() || $estoqueQnt->first()->quantidade < $itemPedido->quantidade) {
+                        /*dd($model, $itemPedido, $estoqueQnt,
+                            $estoqueQnt->first()->quantidade < $itemPedido->quantidade,
+                            $estoqueQnt->first()->quantidade, $itemPedido->quantidade );*/
 
-
+                        if (!$itemPedido->estoques || $estoqueQnt->isEmpty() ||
+                            $itemPedido->quantidade > $estoqueQnt->first()->quantidade) {
                             $estoqueMenor[] = $itemPedido->produto->descricao;
                         }
                     }
 
                     if (!empty($estoqueMenor)) {
-                        $error = array_merge(["Pedido <b>{$itemPedido->pedido_id}</b>, sem produto em estoque:"], $estoqueMenor);
+                        $error = array_merge([
+                            "Pedido <b>{$itemPedido->pedido_id}</b>, sem produto em estoque:"
+                        ], $estoqueMenor);
 
                         \Session::flash('error', $error);
                         return false;
                     }
                 }
             }
-
             $model->date_confirmacao = Carbon::now();
 
-        });
-
-        static::updated(function (Model $model) {
 
             if ($model->status == 2) {
                 $itensPedido = $model->produtos;
 
-                foreach ($itensPedido as $itemPedido) { //dd($model, $itemPedido, $model->pedido);    //updateOrCreate
+                foreach ($itensPedido as $itemPedido) { // dd($model, $itemPedido, $model->pedido);    //updateOrCreate
 
                     if ($model->tipo != 1) {
                         $estoqueQnt = $itemPedido->estoques
@@ -127,7 +124,6 @@ trait TenanModelPedido
 
                     if (!$model->cliente_id) {
                         if (!$estoqueOrigem) {
-
                             $itemPedido->estoques()->create(
                                 [
                                     'lote' => $itemPedido->lote,
@@ -153,6 +149,12 @@ trait TenanModelPedido
                 }
                 \Session::flash('message', "Pedido {$model->id} finalizado com sucesso.");
             }
+
+        });
+
+        static::updated(function (Model $model) {
+
+
 
             $orig = $model->getOriginal();
             if ($model->status == 1 && $orig['status'] == 2) {
@@ -190,7 +192,6 @@ trait TenanModelPedido
                         )->first();
 
                         if (!$estoqueOrigem) {
-
                             $itemPedido->estoques()->create(
                                 [
                                     'lote' => $itemPedido->lote,
@@ -207,12 +208,12 @@ trait TenanModelPedido
                                     'centrodistribuicao_id' => $model->origem_id,
                                     'produto_id' => $itemPedido->produto_id,
                                     'valor' => $itemPedido->preco,
-                                ])
-                                ->update(
-                                    [
-                                        'quantidade' => $itemPedido->quantidade + $estoqueOrigem->quantidade
-                                    ]
-                                );
+                                ]
+                            )->update(
+                                [
+                                    'quantidade' => $itemPedido->quantidade + $estoqueOrigem->quantidade
+                                ]
+                            );
                         }
                     }
 
