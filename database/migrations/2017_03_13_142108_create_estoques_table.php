@@ -16,8 +16,8 @@ class CreateEstoquesTable extends Migration
         Schema::create('estoques', function (Blueprint $table) {
             $table->increments('id');
             $table->string('lote',30);
-            $table->float('valor');
-            $table->float('quantidade');
+            $table->float('valor',8,2);
+            $table->float('quantidade',8,2);
             $table->integer('centrodistribuicao_id')->unsigned();
             $table->foreign('centrodistribuicao_id')->references('id')->on('centro_distribuicoes');
 

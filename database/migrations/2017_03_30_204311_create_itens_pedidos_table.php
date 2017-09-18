@@ -21,9 +21,9 @@ class CreateitenspedidosTable extends Migration
             $table->integer('produto_id')->unsigned();
             $table->foreign('produto_id')->references('id')->on('produtos');
 
-            $table->float('quantidade');
+            $table->float('quantidade',8,2);
 
-            $table->float('preco');
+            $table->float('preco',8,2);
 
             $table->integer('prazoentrega');
 
