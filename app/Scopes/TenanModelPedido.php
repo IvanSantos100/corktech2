@@ -69,9 +69,9 @@ trait TenanModelPedido
 
                         //$estoqueQnt->first()->quantidade = 0.1;
                         //$itemPedido->quantidade = 0.1;
-                       /* dd($model, $itemPedido, $estoqueQnt,
-                            (double)($estoqueQnt->first()->quantidade) == $itemPedido->quantidade,
-                            $estoqueQnt->first()->quantidade, $itemPedido->quantidade);*/
+                       /*dd($model, $itemPedido, $estoqueQnt,
+                           (double)$estoqueQnt->first()->quantidade == $itemPedido->quantidade,
+                             $estoqueQnt->first()->quantidade, $itemPedido->quantidade);*/
                         if (!$itemPedido->estoques || $estoqueQnt->isEmpty() || $estoqueQnt->first()->quantidade < $itemPedido->quantidade) {
 
 
