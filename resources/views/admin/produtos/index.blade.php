@@ -23,6 +23,7 @@
                         <tr>
                             <th>Codigo</th>
                             <th>Descrição</th>
+                            <th>Tamanho</th>
                             <th>Estampa</th>
                             <th>Tipo produto</th>
                             <th>Classe</th>
@@ -34,7 +35,8 @@
                             <tr>
                                 <td class="col-md-1">{{ $produto->codigo}}</td>
                                 <td class="col-md-2">{{ $produto->descricao}}</td>
-                                <td class="col-md-2">{{ $produto->estampas->descricao}}</td>
+                                <td class="col-md-1">{{ $produto->tamanho}}</td>
+                                <td class="col-md-1">{{ $produto->estampas->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->tipoprodutos->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->classes->descricao}}</td>
                                 <td class="col-md-1">R$ {{number_format($produto->preco,2, ',', '.') }}</td>

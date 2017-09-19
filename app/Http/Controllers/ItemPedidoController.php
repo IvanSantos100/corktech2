@@ -48,7 +48,7 @@ class ItemPedidoController extends Controller
         $pedido = $this->pedidosRepository->find($pedidoId);
 
         $itens_pedidos = $this->repository->scopeQuery(function ($query) use ($pedidoId) {
-            return $query->Where('pedido_id', $pedidoId);
+            return $query->where('pedido_id', $pedidoId);
         })->paginate(10);
 
         //dd($itens_pedidos, $pedido);
@@ -57,7 +57,9 @@ class ItemPedidoController extends Controller
             return redirect()->route('admin.itempedido.produtos', ['pedido' => $pedidoId]);
         }
 
-        return view('admin.itempedido.index', compact('itens_pedidos', 'pedidoId', 'pedido'));
+        $totalPedido = $this->repository->total($pedidoId);
+
+        return view('admin.itempedido.index', compact('itens_pedidos', 'pedidoId', 'pedido', 'totalPedido'));
     }
 
     public function listarProdutos(Request $request, $pedidoId)

@@ -43,23 +43,32 @@
                             <th>Código</th>
                             <th>Lote</th>
                             <th>Descrição</th>
+                            <th>Tamanho</th>
                             <th>Quantidade</th>
                             <th>Valor base</th>
-                            <th>Valor Total</th>
+                            <th>Valor item</th>
+                            <th>Total</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php $total = 0;?>
+                        @php
+                            $total = 0
+                        @endphp
                         @foreach($itens_pedidos as $itens_pedido)
-                            <?php $total = $total + ($itens_pedido->preco * $itens_pedido->quantidade); ?>
+                            @php
+                                $desconto = $pedido->desconto ? $pedido->desconto : 1;
+                                $valorItem = $desconto * $itens_pedido->produto->preco;
+                                $total = $valorItem * $itens_pedido->quantidade;
+                            @endphp
                             <tr>
-                                <td class="col-md-1">{{ $itens_pedido->produto->id}}</td>
+                                <td class="col-md-2">{{ $itens_pedido->produto->codigo}}</td>
                                 <td class="col-md-1">{{ $itens_pedido->lote}}</td>
                                 <td class="col-md-2">{{ $itens_pedido->produto->descricao}}</td>
+                                <td class="col-md-1">{{ $itens_pedido->produto->tamanho}}</td>
                                 <td class="col-md-1">{{ $itens_pedido->quantidade}}</td>
-                                <td class="col-md-2">R$ {{number_format($itens_pedido->preco,2, ',', '.') }}</td>
-                                <td class="col-md-2">
-                                    R$ {{number_format(($itens_pedido->preco*$itens_pedido->quantidade),2, ',', '.') }}</td>
+                                <td class="col-md-1">R$ {{number_format($itens_pedido->produto->preco,2, ',', '.') }}</td>
+                                <td class="col-md-1">R$ {{number_format($valorItem,2, ',', '.') }}</td>
+                                <td class="col-md-1"> R$ {{number_format(($total),2, ',', '.') }}</td>
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>
@@ -85,25 +94,29 @@
                                 </td>
                             </tr>
                         @endforeach
-                        <tr>
-                            <td colspan="5"><b>TOTAL:</b></td>
-                            <td><b>R$ {{number_format(($total),2, ',', '.') }}</b></td>
-                        </tr>
-                        <tr>
-                            <td colspan="5"><b>DESCONTO:</b></td>
-                            <td><b>R$ {{--{{number_format(($total/$pedido->desconto),2, ',', '.') }}--}}</b></td>
-                        </tr>
-                        <tr>
-                            <td colspan="5"><b>VALOR FINAL:</b></td>
-                            <td><b>R$ {{--{{number_format(($total)-($total/$pedido->desconto),2, ',', '.') }}--}}</b>
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
+                    <div>
+                        <table>
+                            <tr>
+                                <td class="col-md-2"><b>TOTAL:</b></td>
+                                <td><b>R$ {{number_format(($totalPedido),2, ',', '.') }}</b></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2"><b>DESCONTO:</b></td>
+                                <td><b>R$ {{number_format(($desconto),2, ',', '.') }}</b></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2"><b>VALOR FINAL:</b></td>
+                                <td><b>R$ {{number_format(($totalPedido * $desconto),2, ',', '.') }}</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                     <div class="hidden-print">{{ $itens_pedidos->links() }}</div>
                 </div>
-                <div class="panel-footer hidden-print">
-                    <center><a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Salvar</a></center>
+                <div class="panel-footer hidden-print text-center">
+                    <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Salvar</a>
                 </div>
             </div>
         </div>
