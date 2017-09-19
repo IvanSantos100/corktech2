@@ -34,7 +34,6 @@ trait TenanModelPedido
                 }
             }
             if ($model->tipo == 3) {
-
                 $model->destino_id = null;
                 if ($centrodistribuicao_id != 1) {
                     $model->origem_id = $centrodistribuicao_id;
@@ -93,15 +92,15 @@ trait TenanModelPedido
 
             if ($model->status == 2) {
                 $itensPedido = $model->produtos;
-
-                foreach ($itensPedido as $itemPedido) { // dd($model, $itemPedido, $model->pedido);    //updateOrCreate
-
+                foreach ($itensPedido as $itemPedido) {
+                    //dd($model, $itemPedido, $model->pedido);
                     if ($model->tipo != 1) {
                         $estoqueQnt = $itemPedido->estoques
                             ->whereLote($itemPedido->lote)
                             ->whereCentrodistribuicao_id($model->origem_id)
                             ->whereProduto_id($itemPedido->produto_id)->first();
                         //deleta estoque origem
+                        dd($itemPedido->quantidade < $estoqueQnt->quantidade);
                         if ($estoqueQnt->quantidade == $itemPedido->quantidade) {
                             $estoqueQnt->delete();
                         }
@@ -153,7 +152,6 @@ trait TenanModelPedido
         });
 
         static::updated(function (Model $model) {
-
 
 
             $orig = $model->getOriginal();
