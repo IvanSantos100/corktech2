@@ -89,22 +89,26 @@ trait TenanModelPedido
                 }
             }
             $model->date_confirmacao = Carbon::now();
+        });
 
+        static::updated(function (Model $model) {
 
             if ($model->status == 2) {
                 $itensPedido = $model->produtos;
 
-                foreach ($itensPedido as $itemPedido) { // dd($model, $itemPedido, $model->pedido);    //updateOrCreate
+                foreach ($itensPedido as $itemPedido) {
 
                     if ($model->tipo != 1) {
                         $estoqueQnt = $itemPedido->estoques
                             ->whereLote($itemPedido->lote)
                             ->whereCentrodistribuicao_id($model->origem_id)
                             ->whereProduto_id($itemPedido->produto_id)->first();
+
                         //deleta estoque origem
                         if ($estoqueQnt->quantidade == $itemPedido->quantidade) {
                             $estoqueQnt->delete();
                         }
+
                         //update estoque origem
                         if ($itemPedido->quantidade < $estoqueQnt->quantidade) {
                             $qnt = $estoqueQnt->quantidade - $itemPedido->quantidade;
@@ -112,49 +116,38 @@ trait TenanModelPedido
                         }
                     }
 
-                    //incrementa estoque destino
-                    $estoqueOrigem = $itemPedido->estoques()->where(
-                        [
-                            'lote' => $itemPedido->lote,
-                            'centrodistribuicao_id' => $model->destino_id,
-                            'produto_id' => $itemPedido->produto_id,
-                            'valor' => $itemPedido->preco,
-                        ]
-                    )->first();
-
                     if (!$model->cliente_id) {
-                        if (!$estoqueOrigem) {
-                            $itemPedido->estoques()->create(
-                                [
-                                    'lote' => $itemPedido->lote,
-                                    'centrodistribuicao_id' => $model->destino_id,
-                                    'produto_id' => $itemPedido->produto_id,
-                                    'valor' => $itemPedido->preco,
-                                    'quantidade' => $itemPedido->quantidade
-                                ]
-                            );
-                        } else {
-                            $itemPedido->estoques()->update(
-                                [
-                                    'lote' => $itemPedido->lote,
-                                    'centrodistribuicao_id' => $model->destino_id,
-                                    'produto_id' => $itemPedido->produto_id,
-                                    'valor' => $itemPedido->preco,
-                                    'quantidade' => $itemPedido->quantidade + $estoqueOrigem->quantidade
-                                ]
-                            );
-                        }
+
+                        //incrementa estoque destino
+                        $estoqueDestino = $itemPedido->estoques()->where(
+                            [
+                                'lote' => $itemPedido->lote,
+                                'centrodistribuicao_id' => $model->destino_id,
+                                'produto_id' => $itemPedido->produto_id,
+                                'valor' => $itemPedido->preco,
+                            ]
+                        )->first();
+
+                        $qnt = $estoqueDestino ?
+                            $itemPedido->quantidade + $estoqueDestino->quantidade :
+                            $itemPedido->quantidade;
+
+                        $itemPedido->estoques()->updateOrCreate(
+                            [
+                                'lote' => $itemPedido->lote,
+                                'centrodistribuicao_id' => $model->destino_id,
+                                'produto_id' => $itemPedido->produto_id,
+                                'valor' => $itemPedido->preco
+                            ],
+                            [
+                                'quantidade' => $qnt
+                            ]
+                        );
                     }
 
                 }
                 \Session::flash('message', "Pedido {$model->id} finalizado com sucesso.");
             }
-
-        });
-
-        static::updated(function (Model $model) {
-
-
 
             $orig = $model->getOriginal();
             if ($model->status == 1 && $orig['status'] == 2) {
@@ -191,7 +184,23 @@ trait TenanModelPedido
                             ]
                         )->first();
 
-                        if (!$estoqueOrigem) {
+                        $qnt = $estoqueOrigem ?
+                            $itemPedido->quantidade + $estoqueOrigem->quantidade :
+                            $itemPedido->quantidade;
+
+                        $itemPedido->estoques()->updateOrCreate(
+                            [
+                                'lote' => $itemPedido->lote,
+                                'centrodistribuicao_id' => $model->origem_id,
+                                'produto_id' => $itemPedido->produto_id,
+                                'valor' => $itemPedido->preco,
+                            ],
+                            [
+                                'quantidade' => $qnt
+                            ]
+                        );
+
+                        /*if (!$estoqueOrigem) {
                             $itemPedido->estoques()->create(
                                 [
                                     'lote' => $itemPedido->lote,
@@ -214,7 +223,7 @@ trait TenanModelPedido
                                     'quantidade' => $itemPedido->quantidade + $estoqueOrigem->quantidade
                                 ]
                             );
-                        }
+                        }*/
                     }
 
                 }
