@@ -145,6 +145,7 @@
             @endif
         </div>
     @endif
+    <div class="row" align="center">{{ HTML::image("/images/corktechlogo.png",'alt', array( 'class' => 'img-responsive', 'width' => '200px' )) }}</div>
 
     @yield('content')
 </div>
