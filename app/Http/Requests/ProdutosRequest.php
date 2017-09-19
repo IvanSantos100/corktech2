@@ -26,7 +26,7 @@ class ProdutosRequest extends FormRequest
         $id = $this->route('produto');
 
         return [
-            'codigo' => "required|max:64||unique:produtos,codigo,$id",
+            'codigo' => "required|max:64|unique:produtos,codigo,$id",
             'descricao' => "required|max:50",
             'preco' => "required|numeric",
             'estampa_id' => "exists:estampas,id",
