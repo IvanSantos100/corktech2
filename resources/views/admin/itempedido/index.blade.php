@@ -6,13 +6,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Itens do pedido:
-                        <b>{{$pedido->id}} </b>
+                    <b>{{$pedido->id}} </b>
                     tipo:
-                        <b>{{ $pedido->tipo_nome }}</b>
+                    <b>{{ $pedido->tipo_nome }}</b>
                     Origem:
-                        <b>{{ $pedido->origem->descricao ?? 'Fabrica' }}</b>
+                    <b>{{ $pedido->origem->descricao ?? 'Fabrica' }}</b>
                     destino:
-                        <b>{{ $pedido->destino->descricao ?? $pedido->cliente->nome }}</b>
+                    <b>{{ $pedido->destino->descricao ?? $pedido->cliente->nome }}</b>
                 </div>
                 <div class="panel-body">
                     <div class="pull-left hidden-print">
@@ -26,6 +26,14 @@
                         <a class="btn btn-primary"
                            href="{{route('admin.itempedido.produtos', ['pedidoId' => $pedidoId])}}">Adicionar
                             Produto</a>
+
+                        @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
+                            <a class='btn btn-warning'
+                               href="{{ route('admin.pedidos.edit', ['pedido' => $pedido->id]) }}">Editar</a>
+                        @else
+                            <a class='btn btn-warning' disabled="true">Editar</a>
+                        @endif
+
                         <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Pedidos</a>
                     </div>
                     <br><br>
@@ -50,19 +58,22 @@
                                 <td class="col-md-2">{{ $itens_pedido->produto->descricao}}</td>
                                 <td class="col-md-1">{{ $itens_pedido->quantidade}}</td>
                                 <td class="col-md-2">R$ {{number_format($itens_pedido->preco,2, ',', '.') }}</td>
-                                <td class="col-md-2">R$ {{number_format(($itens_pedido->preco*$itens_pedido->quantidade),2, ',', '.') }}</td>
+                                <td class="col-md-2">
+                                    R$ {{number_format(($itens_pedido->preco*$itens_pedido->quantidade),2, ',', '.') }}</td>
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>
                                             <a class='btn btn-primary' href="{{ route('admin.itempedido.details',
-                                            ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id]) }}"><span class='glyphicon glyphicon-list-alt'></span></a>
+                                            ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id]) }}"><span
+                                                        class='glyphicon glyphicon-list-alt'></span></a>
                                         </li>
                                         <li>
                                             <?php
                                             $form = "form-$itens_pedido->id";
                                             ?>
                                             <a class='btn btn-danger' href="#"
-                                               onclick="event.preventDefault(); document.getElementById({{"\"$form\""}}).submit();"><span class='glyphicon glyphicon-trash'></span></a>
+                                               onclick="event.preventDefault(); document.getElementById({{"\"$form\""}}).submit();"><span
+                                                        class='glyphicon glyphicon-trash'></span></a>
 
                                             {!! Form::open(['route' => ['admin.itempedido.produto.delete',
                                                 'pedidoId' => $pedidoId,'itempedido' => $itens_pedido->id],
@@ -84,7 +95,8 @@
                         </tr>
                         <tr>
                             <td colspan="5"><b>VALOR FINAL:</b></td>
-                            <td><b>R$ {{--{{number_format(($total)-($total/$pedido->desconto),2, ',', '.') }}--}}</b></td>
+                            <td><b>R$ {{--{{number_format(($total)-($total/$pedido->desconto),2, ',', '.') }}--}}</b>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

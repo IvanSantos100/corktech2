@@ -39,20 +39,20 @@
                                     <td class="col-md-2">{{ $pedido->origem->descricao}}</td>
                                 @endif
                                 @if($pedido->destino_id=="")
-                                    <td class="col-md-2">
-                                        <a onclick="popupcliente('{{$pedido->cliente->nome}}','{{$pedido->cliente->tipo}}','{{$pedido->cliente->fone}}')">Cliente - {{$pedido->cliente->nome}}</a>
+                                    <td class="col-md-3">
+                                        <a class="cursor-pointer" onclick="popupcliente('{{$pedido->cliente->nome}}','{{$pedido->cliente->tipo}}','{{$pedido->cliente->fone}}')">Cliente - {{$pedido->cliente->nome}}</a>
                                     </td>
                                 @else
-                                    <td class="col-md-2">{{ $pedido->destino->descricao}}</td>
+                                    <td class="col-md-3">{{ $pedido->destino->descricao}}</td>
                                 @endif
                                 <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
-                                <td class="col-md-3 hidden-print">
+                                <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>
                                             <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.itempedido', ['status' => 2, 'pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-folder-open'></span></a>
                                         </li>
                                         <li>
-                                            <a class='btn btn-danger' href="{{ route('admin.pedidosencerrados.extornar', ['status' => 2, 'pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-trash'></span></a>
+                                            <a class='btn btn-danger' href="{{ route('admin.pedidosencerrados.extornar', ['status' => 2, 'pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-open'></span></a>
                                         </li>
                                     </ul>
                                 </td>
@@ -83,3 +83,7 @@
         <!-- /.modal-dialog -->
     </div>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('js/popup.js') }}"></script>
+@endpush
