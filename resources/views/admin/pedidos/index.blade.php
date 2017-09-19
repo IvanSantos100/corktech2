@@ -38,7 +38,13 @@
                                 <td class="col-md-1">{{ $pedido->id}}</td>
                                 <td class="col-md-1">{{ $pedido->tipo_nome}}</td>
                                 <td class="col-md-3">{{ $pedido->origem->descricao ?? 'Fabrica'}}</td>
-                                <td class="col-md-3">{{ $pedido->destino->descricao ?? "cliente - ".$pedido->cliente->nome}}</td>
+                                @if($pedido->destino_id=="")
+                                    <td class="col-md-3">
+                                        <a class="cursor-pointer" onclick="popupcliente('{{$pedido->cliente->nome}}','{{$pedido->cliente->tipo}}','{{$pedido->cliente->fone}}')">Cliente - {{$pedido->cliente->nome}}</a>
+                                    </td>
+                                @else
+                                    <td class="col-md-3">{{ $pedido->destino->descricao}}</td>
+                                @endif
                                 <td class="col-md-1">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
                                 <td class="col-md-1">{{ $pedido->desconto}} %</td>
                                 <td class="col-md-2 hidden-print">
@@ -70,6 +76,25 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="salvemsg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="Titulomodal"></h4>
+                </div>
+                <div class="modal-body" id="Corpomodal">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 @endsection
-
+@push('scripts')
+    <script src="{{ asset('js/popup.js') }}"></script>
+@endpush
 

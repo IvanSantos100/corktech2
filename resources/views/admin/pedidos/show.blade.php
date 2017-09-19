@@ -60,15 +60,15 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="panel-footer text-center">
                     <div class="alert alert-danger">
                         Deseja realmente excluir?.
                     </div>
-                    <div>
-                        {!! Form::open(['route' => ['admin.pedidos.destroy', 'pedido' => $pedido->id], 'id' => $pedido->id, 'method' => 'DELETE']) !!}
-                        <a href="{{ route('admin.pedidos.index') }}" class="btn btn-success">Voltar</a>
-                        {!! Form::submit('Excluir', ['class' => 'btn btn-danger']) !!}
-                        {!! Form::close() !!}
-                    </div>
+                    {!! Form::open(['route' => ['admin.pedidos.destroy', 'pedido' => $pedido->id], 'id' => $pedido->id, 'method' => 'DELETE']) !!}
+                    <a href="{{ route('admin.pedidos.index') }}" class="btn btn-success">Voltar</a>
+                    {!! Form::submit('Excluir', ['class' => 'btn btn-danger']) !!}
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
