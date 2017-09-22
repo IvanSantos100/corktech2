@@ -30,7 +30,8 @@ class ItemPedidoRepositoryEloquent extends BaseRepository implements ItemPedidoR
     }
 
 
-    public function findWherePaginate($where, $limit){
+    public function findWherePaginate($where, $limit)
+    {
         $this->applyCriteria();
         $this->applyScope();
         $this->applyConditions($where);
@@ -41,9 +42,9 @@ class ItemPedidoRepositoryEloquent extends BaseRepository implements ItemPedidoR
 
     public function total($itens_pedidos)
     {
-        $itens = $this->model->where('pedido_id', $itens_pedidos)->pluck('quantidade','preco');
+        $itens = $this->model->where('pedido_id', $itens_pedidos)->pluck('quantidade', 'preco');
         $total = 0;
-        foreach($itens as $item => $key){
+        foreach ($itens as $item => $key) {
             $total += $item * $key;
         }
 

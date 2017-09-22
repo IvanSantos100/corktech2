@@ -63,5 +63,18 @@ class Pedido extends Model implements Transformable
     {
         return $this->hasMany(ItemPedido::class);
     }
+
+    public function getValorTotalAttribute()
+    {
+        $itens = $this->produtos()->pluck('quantidade', 'preco');
+        $total = 0;
+        foreach ($itens as $item => $key) {
+            $total += $item * $key;
+        }
+
+        $valor_base = $this->destino_id ? $this->destino->valor_base : 1;
+
+        return $total * $valor_base;
+    }
 }
 

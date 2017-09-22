@@ -12,14 +12,13 @@ trait TenanModelItemProduto
 
         //static::addGlobalScope(new TenantScope());
 
-
         static::creating(function (Model $model) {
 
-            if($model->lote){
+            if ($model->lote) {
                 $model->preco = $model->estoques->where('centrodistribuicao_id', $model->pedido->origem->id)
                     ->where('produto_id', $model->produto_id)
                     ->where('lote', $model->lote)->first()->valor;
-            }else{
+            } else {
                 $model->preco = $model->produto->preco;
                 $model->lote = $model->pedido_id;
             }
@@ -36,30 +35,29 @@ trait TenanModelItemProduto
             if ($model->pedido->tipo == 3) {
                 $model->prazoentrega = $model->pedido->origem->prazo_regional;
             }
-
         });
 
         static::created(function (Model $model) {
-            $produtos = $model->pedido->produtos;
+           /* $produtos = $model->pedido->produtos;
             $sum = 0;
             foreach ($produtos as $produto) {
                 $sum += $produto->quantidade * $produto->preco;
             }
 
             $model->pedido->update(['valor_base' => $sum]);
-
-            \Session::flash('message', "Produto incluido com sucesso." );
+            */
+            \Session::flash('message', "Produto incluido com sucesso.");
         });
 
         static::deleted(function (Model $model) {
 
-            $produtos = $model->pedido->produtos;
+            /*$produtos = $model->pedido->produtos;
             $sum = 0;
             foreach ($produtos as $produto) {
                 $sum += $produto->quantidade * $produto->preco;
             }
 
-            $model->pedido->update(['valor_base' => $sum]);
+            $model->pedido->update(['valor_base' => $sum]);*/
         });
     }
 }

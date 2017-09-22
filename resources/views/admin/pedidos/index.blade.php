@@ -45,7 +45,7 @@
                                 @else
                                     <td class="col-md-3">{{ $pedido->destino->descricao}}</td>
                                 @endif
-                                <td class="col-md-1">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
+                                <td class="col-md-1">R$ {{number_format($pedido->valor_total,2, ',', '.') }}</td>
                                 <td class="col-md-1">{{ $pedido->desconto}} %</td>
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">

@@ -170,30 +170,6 @@ trait TenanModelPedido
                                 'quantidade' => $qnt
                             ]
                         );
-                        /*if (!$estoqueOrigem) {
-                            $itemPedido->estoques()->create(
-                                [
-                                    'lote' => $itemPedido->lote,
-                                    'centrodistribuicao_id' => $model->origem_id,
-                                    'produto_id' => $itemPedido->produto_id,
-                                    'valor' => $itemPedido->preco,
-                                    'quantidade' => $itemPedido->quantidade
-                                ]
-                            );
-                        } else {
-                            $itemPedido->estoques()->where(
-                                [
-                                    'lote' => $itemPedido->lote,
-                                    'centrodistribuicao_id' => $model->origem_id,
-                                    'produto_id' => $itemPedido->produto_id,
-                                    'valor' => $itemPedido->preco,
-                                ]
-                            )->update(
-                                [
-                                    'quantidade' => $itemPedido->quantidade + $estoqueOrigem->quantidade
-                                ]
-                            );
-                        }*/
                     }
                 }
                 \Session::flash('message', "Pedido {$model->id} Extornado com sucesso.");

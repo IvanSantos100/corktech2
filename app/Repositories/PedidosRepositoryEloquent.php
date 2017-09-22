@@ -38,14 +38,15 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
             return $produtos->pivot->preco * $produtos->pivot->quantidade;
         });
 
-        $this->model->updateOrCreate(['id'=>$pedidoId],['valor_base'=>$valorPedido]);
+        $this->model->updateOrCreate(['id'=>$pedidoId], ['valor_base'=>$valorPedido]);
     }
 
 
     /**
      * Boot up the repository, pushing criteria
      */
-    public function findWherePaginate($where, $limit){
+    public function findWherePaginate($where, $limit)
+    {
         $this->applyCriteria();
         $this->applyScope();
         $this->applyConditions($where);
@@ -54,7 +55,8 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
         return $this->parserResult($model);
     }
 
-    public function findOrWherePaginate($where, $limit){
+    public function findOrWherePaginate($where, $limit)
+    {
         $this->applyCriteria();
         $this->applyScope();
         $this->applyConditionsOr($where);
@@ -70,10 +72,10 @@ class PedidosRepositoryEloquent extends BaseRepository implements PedidosReposit
         foreach ($where as $field => $value) {
             if (is_array($value)) {
                 list($field, $condition, $val) = $value;
-                if($cont==0){
+                if ($cont==0) {
                     $this->model = $this->model->where($field, $condition, $val);
                     $cont++;
-                }else {
+                } else {
                     $this->model = $this->model->orWhere($field, $condition, $val);
                 }
             } else {
