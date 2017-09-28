@@ -30,6 +30,7 @@
                             <th>Destino</th>
                             <th>Valor base</th>
                             <th>Desconto</th>
+                            <th>Total</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -39,26 +40,34 @@
                                 <td class="col-md-1">{{ $pedido->tipo_nome}}</td>
                                 <td class="col-md-3">{{ $pedido->origem->descricao ?? 'Fabrica'}}</td>
                                 @if($pedido->destino_id=="")
-                                    <td class="col-md-3">
-                                        <a class="cursor-pointer" onclick="popupcliente('{{$pedido->cliente->nome}}','{{$pedido->cliente->tipo}}','{{$pedido->cliente->fone}}')">Cliente - {{$pedido->cliente->nome}}</a>
+                                    <td class="col-md-2">
+                                        <a class="cursor-pointer"
+                                           onclick="popupcliente('{{$pedido->cliente->nome}}','{{$pedido->cliente->tipo}}','{{$pedido->cliente->fone}}')">Cliente
+                                            - {{$pedido->cliente->nome}}</a>
                                     </td>
                                 @else
-                                    <td class="col-md-3">{{ $pedido->destino->descricao}}</td>
+                                    <td class="col-md-2">{{ $pedido->destino->descricao}}</td>
                                 @endif
-                                <td class="col-md-1">R$ {{number_format($pedido->valor_total,2, ',', '.') }}</td>
+                                <td class="col-md-1">{{ $pedido->valor_base }} %</td>
                                 <td class="col-md-1">{{ $pedido->desconto}} %</td>
+                                <td class="col-md-1">R$ {{number_format(($pedido->valor_total),2, ',', '.') }}</td>
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.itempedido.index', ['pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-folder-open'></span></a>
+                                            <a class='btn btn-primary'
+                                               href="{{ route('admin.itempedido.index', ['pedido' => $pedido->id]) }}"><span
+                                                        class='glyphicon glyphicon-folder-open'></span></a>
                                         </li>
                                         <li>
-                                            <a class='btn btn-success' href="{{ route('admin.pedidos.status', ['pedido' => $pedido->id]) }}">
+                                            <a class='btn btn-success'
+                                               href="{{ route('admin.pedidos.status', ['pedido' => $pedido->id]) }}">
                                                 <span class='glyphicon glyphicon-ok'></span></a>
                                         </li>
                                         <li>
                                             @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                                                <a class='btn btn-danger' href="{{ route('admin.pedidos.show', ['pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-trash'></span></a>
+                                                <a class='btn btn-danger'
+                                                   href="{{ route('admin.pedidos.show', ['pedido' => $pedido->id]) }}"><span
+                                                            class='glyphicon glyphicon-trash'></span></a>
                                             @else
                                                 <a class='btn btn-danger' disabled="true">Excluir</a>
                                             @endif

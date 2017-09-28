@@ -66,7 +66,15 @@ class Pedido extends Model implements Transformable
 
     public function getValorTotalAttribute()
     {
-        $itens = $this->produtos()->pluck('quantidade', 'preco');
+        $itens = $this->produtos;
+        $total = 0;
+        foreach ($itens as $item) {
+            $total += $item->valor_item * $item->quantidade;
+        }
+
+        return $total;
+
+       /* $itens = $this->produtos()->pluck('quantidade', 'preco');
         $total = 0;
         foreach ($itens as $item => $key) {
             $total += $item * $key;
@@ -74,7 +82,7 @@ class Pedido extends Model implements Transformable
 
         $valor_base = $this->destino_id ? $this->destino->valor_base : 1;
 
-        return $total * $valor_base;
+        return $total * $valor_base;*/
     }
 }
 

@@ -7,13 +7,13 @@
                 <?php $nomeTipoDestino = $pedido->origem_id ? $pedido->destino_id ? $pedido->destino->TipoNome : 'o cliente' : null ?>
                 <div class="panel-heading">
                     Inclusão de produtos para o pedido:
-                        <b>{{$pedido->id}}</b>
+                    <b>{{$pedido->id}}</b>
                     de
-                        <b>{{$pedido->TipoNome}}</b>
+                    <b>{{$pedido->TipoNome}}</b>
                     da
-                        <b>{{ $pedido->origem->descricao ?? 'Fabrica' }}</b>
+                    <b>{{ $pedido->origem->descricao ?? 'Fabrica' }}</b>
                     para {{$nomeTipoDestino}}
-                        <b>{{$pedido->destino->descricao ?? $pedido->cliente->nome}}</b>
+                    <b>{{$pedido->destino->descricao ?? $pedido->cliente->nome}}</b>
                 </div>
                 <div class="panel-body">
                     <div class="pull-left">
@@ -25,10 +25,13 @@
                     </div>
 
                     <div class="pull-right">
-                        <a class='btn btn-primary'
-                           href="{{ route('admin.itempedido.index',['pedidoId' => $pedido->id]) }}">Ver produtos desse
-                            pedido
-                        </a>
+                        @if(!$pedido->produtos->isEmpty())
+                            <a class='btn btn-primary'
+                               href="{{ route('admin.itempedido.index',['pedidoId' => $pedido->id]) }}">Ver produtos
+                                desse
+                                pedido
+                            </a>
+                        @endif
                         <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Pedidos</a>
                     </div>
                     <br><br>
@@ -70,7 +73,7 @@
                                 @if(!$estoques->isEmpty())
                                     <td class="col-md-3">
                                         <?php
-                                            $form = "add-form-{$pedido->id}-{$produto->id}";
+                                        $form = "add-form-{$pedido->id}-{$produto->id}";
                                         ?>
                                         {!! Form::open(['route' => ['admin.itempedido.produtos', $pedido->id],
                                                         'class' => 'form', 'id' => "$form"]) !!}
@@ -81,7 +84,8 @@
                                                 <tr>
                                                     <td class="col-md-1">{{ $estoque->lote}}</td>
                                                     <td class="col-md-1">{{$estoque->quantidade}}</td>
-                                                    <td class="col-md-1">R$ {{number_format($estoque->valor,2, ',', '.') }}</td>
+                                                    <td class="col-md-1">
+                                                        R$ {{number_format($estoque->valor,2, ',', '.') }}</td>
                                                     <td class="col-md-1">
                                                         {!! form::number("quantidade[]", 0, ['min' => 1, 'style' => 'width:100%', 'form' => $form]) !!}
                                                         {!! form::hidden("lote[]", $estoque->lote) !!}
@@ -94,7 +98,8 @@
                                     </td>
                                     <td class="col-md-1">
                                         <a class='btn btn-success' href="#"
-                                           onclick="document.getElementById({{"\"$form\""}}).submit();"><span class='glyphicon glyphicon-plus'></span>
+                                           onclick="document.getElementById({{"\"$form\""}}).submit();"><span
+                                                    class='glyphicon glyphicon-plus'></span>
                                         </a>
                                     </td>
                                 @else
@@ -103,7 +108,8 @@
                                             <tr>
                                                 <td class="col-md-1">{{ $produto->lote}}</td>
                                                 <td class="col-md-1">{{ $produto->quantidade}}</td>
-                                                <td class="col-md-1">R$ {{number_format($produto->preco,2, ',', '.') }}</td>
+                                                <td class="col-md-1">
+                                                    R$ {{number_format($produto->preco,2, ',', '.') }}</td>
                                                 <td class="col-md-1">
                                                     <?php
                                                     $form = "add-form-{$pedido->id}-{$produto->id}";
@@ -124,7 +130,8 @@
                                     </td>
                                     <td class="col-md-1">
                                         <a class='btn btn-success' href="#"
-                                           onclick="document.getElementById({{"\"$form\""}}).submit();"><span class='glyphicon glyphicon-plus'></span>
+                                           onclick="document.getElementById({{"\"$form\""}}).submit();"><span
+                                                    class='glyphicon glyphicon-plus'></span>
                                         </a>
                                     </td>
                                 @endif

@@ -42,10 +42,11 @@ class ItemPedidoRepositoryEloquent extends BaseRepository implements ItemPedidoR
 
     public function total($itens_pedidos)
     {
-        $itens = $this->model->where('pedido_id', $itens_pedidos)->pluck('quantidade', 'preco');
+        $itens = $this->model->where('pedido_id', $itens_pedidos)->get();
+
         $total = 0;
-        foreach ($itens as $item => $key) {
-            $total += $item * $key;
+        foreach ($itens as $item) {
+            $total += $item->valor_item * $item->quantidade;
         }
 
         return $total;

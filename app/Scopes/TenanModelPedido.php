@@ -10,7 +10,9 @@ trait TenanModelPedido
     protected static function boot()
     {
         parent::boot();
+
         static::addGlobalScope(new TenantScope());
+
         static::creating(function (Model $model) {
             $centrodistribuicao_id = \Auth::user()->centrodistribuicao_id;
             $model->desconto = $model->desconto ?? 0;
@@ -35,6 +37,14 @@ trait TenanModelPedido
                 }
             }
         });
+
+        static::created(function (Model $model) {
+            if ($model->destino) {
+                $model->valor_base = $model->destino->valor_base;
+                $model->save();
+            }
+        });
+
         static::updating(function (Model $model) {
             $orig = $model->getOriginal();
             if (($model->status == 2) || ($model->status == 1 && $orig['status'] == 2)) {

@@ -46,8 +46,8 @@ class PedidosController extends Controller
     {
         $search = $request->get('search');
 
-        $pedidos = $this->repository->scopeQuery(function($query){
-            return $query->orderBy('id','desc');
+        $pedidos = $this->repository->scopeQuery(function ($query) {
+            return $query->orderBy('id', 'desc');
         })->paginate(10);
 
         ///dd($pedidos[0]->cliente->nome);
@@ -63,7 +63,6 @@ class PedidosController extends Controller
         $url = $request->get('redirect_to', route('admin.pedidos.index'));
 
         return redirect()->to($url);
-
     }
 
     public function create(Request $request)
@@ -75,6 +74,17 @@ class PedidosController extends Controller
         $tipo = $request->get('tipo') ?: array_keys($opcao)[0];
 
         return view('admin.pedidos.create', compact('centroDistribuicao', 'clientes', 'opcao', 'tipo'));
+    }
+
+    private function opcao()
+    {
+        $center_id = \Auth::user()->centrodistribuicao_id;
+        switch ($center_id) {
+            case 1:
+                return Pedido::TIPO;
+            default:
+                return Pedido::TIPO_2;
+        }
     }
 
     /**
@@ -102,7 +112,7 @@ class PedidosController extends Controller
     {
         $pedido = $this->repository->find($id);
 
-        if(!$pedido){
+        if (!$pedido) {
             throw new ModelNotFoundException('Pedido não encontrado.');
         }
 
@@ -128,7 +138,6 @@ class PedidosController extends Controller
 
         return view('admin.pedidos.edit', compact('pedido', 'centroDistribuicao', 'clientes', 'opcao', 'tipo'));
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -164,16 +173,5 @@ class PedidosController extends Controller
         }
 
         return redirect('admin/pedidos');
-    }
-
-    private function opcao()
-    {
-        $center_id = \Auth::user()->centrodistribuicao_id;
-        switch ($center_id) {
-            case 1:
-                return  Pedido::TIPO;
-            default:
-                return  Pedido::TIPO_2;
-        }
     }
 }

@@ -59,6 +59,8 @@ class ItemPedidoController extends Controller
 
         $totalPedido = $this->repository->total($pedidoId);
 
+        //dd($itens_pedidos[0]->preco);
+
         return view('admin.itempedido.index', compact('itens_pedidos', 'pedidoId', 'pedido', 'totalPedido'));
     }
 
@@ -78,15 +80,12 @@ class ItemPedidoController extends Controller
             return $query->orderBy('descricao', 'asc');
         })->paginate(10);
 
-        //dd($produtos[0]->estoques);
-
         return view('admin.itempedido.produtos', compact('produtos', 'pedido', 'search', 'tipo'));
     }
 
     public function addProdudo(Request $request, $pedidoId)
     {
         foreach ($request->quantidade as $key => $qnt) {
-
             if ($qnt > 0) {
                 $this->repository->create([
                     'pedido_id' => $pedidoId,
@@ -105,7 +104,7 @@ class ItemPedidoController extends Controller
         return redirect()->to($url);
     }
 
-    public function details($pedido,$id)
+    public function details($pedido, $id)
     {
         $produto = $this->produtosRepository->find($id);
 
@@ -114,12 +113,12 @@ class ItemPedidoController extends Controller
 
     public function editProdudo($pedidoId, $produtoId)
     {
-
+        //
     }
 
     public function updateProdudo(Request $request, $pedidoId, $produtoId)
     {
-
+        //
     }
 
     public function deleteProduto($pedidoId, $itempedido)

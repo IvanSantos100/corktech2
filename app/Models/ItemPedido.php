@@ -41,4 +41,11 @@ class ItemPedido extends Model implements Transformable
     {
         return $this->belongsTo(Estoque::class, 'produto_id', 'produto_id');
     }
+
+    public function getValorItemAttribute()
+    {
+        $itens = $this->pedido->valor_base == 0 ? 1 : $this->pedido->valor_base;
+
+        return $this->preco * $itens;
+    }
 }
