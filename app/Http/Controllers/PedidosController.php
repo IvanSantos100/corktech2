@@ -46,7 +46,7 @@ class PedidosController extends Controller
     {
         $search = $request->get('search');
 
-        $pedidos = $this->repository->scopeQuery(function ($query) {
+        $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) {
             return $query->orderBy('id', 'desc');
         })->paginate(10);
 

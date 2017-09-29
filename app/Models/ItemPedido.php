@@ -46,6 +46,6 @@ class ItemPedido extends Model implements Transformable
     {
         $itens = $this->pedido->valor_base == 0 ? 1 : $this->pedido->valor_base;
 
-        return $this->preco * $itens;
+        return $this->produto->preco * $itens;
     }
 }

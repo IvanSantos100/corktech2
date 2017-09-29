@@ -61,9 +61,15 @@
                                 <td class="col-md-2">{{ $itens_pedido->produto->descricao}}</td>
                                 <td class="col-md-1">{{ $itens_pedido->produto->tamanho}}</td>
                                 <td class="col-md-1">{{ $itens_pedido->quantidade}}</td>
-                                <td class="col-md-1">R$ {{number_format($itens_pedido->preco,2, ',', '.') }}</td>
-                                <td class="col-md-1">R$ {{number_format($itens_pedido->valor_item,2, ',', '.') }}</td>
-                                <td class="col-md-1"> R$ {{number_format(($itens_pedido->quantidade * $itens_pedido->valor_item),2, ',', '.') }}</td>
+                                <td class="col-md-1">
+                                    R$ {{ number_format($itens_pedido->produto->preco,2, ',', '.') }}
+                                </td>
+                                <td class="col-md-1">
+                                    R$ {{ number_format($itens_pedido->valor_item,2, ',', '.') }}
+                                </td>
+                                <td class="col-md-1">
+                                    R$ {{ number_format(($itens_pedido->quantidade * $itens_pedido->valor_item),2, ',', '.') }}
+                                </td>
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>
@@ -95,18 +101,15 @@
                         <table>
                             <tr>
                                 <td class="col-md-2"><b>TOTAL:</b></td>
-                                <td><b>R$ {{number_format(($totalPedido),2, ',', '.') }}</b></td>
+                                <td><b>R$ {{number_format(($pedido->valor_total),2, ',', '.') }}</b></td>
                             </tr>
                             <tr>
                                 <td class="col-md-2"><b>DESCONTO:</b></td>
                                 <td><b>{{number_format(($pedido->desconto),2, ',', '.') }} %</b></td>
                             </tr>
-                            @php
-                                $desconto = $pedido->desconto ? $pedido->desconto : 1;
-                            @endphp
                             <tr>
                                 <td class="col-md-2"><b>VALOR FINAL:</b></td>
-                                <td><b>R$ {{number_format(($totalPedido * $desconto),2, ',', '.') }}</b>
+                                <td><b>R$ {{number_format($pedido->valor_final, 2, ',', '.') }}</b>
                                 </td>
                             </tr>
                         </table>

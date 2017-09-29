@@ -26,26 +26,30 @@
                             <th>Origem</th>
                             <th>Destino</th>
                             <th>Valor base</th>
+                            <th>Desconto</th>
+                            <th>Total</th>
+                            <th>Valor Final</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($pedidos as $pedido)
                             <tr>
                                 <td class="col-md-1">{{ $pedido->id}}</td>
-                                <td class="col-md-2">{{ $pedido->tipoNome}}</td>
-                                @if($pedido->origem_id=="")
-                                    <td class="col-md-2">Fábrica</td>
-                                @else
-                                    <td class="col-md-2">{{ $pedido->origem->descricao}}</td>
-                                @endif
+                                <td class="col-md-1">{{ $pedido->tipo_nome}}</td>
+                                <td class="col-md-2">{{ $pedido->origem->descricao ?? 'Fabrica'}}</td>
                                 @if($pedido->destino_id=="")
-                                    <td class="col-md-3">
-                                        <a class="cursor-pointer" onclick="popupcliente('{{$pedido->cliente->nome}}','{{$pedido->cliente->tipo}}','{{$pedido->cliente->fone}}')">Cliente - {{$pedido->cliente->nome}}</a>
+                                    <td class="col-md-2">
+                                        <a class="cursor-pointer"
+                                           onclick="popupcliente('{{$pedido->cliente->nome}}','{{$pedido->cliente->tipo}}','{{$pedido->cliente->fone}}')">Cliente
+                                            - {{$pedido->cliente->nome}}</a>
                                     </td>
                                 @else
-                                    <td class="col-md-3">{{ $pedido->destino->descricao}}</td>
+                                    <td class="col-md-2">{{ $pedido->destino->descricao}}</td>
                                 @endif
-                                <td class="col-md-2">R$ {{number_format($pedido->valor_base,2, ',', '.') }}</td>
+                                <td class="col-md-1">{{ $pedido->valor_base }} %</td>
+                                <td class="col-md-1">{{ $pedido->desconto}} %</td>
+                                <td class="col-md-1">R$ {{number_format(($pedido->valor_total),2, ',', '.') }}</td>
+                                <td class="col-md-1">R$ {{number_format(($pedido->valor_final),2, ',', '.') }}</td>
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>

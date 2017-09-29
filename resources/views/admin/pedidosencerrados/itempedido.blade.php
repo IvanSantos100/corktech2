@@ -13,20 +13,32 @@
                         <thead>
                         <tr>
                             <th>Código</th>
+                            <th>Lote</th>
                             <th>Descrição</th>
+                            <th>Tamanho</th>
                             <th>Quantidade</th>
                             <th>Valor base</th>
-                            <th>Lote</th>
+                            <th>Valor item</th>
+                            <th>Total</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($itenspedido as $itempedido)
                             <tr>
                                 <td class="col-md-1">{{ $itempedido->produto->codigo}}</td>
-                                <td class="col-md-3">{{ $itempedido->produto->descricao}}</td>
-                                <td class="col-md-3">{{ $itempedido->quantidade}}</td>
-                                <td class="col-md-3">R$ {{ number_format($itempedido->preco,2, ',', '.')}}</td>
-                                <td class="col-md-3">{{ $itempedido->lote}}</td>
+                                <td class="col-md-1">{{ $itempedido->lote}}</td>
+                                <td class="col-md-2">{{ $itempedido->produto->descricao}}</td>
+                                <td class="col-md-1">{{ $itempedido->produto->tamanho}}</td>
+                                <td class="col-md-1">{{ $itempedido->quantidade}}</td>
+                                <td class="col-md-1">
+                                    R$ {{ number_format($itempedido->preco,2, ',', '.') }}
+                                </td>
+                                <td class="col-md-2">
+                                    R$ {{ number_format($itempedido->valor_item,2, ',', '.') }}
+                                </td>
+                                <td class="col-md-2">
+                                    R$ {{ number_format(($itempedido->quantidade * $itempedido->valor_item),2, ',', '.') }}
+                                </td>
                                 <td class="col-md-1 hidden-print">
                                     <ul class="list-inline">
                                         <li>
@@ -40,6 +52,23 @@
                         @endforeach
                         </tbody>
                     </table>
+                    <div>
+                        <table>
+                            <tr>
+                                <td class="col-md-2"><b>TOTAL:</b></td>
+                                <td><b>R$ {{number_format(($itenspedido[0]->pedido->valor_total),2, ',', '.') }}</b></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2"><b>DESCONTO:</b></td>
+                                <td><b>{{number_format(($itenspedido[0]->pedido->desconto),2, ',', '.') }} %</b></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2"><b>VALOR FINAL:</b></td>
+                                <td><b>R$ {{number_format($itenspedido[0]->pedido->valor_final, 2, ',', '.') }}</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                     <div class="hidden-print">{{ $itenspedido->links() }}</div>
                 </div>
             </div>

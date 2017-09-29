@@ -1,4 +1,5 @@
 <?php
+
 namespace CorkTech\Http\Controllers;
 
 use CorkTech\Criteria\FindByPedidoEncerradoCriteria;
@@ -45,7 +46,8 @@ class PedidosEncerradosController extends Controller
         ClientesRepository $clientesRepository,
         ProdutosRepository $produtosRepository,
         ItemPedidoRepository $itempedidosRepository
-    ){
+    )
+    {
         $this->repository = $repository;
         $this->origensRepository = $origensRepository;
         $this->destinosRepository = $destinosRepository;
@@ -65,16 +67,18 @@ class PedidosEncerradosController extends Controller
     {
         $search = $request->get('search');
 
-        if(Auth::user()->centrodistribuicao_id==1){
-            $pedidos = $this->repository->paginate(10);
-        }else {
+        if (Auth::user()->centrodistribuicao_id == 1) {
+            $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->paginate(10);
+        } else {
             $centrodis = Auth::user()->centrodistribuicao_id;
-            $pedidos = $this->repository->findOrWherePaginate([['origem_id', '=', $centrodis], ['destino_id', '=', $centrodis]], 10);
+            $pedidos = $this->repository
+                ->with(['origem', 'cliente', 'destino'])
+                ->findOrWherePaginate([['origem_id', '=', $centrodis], ['destino_id', '=', $centrodis]], 10);
         }
 
         //dd($pedidos[0]->produtos[0]->produto);
 
-        return view('admin.pedidosencerrados.index', compact('pedidos','search'));
+        return view('admin.pedidosencerrados.index', compact('pedidos', 'search'));
     }
 
     public function itempedido(Request $request, $t, $id)
@@ -83,10 +87,11 @@ class PedidosEncerradosController extends Controller
 
         ///$this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $itenspedido = $this->repository->find($id)->produtos()->paginate(10);
+        $itenspedido = $this->itempedidosRepository->with(['produto'])->scopeQuery(function ($query) use ($id) {
+            return $query->where('pedido_id', $id);
+        })->paginate(10);
 
         if ($itenspedido->isEmpty()) {
-
             return 'vazio';
         }
 
@@ -96,7 +101,7 @@ class PedidosEncerradosController extends Controller
 
     public function details($status, $id, $produtoId)
     {
-        $produto = $this->repository->find($id)->produtos->where('produto_id', $produtoId)->first()->produto;
+        $produto = $this->repository->find($id)->produtos->where('produto_id', $produtoId)->first();
 
         return view('admin.pedidosencerrados.details', compact('produto'));
     }
@@ -112,13 +117,13 @@ class PedidosEncerradosController extends Controller
     private function opcao()
     {
         $center_id = \Auth::user()->centrodistribuicao_id;
-        switch ($center_id){
-            case 1: return ['Entrada' => 'Entrada', 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
-            case 2: return ['Movimentação' => 'Movimentação'];
-            case 3: return ['Saída' => 'Saída'];
+        switch ($center_id) {
+            case 1:
+                return ['Entrada' => 'Entrada', 'Movimentação' => 'Movimentação', 'Saída' => 'Saída'];
+            case 2:
+                return ['Movimentação' => 'Movimentação'];
+            case 3:
+                return ['Saída' => 'Saída'];
         }
-
     }
-
-
 }

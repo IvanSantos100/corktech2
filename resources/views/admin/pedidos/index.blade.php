@@ -31,6 +31,7 @@
                             <th>Valor base</th>
                             <th>Desconto</th>
                             <th>Total</th>
+                            <th>Valor Final</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,7 +39,7 @@
                             <tr>
                                 <td class="col-md-1">{{ $pedido->id}}</td>
                                 <td class="col-md-1">{{ $pedido->tipo_nome}}</td>
-                                <td class="col-md-3">{{ $pedido->origem->descricao ?? 'Fabrica'}}</td>
+                                <td class="col-md-2">{{ $pedido->origem->descricao ?? 'Fabrica'}}</td>
                                 @if($pedido->destino_id=="")
                                     <td class="col-md-2">
                                         <a class="cursor-pointer"
@@ -51,6 +52,7 @@
                                 <td class="col-md-1">{{ $pedido->valor_base }} %</td>
                                 <td class="col-md-1">{{ $pedido->desconto}} %</td>
                                 <td class="col-md-1">R$ {{number_format(($pedido->valor_total),2, ',', '.') }}</td>
+                                <td class="col-md-1">R$ {{number_format(($pedido->valor_final),2, ',', '.') }}</td>
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>

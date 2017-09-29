@@ -10,9 +10,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface ItemPedidoRepository extends RepositoryInterface
 {
-    //
     public function findWherePaginate($where, $limit);
-
-    public function total($itens_pedidos);
-
 }

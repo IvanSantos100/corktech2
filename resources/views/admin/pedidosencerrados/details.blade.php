@@ -12,7 +12,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Descrição:</label><br>
-                                {{ $produto->descricao }}
+                                {{ $produto->produto->descricao }}
                             </div>
                             <div class="form-group">
                                 <label>Preço:</label><br>
@@ -22,21 +22,21 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Estampa:</label><br>
-                                {{ $produto->estampas->descricao }}
+                                {{ $produto->produto->estampas->descricao }}
                             </div>
                             <div class="form-group">
                                 <label>Tipo produto:</label><br>
-                                {{ $produto->tipoprodutos->descricao }}
+                                {{ $produto->produto->tipoprodutos->descricao }}
                             </div>
                             <div class="form-group">
                                 <label>Classe:</label><br>
-                                {{ $produto->classes->descricao }}
+                                {{ $produto->produto->classes->descricao }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="panel-footer">
-                    <center><a class='btn btn-primary' href="{{ URL::previous() }}">Voltar</a></center>
+                <div class="panel-footerv text-center">
+                   <a class='btn btn-primary' href="{{ URL::previous() }}">Voltar</a>
                 </div>
             </div>
         </div>

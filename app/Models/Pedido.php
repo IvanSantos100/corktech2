@@ -73,16 +73,13 @@ class Pedido extends Model implements Transformable
         }
 
         return $total;
+    }
 
-       /* $itens = $this->produtos()->pluck('quantidade', 'preco');
-        $total = 0;
-        foreach ($itens as $item => $key) {
-            $total += $item * $key;
-        }
-
-        $valor_base = $this->destino_id ? $this->destino->valor_base : 1;
-
-        return $total * $valor_base;*/
+    public function getValorFinalAttribute()
+    {
+        //TOTAL*(1-(DESCONTO/100))
+        $desconto = $this->desconto > 0 ? 1 - ( $this->desconto / 100) : 1;
+        return $this->getValorTotalAttribute() * $desconto;
     }
 }
 
