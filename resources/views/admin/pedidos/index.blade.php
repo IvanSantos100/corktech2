@@ -58,7 +58,7 @@
                                         <li>
                                             <a class='btn btn-primary'
                                                href="{{ route('admin.itempedido.index', ['pedido' => $pedido->id]) }}"><span
-                                                        class='glyphicon glyphicon-folder-open'></span></a>
+                                                        class='glyphicon glyphicon-list-alt'></span></a>
                                         </li>
                                         <li>
                                             <a class='btn btn-success'

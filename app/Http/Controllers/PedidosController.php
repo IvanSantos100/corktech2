@@ -48,7 +48,7 @@ class PedidosController extends Controller
 
         $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) {
             return $query->orderBy('id', 'desc');
-        })->paginate(10);
+        })->paginate(20);
 
         ///dd($pedidos[0]->cliente->nome);
 
