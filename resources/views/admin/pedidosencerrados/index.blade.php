@@ -53,7 +53,7 @@
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.itempedido', ['status' => 2, 'pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-folder-open'></span></a>
+                                            <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.itempedido', ['status' => 2, 'pedido' => $pedido->id]) }}"><span  class='glyphicon glyphicon-list-alt'></span></a>
                                         </li>
                                         <li>
                                             <a class='btn btn-danger' href="{{ route('admin.pedidosencerrados.extornar', ['status' => 2, 'pedido' => $pedido->id]) }}"><span class='glyphicon glyphicon-open'></span></a>
