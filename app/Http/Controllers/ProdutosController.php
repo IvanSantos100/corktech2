@@ -53,7 +53,7 @@ class ProdutosController extends Controller
         $search = $request->get('search');
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $produtos = $this->repository->orderBy('descricao')->paginate(10);
+        $produtos = $this->repository->orderBy('descricao')->paginate(25);
 
         return view('admin.produtos.index', compact('produtos','search'));
     }

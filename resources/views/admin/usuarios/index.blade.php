@@ -29,7 +29,12 @@
                         <tbody>
                         @foreach($usuarios as $usuario)
                             <tr>
-                                <td class="col-md-2">{{ $usuario->name}}</td>
+                                <td class="col-md-2"> 
+                                    <a class="cursor-pointer"
+                                           onclick="popupusuario('{{$usuario->name}}','{{$usuario->email}}','{{$usuario->endereco}}','{{$usuario->bairro}}','{{$usuario->cidade}}','{{$usuario->uf}}','{{$usuario->cep}}','{{$usuario->fone}}','{{$usuario->celular}}','{{$usuario->centroDistribuicoes->descricao}}')">
+                                           {{ $usuario->name}}
+                                    </a>
+                                </td>
                                 <td class="col-md-2">{{ $usuario->email}}</td>
                                 <td class="col-md-2">{{ $usuario->centroDistribuicoes->descricao}}</td>
                                 @if(checkPermission(['nacional']))
@@ -55,4 +60,24 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="salvemsg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="Titulomodal"></h4>
+                </div>
+                <div class="modal-body" id="Corpomodal">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/popup.js') }}"></script>
+@endpush

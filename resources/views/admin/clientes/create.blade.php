@@ -22,3 +22,6 @@
     </div>
 
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/mask.js') }}"></script>
+@endpush

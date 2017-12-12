@@ -35,7 +35,7 @@ class ClassesController extends Controller
         $search = $request->get('search');
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $classes = $this->repository->paginate(10);
+        $classes = $this->repository->orderby('descricao')->paginate(25);
 
         return view('admin.classes.index', compact('classes','search'));
     }
