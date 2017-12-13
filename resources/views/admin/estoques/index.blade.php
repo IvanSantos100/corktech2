@@ -21,6 +21,8 @@
                             <option @if($limit==50) selected="selected" @endif value="50">50</option>
                             <option @if($limit==75) selected="selected" @endif value="75">75</option>
                             <option @if($limit==100) selected="selected" @endif value="100">100</option>
+                            <option @if($limit == $total_rows) selected="selected" @endif value="{{$total_rows}}">Todos</option>
+                            
                         </select>
                     </div>
                     <br>
@@ -32,9 +34,11 @@
                             @if(checkPermission(['nacional']))
                                 <th>Centro distribuição</th>
                             @endif
+                            <th>Tamanho</th>
                             <th>Lote</th>
                             <th>Quantidade</th>
                             <th>Valor (unitário)</th>
+                            <th>Valor (total)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,9 +49,11 @@
                                 @if(checkPermission(['nacional']))
                                     <td class="col-md-2">{{ $estoque->centroDistribuicoes->descricao}}</td>
                                 @endif
+                                <td class="col-md-1">{{ $estoque->produtos->classes->descricao}}</td>
                                 <td class="col-md-1">{{ $estoque->lote}}</td>
                                 <td class="col-md-1">{{ $estoque->quantidade}}</td>
                                 <td class="col-md-1">R$ {{number_format($estoque->valor,2, ',', '.') }}</td>
+                                <td class="col-md-1">R$ {{number_format(($estoque->valor*$estoque->quantidade),2, ',', '.') }}</td>
                                 <td class="col-md-3 hidden-print">
                                     <ul class="list-inline">
                                         <li>

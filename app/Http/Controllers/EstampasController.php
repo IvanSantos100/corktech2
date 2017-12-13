@@ -33,7 +33,7 @@ class EstampasController extends Controller
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $estampas = $this->repository->scopeQuery(function($query){
             return $query->orderBy('descricao','asc');
-        })->paginate(10);
+        })->paginate(25);
 
 
         return view('admin.estampas.index', compact('estampas','search'));

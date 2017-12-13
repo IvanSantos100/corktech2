@@ -46,7 +46,7 @@ class EstoquesController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-        $limit = $request->get('limit') ?: 10;
+        $limit = $request->get('limit') ?: 25;
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
@@ -67,6 +67,8 @@ class EstoquesController extends Controller
                     ->orderBy('produtos.descricao');
             })->paginate($limit);
         }
+
+        $total_rows= $estoques->count();
         $linkredirect='';
         if($search!=""){
             $linkredirect ="&search=".$search;
@@ -74,7 +76,7 @@ class EstoquesController extends Controller
 
         //dd($linkredirect);
 
-        return view('admin.estoques.index', compact('estoques','search', 'limit', 'linkredirect'));
+        return view('admin.estoques.index', compact('estoques','search', 'limit', 'linkredirect', 'total_rows'));
     }
 
     public function create()

@@ -31,7 +31,7 @@ class TipoProdutosController extends Controller
         $search = $request->get('search');
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $tipoprodutos = $this->repository->paginate(10);
+        $tipoprodutos = $this->repository->paginate(25);
 
 
         return view('admin.tipoprodutos.index', compact('tipoprodutos','search'));

@@ -37,10 +37,10 @@ class UsuariosController extends Controller
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
         if(Auth::user()->centrodistribuicao_id==1){
-            $usuarios = $this->repository->paginate(10);
+            $usuarios = $this->repository->paginate(25);
         }else{
             $centrodis = Auth::user()->centrodistribuicao_id;
-            $usuarios = $this->repository->findWherePaginate([['centrodistribuicao_id','=',$centrodis]],10);
+            $usuarios = $this->repository->findWherePaginate([['centrodistribuicao_id','=',$centrodis]],25);
         }
 
 

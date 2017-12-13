@@ -49,8 +49,6 @@ class PedidosRequest extends FormRequest
 
         $rules = array_merge($rules, [
             'tipo' => "required",
-            'forma_pagamento' => "required",
-            'desconto' => "numeric",
         ]);
 
         return $rules;

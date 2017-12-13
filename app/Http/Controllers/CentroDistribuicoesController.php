@@ -33,7 +33,7 @@ class CentroDistribuicoesController extends Controller
         $search = $request->get('search');
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $centrodistribuicoes = $this->repository->paginate(10);
+        $centrodistribuicoes = $this->repository->paginate(25);
 
         return view('admin.centrodistribuicoes.index', compact('centrodistribuicoes','search'));
     }

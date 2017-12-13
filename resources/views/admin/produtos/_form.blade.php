@@ -12,12 +12,6 @@
 {!! Form::error('descricao', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
-{!! Html::openFormGroup('tamanho', $errors) !!}
-{!! Form::label('tamanho', 'Tamanho', ['class' => 'control-label']) !!}
-{!! Form::text('tamanho', null, ['class' => 'form-control']) !!}
-{!! Form::error('tamanho', $errors) !!}
-{!! Html::closeFormGroup() !!}
-
 {!! Html::openFormGroup('preco', $errors) !!}
 {!! Form::label('preco', 'Preço', ['class' => 'control-label']) !!}
 {!! Form::text('preco', null, ['class' => 'form-control']) !!}

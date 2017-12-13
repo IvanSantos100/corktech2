@@ -48,7 +48,7 @@ class PedidosController extends Controller
 
         $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) {
             return $query->orderBy('id', 'desc');
-        })->paginate(20);
+        })->paginate(25);
 
         ///dd($pedidos[0]->cliente->nome);
 
@@ -96,6 +96,13 @@ class PedidosController extends Controller
      */
     public function store(PedidosRequest $request)
     {
+        if(trim($request->get('desconto'))==""){
+            $request['desconto'] = 0;
+        }
+        if(trim($request->get('forma_pagamento'))==""){
+            $request['forma_pagamento'] = 'À VISTA';
+        }
+        
         $pedido = $this->repository->create($request->all());
 
         return redirect()->route('admin.itempedido.produtos', ['pedidoId' => $pedido->id]);

@@ -49,7 +49,7 @@ class ItemPedidoController extends Controller
 
         $itens_pedidos = $this->repository->with(['produto'])->scopeQuery(function ($query) use ($pedidoId) {
             return $query->where('pedido_id', $pedidoId);
-        })->paginate(10);
+        })->paginate(25);
 
         //dd($itens_pedidos, $pedido);
 
@@ -75,7 +75,7 @@ class ItemPedidoController extends Controller
 
         $produtos = $this->produtosRepository->scopeQuery(function ($query) {
             return $query->orderBy('descricao', 'asc');
-        })->paginate(10);
+        })->paginate(25);
 
         return view('admin.itempedido.produtos', compact('produtos', 'pedido', 'search', 'tipo'));
     }

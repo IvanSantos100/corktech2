@@ -56,10 +56,10 @@
                         @endphp
                         @foreach($itens_pedidos as $itens_pedido)
                             <tr>
-                                <td class="col-md-2">{{ $itens_pedido->produto->codigo}}</td>
+                                <td class="col-md-1">{{ $itens_pedido->produto->codigo}}</td>
                                 <td class="col-md-1">{{ $itens_pedido->lote}}</td>
                                 <td class="col-md-2">{{ $itens_pedido->produto->descricao}}</td>
-                                <td class="col-md-1">{{ $itens_pedido->produto->tamanho}}</td>
+                                <td class="col-md-1">{{ $itens_pedido->produto->classes->tamanho}}</td>
                                 <td class="col-md-1">{{ $itens_pedido->quantidade}}</td>
                                 <td class="col-md-1">
                                     R$ {{ number_format($itens_pedido->produto->preco,2, ',', '.') }}

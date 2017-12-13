@@ -68,12 +68,12 @@ class PedidosEncerradosController extends Controller
         $search = $request->get('search');
 
         if (Auth::user()->centrodistribuicao_id == 1) {
-            $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->paginate(10);
+            $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->paginate(25);
         } else {
             $centrodis = Auth::user()->centrodistribuicao_id;
             $pedidos = $this->repository
                 ->with(['origem', 'cliente', 'destino'])
-                ->findOrWherePaginate([['origem_id', '=', $centrodis], ['destino_id', '=', $centrodis]], 10);
+                ->findOrWherePaginate([['origem_id', '=', $centrodis], ['destino_id', '=', $centrodis]], 25);
         }
 
         //dd($pedidos[0]->produtos[0]->produto);
@@ -89,7 +89,7 @@ class PedidosEncerradosController extends Controller
 
         $itenspedido = $this->itempedidosRepository->with(['produto'])->scopeQuery(function ($query) use ($id) {
             return $query->where('pedido_id', $id);
-        })->paginate(10);
+        })->paginate(25);
 
         if ($itenspedido->isEmpty()) {
             return 'vazio';

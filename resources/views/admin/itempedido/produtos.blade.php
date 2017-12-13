@@ -49,6 +49,7 @@
                             <th class="col-md-2">Descrição</th>
                             <th class="col-md-2">Estampa</th>
                             <th class="col-md-2">Classe</th>
+                            <th class="col-md-1">Tamanho</th>
                             <th class="col-md-5">
                                 <table>
                                     <tr>
@@ -69,6 +70,7 @@
                                 <td class="col-md-2">{{ $produto->descricao}} </td>
                                 <td class="col-md-2">{{ $produto->estampas->descricao}}</td>
                                 <td class="col-md-2">{{ $produto->classes->descricao}}</td>
+                                <td class="col-md-1">{{ $produto->classes->tamanho}}</td>
                                 <?php $estoques = $produto->estoques->where('centrodistribuicao_id', $pedido->origem_id)?>
                                 @if(!$estoques->isEmpty())
                                     <td class="col-md-3">
