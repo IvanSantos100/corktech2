@@ -55,6 +55,19 @@ class PedidosController extends Controller
         return view('admin.pedidos.index', compact('pedidos', 'search'));
     }
 
+    public function cliente(Request $request, $clienteId){
+        $search = $request->get('search');
+        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        
+        $cliente = $this->clientesRepository->find($clienteId);
+
+        $pedidos = $this->repository->findWherePaginate([['cliente_id','=',$clienteId]],25);
+
+        ///dd($pedidos[0]->cliente->nome);
+
+        return view('admin.pedidos.cliente', compact('pedidos', 'search', 'cliente'));
+    }
+
     public function status(Request $request, $pedidoId)
     {
         $pedido['status'] = 2;

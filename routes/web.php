@@ -45,6 +45,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     Route::resource('pedidos', 'PedidosController');
     Route::get('pedidos/{pedido}/status', 'PedidosController@status')->name('pedidos.status');
+    Route::get('pedidos/cliente/{cliente}', 'PedidosController@cliente')->name('pedidos.cliente');
 
     /*
     Route::resource('pedidosencerrados', 'PedidosEncerradosController');

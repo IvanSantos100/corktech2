@@ -34,8 +34,11 @@
                                 <td class="col-md-2">{{ $cliente->nome}}</td>
                                 <td class="col-md-2">{{ $cliente->documento_formatted}}</td>
                                 @if(checkPermission(['nacional']))
-                                    <td class="col-md-2  hidden-print">
+                                    <td class="col-md-3  hidden-print">
                                         <ul class="list-inline">
+                                            <li>
+                                                <a class="btn btn-primary" href="{{ route('admin.pedidos.cliente', ['cliente' => $cliente->id]) }}"><span class="glyphicon glyphicon-list-alt"></span></a>
+                                            </li>
                                             <li>
                                                 <a class='btn btn-warning'
                                                    href="{{ route('admin.clientes.edit', ['cliente' => $cliente->id]) }}"><span class="glyphicon glyphicon-edit"></span></a>
