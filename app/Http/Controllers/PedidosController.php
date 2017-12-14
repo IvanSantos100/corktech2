@@ -7,6 +7,7 @@ use CorkTech\Models\Pedido;
 use CorkTech\Repositories\CentroDistribuicoesRepository;
 use CorkTech\Repositories\PedidosRepository;
 use CorkTech\Repositories\ClientesRepository;
+use CorkTech\Repositories\ItemPedidoRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -25,16 +26,19 @@ class PedidosController extends Controller
      * @var ClientesRepository
      */
     private $clientesRepository;
+    private $itempedidosRepository;
 
     public function __construct(
         PedidosRepository $repository,
         CentroDistribuicoesRepository $centroDistribuicoesRepository,
-        ClientesRepository $clientesRepository
+        ClientesRepository $clientesRepository,
+        ItemPedidoRepository $itempedidosRepository
     )
     {
         $this->repository = $repository;
         $this->centroDistribuicoesRepository = $centroDistribuicoesRepository;
         $this->clientesRepository = $clientesRepository;
+        $this->itempedidosRepository = $itempedidosRepository;
     }
 
     /**
@@ -57,15 +61,29 @@ class PedidosController extends Controller
 
     public function cliente(Request $request, $clienteId){
         $search = $request->get('search');
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         
-        $cliente = $this->clientesRepository->find($clienteId);
-
         $pedidos = $this->repository->findWherePaginate([['cliente_id','=',$clienteId]],25);
 
         ///dd($pedidos[0]->cliente->nome);
 
-        return view('admin.pedidos.cliente', compact('pedidos', 'search', 'cliente'));
+        return view('admin.pedidos.cliente', compact('pedidos', 'search'));
+    }
+
+    public function itempedido(Request $request, $id)
+    {
+        $search = $request->get('search');
+
+        ///$this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+
+        $itenspedido = $this->itempedidosRepository->with(['produto'])->scopeQuery(function ($query) use ($id) {
+            return $query->where('pedido_id', $id);
+        })->paginate(25);
+
+        if ($itenspedido->isEmpty()) {
+            return 'vazio';
+        }
+
+        return view('admin.pedidos.itempedido', compact('itenspedido', 'search'));
     }
 
     public function status(Request $request, $pedidoId)

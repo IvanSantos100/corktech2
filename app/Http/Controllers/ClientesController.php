@@ -30,7 +30,7 @@ class ClientesController extends Controller
         $search = $request->get('search');
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $clientes = $this->repository->paginate(25);
+        $clientes = $this->repository->orderBy('nome')->paginate(25);
 
         $clientes->each(function ($item, $key) {
             $item->tipo = $this->opcao($item->tipo);

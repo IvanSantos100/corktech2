@@ -6,9 +6,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Itens do pedido: {{ $itenspedido[0]->pedido_id}}</div>
                 <div class="panel-body">
-                    <div class="pull-right hidden-print">
-                        <a class='btn btn-primary pull-right' href="{{ route('admin.pedidosencerrados.index', ['status' => 2]) }}">Voltar</a>
-                    </div>
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
@@ -41,8 +38,8 @@
                                 </td>
                                 <td class="col-md-1 hidden-print">
                                     <ul class="list-inline">
-                                        <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.pedidosencerrados.details',
+                                       <li>
+                                            <a class='btn btn-primary' href="{{ route('admin.itempedido.details',
                                             ['status'=> 2, 'pedidoId' => $itempedido->pedido_id, 'produtoId' => $itempedido->produto_id]) }}"><span class='glyphicon glyphicon-list-alt'></span></a>
 
                                         </li>
