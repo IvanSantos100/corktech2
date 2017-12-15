@@ -67,13 +67,34 @@ class PedidosEncerradosController extends Controller
     {
         $search = $request->get('search');
 
+        $tipo = $request->get('tipo');
+        if($tipo==""){
+            $tipo = 0;
+        }
+
+      
         if (Auth::user()->centrodistribuicao_id == 1) {
-            $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->paginate(25);
+            if($tipo == 0){
+                $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->paginate(25);
+            }else{
+                $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) use ($tipo) {
+                    return $query->where('tipo', $tipo)->orderBy('id', 'desc');
+                })->paginate(25);
+            }
         } else {
             $centrodis = Auth::user()->centrodistribuicao_id;
-            $pedidos = $this->repository
-                ->with(['origem', 'cliente', 'destino'])
-                ->findOrWherePaginate([['origem_id', '=', $centrodis], ['destino_id', '=', $centrodis]], 25);
+
+            if($tipo == 0){
+                $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) use ($centrodis) {
+                    return $query->where('origem_id', $centrodis)->orderBy('id', 'desc');
+                })->paginate(25);
+            }else{
+                $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) use ($tipo) {
+                    return $query->where('tipo', $tipo)->orderBy('id', 'desc');
+                })->paginate(25);
+            }
+           
+               // ->findOrWherePaginate([['origem_id', '=', $centrodis], ['destino_id', '=', $centrodis]], 25);
         }
 
         //dd($pedidos[0]->produtos[0]->produto);

@@ -14,8 +14,18 @@
                         {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
                         {!! Form::text('search', null, ['class' => 'form-control']) !!}
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
+                        <br>
+                        {!! Form::radio('tipo', '0'); !!}
+                        {!! Form::label('Todos', 'Todos', ['class' => 'control-label']) !!}
+                        {!! Form::radio('tipo', '1'); !!}
+                        {!! Form::label('Entrada', 'Entrada', ['class' => 'control-label']) !!}
+                        {!! Form::radio('tipo', '2'); !!}
+                        {!! Form::label('Movimentacao', 'Movimentação', ['class' => 'control-label']) !!}
+                        {!! Form::radio('tipo', '3'); !!}
+                        {!! Form::label('Saida', 'Saída', ['class' => 'control-label']) !!}
                         {!! Form::close()!!}
                     </div>
+                     
                     <div class="pull-right hidden-print">
                         <a class="btn btn-primary" href="{{route('admin.pedidos.create')}}">Novo Pedido</a>
                         <a class='btn btn-primary' href="{{route('admin.pedidosencerrados.index',['status' => 2])}}">Encerrados</a>

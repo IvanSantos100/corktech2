@@ -50,11 +50,24 @@ class PedidosController extends Controller
     {
         $search = $request->get('search');
 
-        $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) {
-            return $query->orderBy('id', 'desc');
-        })->paginate(25);
+        $tipo = $request->get('tipo');
+        if($tipo==""){
+            $tipo = 0;
+        }
 
-        ///dd($pedidos[0]->cliente->nome);
+        if($tipo == 0){
+
+            $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) {
+                return $query->orderBy('id', 'desc');
+            })->paginate(25);
+
+        }else{
+
+            $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) use ($tipo) {
+                return $query->where('tipo', $tipo)->orderBy('id', 'desc');
+            })->paginate(25);
+
+        }
 
         return view('admin.pedidos.index', compact('pedidos', 'search'));
     }
