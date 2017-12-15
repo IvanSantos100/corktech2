@@ -69,7 +69,14 @@
                                 <td class="col-md-1">{{ $produto->codigo}} </td>
                                 <td class="col-md-2">{{ $produto->descricao}} </td>
                                 <td class="col-md-2">{{ $produto->estampas->descricao}}</td>
-                                <td class="col-md-2">{{ $produto->classes->descricao}}</td>
+                                <td class="col-md-2">
+                                    {{ $produto->classes->descricao}}
+                                    @if(!empty($produto))
+                                        @if(file_exists("images/thumbnail/estampa-{$produto->estampas->id}.png"))
+                                            {{ HTML::image("/images/thumbnail/estampa-{$produto->estampas->id}.png") }}
+                                        @endif
+                                    @endif
+                                </td>
                                 <td class="col-md-1">{{ $produto->classes->tamanho}}</td>
                                 <?php $estoques = $produto->estoques->where('centrodistribuicao_id', $pedido->origem_id)?>
                                 @if(!$estoques->isEmpty())

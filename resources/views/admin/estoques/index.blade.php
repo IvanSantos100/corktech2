@@ -34,6 +34,7 @@
                             @if(checkPermission(['nacional']))
                                 <th>Centro distribuição</th>
                             @endif
+                            <th>Classe</th>
                             <th>Tamanho</th>
                             <th>Lote</th>
                             <th>Quantidade</th>
@@ -49,7 +50,15 @@
                                 @if(checkPermission(['nacional']))
                                     <td class="col-md-2">{{ $estoque->centroDistribuicoes->descricao}}</td>
                                 @endif
-                                <td class="col-md-1">{{ $estoque->produtos->classes->descricao}}</td>
+                                 <td class="col-md-2">
+                                    {{ $estoque->produtos->estampas->descricao}}<br>
+                                     @if(!empty($produto))
+                                        @if(file_exists("images/thumbnail/estampa-{$estoque->produtos->estampas->id}.png"))
+                                            {{ HTML::image("/images/thumbnail/estampa-{$estoque->produtos->estampas->id}.png") }}
+                                        @endif
+                                    @endif
+                                </td>
+                                <td class="col-md-1">{{ $estoque->produtos->classes->tamanho}}</td>
                                 <td class="col-md-1">{{ $estoque->lote}}</td>
                                 <td class="col-md-1">{{ $estoque->quantidade}}</td>
                                 <td class="col-md-1">R$ {{number_format($estoque->valor,2, ',', '.') }}</td>

@@ -35,9 +35,16 @@
                             <tr>
                                 <td class="col-md-1">{{ $produto->codigo}}</td>
                                 <td class="col-md-2">{{ $produto->descricao}}</td>
-                                <td class="col-md-1">{{ $produto->estampas->descricao}}</td>
+                                <td class="col-md-2">
+                                    {{ $produto->estampas->descricao}}<br>
+                                     @if(!empty($produto))
+                                        @if(file_exists("images/thumbnail/estampa-{$produto->estampas->id}.png"))
+                                            {{ HTML::image("/images/thumbnail/estampa-{$produto->estampas->id}.png") }}
+                                        @endif
+                                    @endif
+                                </td>
                                 <td class="col-md-2">{{ $produto->tipoprodutos->descricao}}</td>
-                                <td class="col-md-2">{{ $produto->classes->descricao}}</td>
+                                <td class="col-md-1">{{ $produto->classes->descricao}}</td>
                                 <td class="col-md-1">{{ $produto->classes->tamanho}}</td>
                                 <td class="col-md-1">R$ {{number_format($produto->preco,2, ',', '.') }}</td>
                                 @if(checkPermission(['nacional']))

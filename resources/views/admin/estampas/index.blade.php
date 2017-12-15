@@ -20,12 +20,20 @@
                         <thead>
                         <tr>
                             <th >Descrição</th>
+                            <th >Estampa</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($estampas as $estampa)
                             <tr>
                                 <td class="col-md-3">{{ $estampa->descricao}}</td>
+                                <td class="col-md-3">
+                                @if(!empty($estampa))
+                                    @if(file_exists("images/thumbnail/estampa-{$estampa->id}.png"))
+                                        {{ HTML::image("/images/thumbnail/estampa-{$estampa->id}.png") }}
+                                    @endif
+                                @endif
+                                </td>
                                 <td class="col-md-2 hidden-print">
                                     <ul class="list-inline">
                                         <li>
@@ -35,7 +43,6 @@
                                             <a class='btn btn-danger' href="{{ route('admin.estampas.show', ['estampa' => $estampa->id]) }}"><span class='glyphicon glyphicon-trash'></span></a>
                                         </li>
                                     </ul>
-
                                 </td>
                             </tr>
                         @endforeach

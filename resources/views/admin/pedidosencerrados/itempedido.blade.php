@@ -15,6 +15,7 @@
                             <th>Código</th>
                             <th>Lote</th>
                             <th>Descrição</th>
+                            <th>Classe</th>
                             <th>Tamanho</th>
                             <th>Quantidade</th>
                             <th>Valor base</th>
@@ -28,6 +29,14 @@
                                 <td class="col-md-1">{{ $itempedido->produto->codigo}}</td>
                                 <td class="col-md-1">{{ $itempedido->lote}}</td>
                                 <td class="col-md-2">{{ $itempedido->produto->descricao}}</td>
+                                <td class="col-md-1">
+                                    {{$itempedido->produto->classes->descricao}}
+                                    @if(!empty($itempedido))
+                                        @if(file_exists("images/thumbnail/estampa-{$itempedido->produto->estampas->id}.png"))
+                                            {{ HTML::image("/images/thumbnail/estampa-{$itempedido->produto->estampas->id}.png") }}
+                                        @endif
+                                    @endif
+                                </td>
                                 <td class="col-md-1">{{ $itempedido->produto->classes->tamanho}}</td>
                                 <td class="col-md-1">{{ $itempedido->quantidade}}</td>
                                 <td class="col-md-1">
