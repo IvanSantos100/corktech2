@@ -86,15 +86,18 @@ class PedidosEncerradosController extends Controller
 
             if($tipo == 0){
                 $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) use ($centrodis) {
-                    return $query->where('origem_id', $centrodis)->orderBy('id', 'desc');
+                    return $query->orwhere('origem_id', $centrodis)->orwhere('destino_id', $centrodis)->orderBy('id', 'desc');
                 })->paginate(25);
             }else{
-                $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) use ($tipo) {
-                    return $query->where('tipo', $tipo)->orderBy('id', 'desc');
+                $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) use ($tipo, $centrodis) {
+                    return $query->where('tipo', $tipo)->Where(function ($query) use ($centrodis) {
+                        $query->orwhere('origem_id', $centrodis)->orwhere('destino_id', $centrodis);
+                    });
+                    
+                    
                 })->paginate(25);
             }
-           
-               // ->findOrWherePaginate([['origem_id', '=', $centrodis], ['destino_id', '=', $centrodis]], 25);
+                      
         }
 
         //dd($pedidos[0]->produtos[0]->produto);
