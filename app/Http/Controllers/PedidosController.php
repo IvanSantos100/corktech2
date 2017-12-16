@@ -76,8 +76,9 @@ class PedidosController extends Controller
         $search = $request->get('search');
         
         $pedidos = $this->repository->findWherePaginate([['cliente_id','=',$clienteId]],25);
+        
         $total_rows= $pedidos->count();
-       ///dd($pedidos);
+        //dd($clienteId);
 
         return view('admin.pedidos.cliente', compact('pedidos', 'search', 'total_rows'));
     }

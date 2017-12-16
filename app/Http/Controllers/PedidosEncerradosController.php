@@ -109,7 +109,7 @@ class PedidosEncerradosController extends Controller
     {
         $search = $request->get('search');
 
-        ///$this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $pedido = $this->repository->find($id);
 
         $itenspedido = $this->itempedidosRepository->with(['produto'])->scopeQuery(function ($query) use ($id) {
             return $query->where('pedido_id', $id);
@@ -119,7 +119,7 @@ class PedidosEncerradosController extends Controller
             return 'vazio';
         }
 
-        return view('admin.pedidosencerrados.itempedido', compact('itenspedido', 'search'));
+        return view('admin.pedidosencerrados.itempedido', compact('itenspedido', 'search', 'pedido'));
     }
 
 

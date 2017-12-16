@@ -5,14 +5,69 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Itens do pedido:
-                    <b>{{$pedido->id}} </b>
-                    tipo:
-                    <b>{{ $pedido->tipo_nome }}</b>
-                    Origem:
-                    <b>{{ $pedido->origem->descricao ?? 'Fabrica' }}</b>
-                    destino:
-                    <b>{{ $pedido->destino->descricao ?? $pedido->cliente->nome }}</b>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr><th colspan="2">Dados do Pedido</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td>Identificação: {{$pedido->id}}</td>
+                                    <td>Tipo: {{$pedido->tipo_nome}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Origem: {{ $pedido->origem->descricao ?? 'Fabrica' }}</td>
+                                    <td>Destino: {{ $pedido->destino->descricao ?? $pedido->cliente->nome }}</td>
+                                </tr>
+                            </tbody>
+                        </table>    
+                    </div>
+                    @if($pedido->cliente!='')
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr><th colspan="3">Dados do Cliente</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tipo: @if($pedido->cliente->tipo==1) Física @else Jurídica @endif</td>
+                                    <td>Documento: {{$pedido->cliente->documento_formatted}}</td>
+                                </tr>
+                            </tbody>
+                        </table>    
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr><th colspan="3">Localização do Cliente</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td  colspan="2">Endereço: {{$pedido->cliente->endereco}}</td>
+                                    <td>Bairro: {{$pedido->cliente->bairro}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Cidade: {{$pedido->cliente->cidade}}</td>
+                                    <td>UF:{{$pedido->cliente->uf}}</td>
+                                    <td>CEP:{{$pedido->cliente->cep}}</td>
+                                </tr>
+                            </tbody>
+                        </table>    
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr><th colspan="2">Contatos do Cliente</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Telefone: {{$pedido->cliente->fone}}</td>
+                                    <td>Celular: {{$pedido->cliente->celular}}</td>
+                                </tr>
+                            </tbody>
+                        </table>    
+                    </div>
+                    @endif
                 </div>
                 <div class="panel-body">
                     <div class="pull-left hidden-print">
