@@ -15,7 +15,7 @@
                             {!! Form::close()!!}
                         </div>
                         <div class="pull-right hidden-print">
-                            <a class='btn btn-primary' href="{{route('admin.pedidosencerrados.cliente',['status' => 2, 'cliente' => $cliente])}}">Encerrados</a>
+                            <a class='btn btn-primary' href="{{route('admin.pedidos.cliente',['cliente' => $cliente])}}">Em Aberto</a>
                         </div>
                         <br><br>
                         <table class="table table-hover table-striped">
@@ -50,7 +50,7 @@
                                         <ul class="list-inline">
                                             <li>
                                                 <a class='btn btn-primary'
-                                                href="{{ route('admin.pedidos.itempedido', ['pedido' => $pedido->id]) }}"><span
+                                                href="{{ route('admin.pedidosencerrados.itempedido', ['status' => 2, 'pedido' => $pedido->id]) }}"><span
                                                             class='glyphicon glyphicon-list-alt'></span></a>
                                             </li>
                                         </ul>
@@ -71,10 +71,10 @@
                         {!! Form::close()!!}
                     </div>
                     <div class="pull-right hidden-print">
-                        <a class='btn btn-primary' href="{{route('admin.pedidosencerrados.cliente',['status' => 2, 'cliente' => $cliente])}}">Encerrados</a>
+                        <a class='btn btn-primary' href="{{route('admin.pedidos.cliente',['cliente' => $cliente])}}">Em Aberto</a>
                     </div>
                     <br><br>
-                    Cliente não possui pedidos em aberto
+                    Cliente não possui pedidos encerrados
                 </div>
                 @endif
             </div>

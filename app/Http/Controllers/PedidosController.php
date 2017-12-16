@@ -75,19 +75,25 @@ class PedidosController extends Controller
     public function cliente(Request $request, $clienteId){
         $search = $request->get('search');
         
-        $pedidos = $this->repository->findWherePaginate([['cliente_id','=',$clienteId]],25);
+       // $pedidos = $this->repository->findWherePaginate([['cliente_id','=',$clienteId]],25);
+
+        $pedidos = $this->repository->scopeQuery(function($query) use($clienteId) {
+            return $query->where('cliente_id', $clienteId);
+        })->paginate(25);
         
         $total_rows= $pedidos->count();
+
+        $cliente = $clienteId;
         //dd($clienteId);
 
-        return view('admin.pedidos.cliente', compact('pedidos', 'search', 'total_rows'));
+        return view('admin.pedidos.cliente', compact('pedidos', 'search', 'total_rows', 'cliente'));
     }
 
     public function itempedido(Request $request, $id)
     {
         $search = $request->get('search');
 
-        ///$this->produtosRepository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $pedido = $this->repository->find($id);
 
         $itenspedido = $this->itempedidosRepository->with(['produto'])->scopeQuery(function ($query) use ($id) {
             return $query->where('pedido_id', $id);
@@ -97,7 +103,7 @@ class PedidosController extends Controller
             return 'vazio';
         }
 
-        return view('admin.pedidos.itempedido', compact('itenspedido', 'search'));
+        return view('admin.pedidos.itempedido', compact('itenspedido', 'search', 'pedido'));
     }
 
     public function status(Request $request, $pedidoId)

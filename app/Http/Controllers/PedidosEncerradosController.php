@@ -105,6 +105,21 @@ class PedidosEncerradosController extends Controller
         return view('admin.pedidosencerrados.index', compact('pedidos', 'search'));
     }
 
+    public function cliente(Request $request, $status, $clienteId){
+        $search = $request->get('search');
+        
+        $pedidos = $this->repository->scopeQuery(function($query) use($clienteId) {
+            return $query->where('cliente_id', $clienteId);
+        })->paginate(25);
+        
+        $total_rows= $pedidos->count();
+
+        $cliente = $clienteId;
+        //dd($clienteId);
+
+        return view('admin.pedidosencerrados.cliente', compact('pedidos', 'search', 'total_rows', 'cliente'));
+    }
+
     public function itempedido(Request $request, $t, $id)
     {
         $search = $request->get('search');

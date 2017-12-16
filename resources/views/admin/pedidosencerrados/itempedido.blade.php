@@ -70,9 +70,9 @@
                     @endif
                 </div>
                 <div class="panel-body">
-                    <div class="pull-right hidden-print">
+                   <!-- <div class="pull-right hidden-print">
                         <a class='btn btn-primary pull-right' href="{{ route('admin.pedidosencerrados.index', ['status' => 2]) }}">Voltar</a>
-                    </div>
+                    </div> -->
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
