@@ -13,18 +13,17 @@
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
                         {!! Form::close()!!}
                     </div>
-                    @if(checkPermission(['nacional']))
-                        <div class="pull-right  hidden-print">
-                            <a class="btn btn-primary" href="{{route('admin.clientes.create', 'cpf=true')}}">Novo cliente físico</a>
-                            <a class="btn btn-primary" href="{{route('admin.clientes.create', 'cnpj=true')}}">Novo cliente jurídico</a>
-                        </div>
-                    @endif
+                    <div class="pull-right  hidden-print">
+                        <a class="btn btn-primary" href="{{route('admin.clientes.create', 'cpf=true')}}">Novo cliente físico</a>
+                        <a class="btn btn-primary" href="{{route('admin.clientes.create', 'cnpj=true')}}">Novo cliente jurídico</a>
+                    </div>
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
                             <th>Tipo</th>
                             <th>Nome</th>
                             <th>Documento</th>
+                            <th>Centro de Distribuição</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -33,6 +32,7 @@
                                 <td class="col-md-2">{{ $cliente->tipo}}</td>
                                 <td class="col-md-2">{{ $cliente->nome}}</td>
                                 <td class="col-md-2">{{ $cliente->documento_formatted}}</td>
+                                <td class="col-md-2">{{ $cliente->centroDistribuicoes->descricao}}</td>
                                 @if(checkPermission(['nacional']))
                                     <td class="col-md-3  hidden-print">
                                         <ul class="list-inline">

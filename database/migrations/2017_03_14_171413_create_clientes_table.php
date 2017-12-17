@@ -27,6 +27,8 @@ class CreateClientesTable extends Migration
             $table->string('responsavel')->nullable();
             $table->integer('fone')->nullable();
             $table->integer('celular')->nullable();
+            $table->integer('centrodistribuicao_id')->unsigned()->nullable();
+            $table->foreign('centrodistribuicao_id')->references('id')->on('centro_distribuicoes');
             $table->timestamps();
         });
     }

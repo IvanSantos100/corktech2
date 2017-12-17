@@ -25,6 +25,7 @@ class Cliente extends Model implements Transformable
         'responsavel',
         'fone',
         'celular',
+        'centrodistribuicao_id',
     ];
 
     protected $hidden = [
@@ -39,6 +40,11 @@ class Cliente extends Model implements Transformable
     public function pedidos()
     {
         return $this->hasMany(Pedido::class, 'cliente_id', 'id');
+    }
+
+    public function centroDistribuicoes()
+    {
+        return $this->belongsTo(CentroDistribuicao::class, 'centrodistribuicao_id', 'id');
     }
 
     public function getDocumentoFormattedAttribute()

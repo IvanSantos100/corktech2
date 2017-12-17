@@ -4,6 +4,7 @@ namespace CorkTech\Http\Controllers;
 
 use CorkTech\Http\Requests\ClientesRequest;
 use CorkTech\Repositories\ClientesRepository;
+use CorkTech\Repositories\CentroDistribuicoesRepository;
 use CorkTech\Repositories\TipoClientesRepository;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,11 @@ class ClientesController extends Controller
      */
     protected $repository;
 
-    public function __construct(ClientesRepository $repository){
+    private $centroDistribuicoesRepository;
+
+    public function __construct(ClientesRepository $repository, CentroDistribuicoesRepository $centroDistribuicoesRepository){
         $this->repository = $repository;
+        $this->centroDistribuicoesRepository = $centroDistribuicoesRepository;
     }
 
 
@@ -61,7 +65,8 @@ class ClientesController extends Controller
     {
         $data = $request->all();
         $data['senha'] = bcrypt($request->documento);
-        $this->repository->create( $data);
+        $data['centrodistribuicao_id'] = \Auth::user()->centrodistribuicao_id;
+        $this->repository->create($data);
         $url = $request->get('redirect_to', route('admin.clientes.index'));
         $request->session()->flash('message', 'Cliente cadastrado com sucesso.');
 

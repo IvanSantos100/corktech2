@@ -115,6 +115,7 @@ $factory->define(CorkTech\Models\Cliente::class, function (Faker\Generator $fake
         'responsavel' => $faker->name,
         'fone' => 123456,
         'celular' => 123456,
+        'centrodistribuicao_id' => rand(1,3),
     ];
 });
 
