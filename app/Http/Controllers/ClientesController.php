@@ -34,7 +34,17 @@ class ClientesController extends Controller
         $search = $request->get('search');
 
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $clientes = $this->repository->orderBy('nome')->paginate(25);
+        $user = \Auth::user()->centrodistribuicao_id;
+        if($user == 1 ){
+            $clientes = $this->repository->orderBy('nome')->paginate(25);
+        }else{
+           //$this->repository->where('centrodistribuicao_id', $user)->orderBy('nome')->paginate(25);
+
+            $clientes = $this->repository->with(['centroDistribuicoes'])->scopeQuery(function ($query) use ($user) {
+                return $query->where('centrodistribuicao_id', $user)->orderBy('nome');
+            })->paginate(25);
+        }
+
 
         $clientes->each(function ($item, $key) {
             $item->tipo = $this->opcao($item->tipo);
