@@ -43,6 +43,9 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @php
+                             $total_custo = 0;
+                        @endphp
                         @foreach($estoques as $estoque)
                             <tr>
                                 <td class="col-md-1">{{ $estoque->produtos->codigo}}</td>
@@ -62,7 +65,7 @@
                                 <td class="col-md-1">{{ $estoque->lote}}</td>
                                 <td class="col-md-1">{{ $estoque->quantidade}}</td>
                                 <td class="col-md-1">R$ {{number_format($estoque->valor,2, ',', '.') }}</td>
-                                <td class="col-md-1">R$ {{number_format(($estoque->valor*$estoque->quantidade),2, ',', '.') }}</td>
+                                <td class="col-md-1">R$ {{number_format($estoque->custo_produto,2, ',', '.') }}</td>
                                 <td class="col-md-3 hidden-print">
                                     <ul class="list-inline">
                                         <li>
@@ -79,10 +82,16 @@
                                     </ul>
                                 </td>
                             </tr>
+                            @php
+                                $total_custo = $total_custo + $estoque->custo_produto;
+                            @endphp
                         @endforeach
                         </tbody>
                     </table>
                     {{ $estoques->appends(['limit' => $limit])->links() }}
+                </div>
+                <div class="panel-footer text-left">
+                    <strong>Valor Total: R${{number_format($total_custo,2, ',', '.')}}</strong>
                 </div>
             </div>
         </div>
