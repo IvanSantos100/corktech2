@@ -124,14 +124,15 @@ class PedidosController extends Controller
             $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
         }else{
 
-            $clientes = $this->clientesRepository->scopeQuery(function ($query) use ($centrodis){
+           /* $clientes = $this->clientesRepository->scopeQuery(function ($query) use ($centrodis){
                 return $query->select('id', 'nome')
                     ->where('centrodistribuicao_id', $centrodis)
                     ->orderBy('nome');
-            });
+            }); */
             
+            $clientes = \DB::table('clientes')->select('id', 'nome')->where('centrodistribuicao_id', $centrodis)->orderBy('nome')->pluck('nome', 'id');
         }
-        dd($clientes);
+        //dd($clientes);
 
         $opcao = $this->opcao();
 
