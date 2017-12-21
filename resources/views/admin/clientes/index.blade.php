@@ -32,8 +32,7 @@
                                 <td class="col-md-2">{{ $cliente->tipo}}</td>
                                 <td class="col-md-2">{{ $cliente->nome}}</td>
                                 <td class="col-md-2">{{ $cliente->documento_formatted}}</td>
-                                <td class="col-md-2">{{ $cliente->centroDistribuicoes->descricao}}</td>
-                                @if(checkPermission(['nacional']))
+                                <td class="col-md-2">{{ $cliente->centroDistribuicoes->descricao ?? ''}}</td>
                                     <td class="col-md-3  hidden-print">
                                         <ul class="list-inline">
                                             <li>
@@ -49,7 +48,6 @@
                                             </li>
                                         </ul>
                                     </td>
-                                @endif
                             </tr>
                         @endforeach
                         </tbody>

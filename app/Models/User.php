@@ -50,4 +50,15 @@ class User extends Model implements AuthenticatableContracts, CanResetPasswordCo
     {
         return $this->belongsTo(CentroDistribuicao::class, 'centrodistribuicao_id', 'id');
     }
+
+    public function getSelectCDAttribute()
+    {
+        if($this->centrodistribuicao_id == 1){
+            return $this->centroDistribuicoes->pluck('descricao', 'id');
+        }
+
+        return $this->centroDistribuicoes()->pluck('descricao', 'id');
+    }
+
+
 }

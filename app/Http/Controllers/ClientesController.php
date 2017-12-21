@@ -45,7 +45,6 @@ class ClientesController extends Controller
             })->paginate(25);
         }
 
-
         $clientes->each(function ($item, $key) {
             $item->tipo = $this->opcao($item->tipo);
         });
@@ -58,10 +57,12 @@ class ClientesController extends Controller
     {
         $opcao = [1 => 'Física'];
 
+        $select_c_d = \Auth::user()->select_c_d;
+
         if($request->cnpj)
             $opcao = [2 => 'Jurídica'];
 
-        return view('admin.clientes.create', compact('opcao'));
+        return view('admin.clientes.create', compact('opcao', 'select_c_d'));
     }
 
     /**
@@ -75,7 +76,11 @@ class ClientesController extends Controller
     {
         $data = $request->all();
         $data['senha'] = bcrypt($request->documento);
-        $data['centrodistribuicao_id'] = \Auth::user()->centrodistribuicao_id;
+
+        if(\Auth::user()->centrodistribuicao_id !=1 ){
+            $data['centrodistribuicao_id'] = \Auth::user()->centrodistribuicao_id;
+        }
+
         $this->repository->create($data);
         $url = $request->get('redirect_to', route('admin.clientes.index'));
         $request->session()->flash('message', 'Cliente cadastrado com sucesso.');
@@ -117,7 +122,9 @@ class ClientesController extends Controller
         if($cliente->tipo == 2)
             $opcao = [2 => 'Jurídica'];
 
-        return view('admin.clientes.edit', compact('cliente', 'opcao'));
+        $select_c_d = \Auth::user()->select_c_d;
+
+        return view('admin.clientes.edit', compact('cliente', 'opcao', 'select_c_d'));
     }
 
 
@@ -131,6 +138,12 @@ class ClientesController extends Controller
      */
     public function update(ClientesRequest $request, $id)
     {
+        $data = $request->all();
+
+        if(\Auth::user()->centrodistribuicao_id !=1 ){
+            $data['centrodistribuicao_id'] = \Auth::user()->centrodistribuicao_id;
+        }
+
         $this->repository->update($request->all(), $id);
         $url = $request->get('redirect_to', route('admin.clientes.index'));
         $request->session()->flash('message', ' Cliente atualizado com sucesso.');

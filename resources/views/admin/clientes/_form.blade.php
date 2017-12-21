@@ -6,6 +6,16 @@
 {!! Form::error('tipo', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
+@php
+    $disabled = Auth::user()->centrodistribuicao_id==1 ? '' : 'disabled';
+@endphp
+
+{!! Html::openFormGroup('centrodistribuicao_id', $errors) !!}
+{!! Form::label('centrodistribuicao_id', 'CD', ['class' => 'control-label']) !!}
+{!! Form::select('centrodistribuicao_id', $select_c_d, null, ['class' => 'form-control', 'id' => 'centrodistribuicao', $disabled]) !!}
+{!! Form::error('centrodistribuicao_id', $errors) !!}
+{!! Html::closeFormGroup() !!}
+
 {!! Html::openFormGroup('nome', $errors) !!}
 {!! Form::label('nome', 'Nome', ['class' => 'control-label']) !!}
 {!! Form::text('nome', null, ['class' => 'form-control']) !!}

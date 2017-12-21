@@ -22,8 +22,8 @@ Route::get('/editpassword', 'HomeController@editpassword')->name('editpassword')
 Route::put('/update', 'HomeController@update')->name('update');
 Route::put('/updatepassword', 'HomeController@updatepassword')->name('updatepassword');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function(){  //, 'check-permission:nacional|distribuidora|revenda'
-    Route::group(['middleware' => 'check-permission:nacional'], function() {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {  //, 'check-permission:nacional|distribuidora|revenda'
+    Route::group(['middleware' => 'check-permission:nacional'], function () {
         Route::resource('classes', 'ClassesController');
         Route::resource('estampas', 'EstampasController');
         Route::resource('tipoprodutos', 'TipoProdutosController');
@@ -33,21 +33,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('produtos', 'ProdutosController');
 
     Route::name('estoques.index')->get('estoques', 'EstoquesController@index');
-    Route::group(['middleware' => 'check-permission:nacional'], function() {
-        Route::resource('estoques', 'EstoquesController', ['except' => ['index','create', 'store', 'update', 'store', 'destroy']]);
+    Route::group(['middleware' => 'check-permission:nacional'], function () {
+        Route::resource('estoques', 'EstoquesController', ['except' => ['index', 'create', 'store', 'update', 'store', 'destroy']]);
     });
     Route::get('estoques/{estoque}/details', 'EstoquesController@details')->name('estoques.details');
 
-    Route::name('clientes.index')->get('clientes','ClientesController@index');
-    Route::group(['middleware' => 'check-permission:nacional'], function(){
-        Route::resource('clientes', 'ClientesController', ['except' => 'index']);
-    });
+    Route::name('clientes.index')->get('clientes', 'ClientesController@index');
+    Route::resource('clientes', 'ClientesController', ['except' => 'index']);
+
 
     Route::resource('pedidos', 'PedidosController');
     Route::get('pedidos/{pedido}/status', 'PedidosController@status')->name('pedidos.status');
     Route::get('pedidos/cliente/{cliente}', 'PedidosController@cliente')->name('pedidos.cliente');
     Route::get('pedidos/itempedido/{pedido}', 'PedidosController@itempedido')->name('pedidos.itempedido');
-    
+
 
     /*
     Route::resource('pedidosencerrados', 'PedidosEncerradosController');
@@ -56,11 +55,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     */
 
     Route::group(['prefix' => 'pedidosencerrados/{status}', 'as' => 'pedidosencerrados.'], function () {
-       Route::get('index', 'PedidosEncerradosController@index')->name('index');
-       Route::get('itempedido/{pedido}', 'PedidosEncerradosController@itempedido')->name('itempedido');
-       Route::get('cliente/{cliente}', 'PedidosEncerradosController@cliente')->name('cliente');
-       Route::get('itempedido/{pedido}/details/{produto}', 'PedidosEncerradosController@details')->name('details');
-       Route::get('itempedido/{pedido}/extornar', 'PedidosEncerradosController@extornar')->name('extornar');
+        Route::get('index', 'PedidosEncerradosController@index')->name('index');
+        Route::get('itempedido/{pedido}', 'PedidosEncerradosController@itempedido')->name('itempedido');
+        Route::get('cliente/{cliente}', 'PedidosEncerradosController@cliente')->name('cliente');
+        Route::get('itempedido/{pedido}/details/{produto}', 'PedidosEncerradosController@details')->name('details');
+        Route::get('itempedido/{pedido}/extornar', 'PedidosEncerradosController@extornar')->name('extornar');
     });
 
     Route::get('itempedido/{pedido}/index', 'ItemPedidoController@index')->name('itempedido.index');
@@ -71,14 +70,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     //Route::resource('itempedidos', 'itempedidosController');
 
-    Route::name('usuarios.index')->get('usuarios','UsuariosController@index');
-    Route::group(['middleware' => 'check-permission:nacional'], function() {
-        Route::get('usuarios/{usuario}/editpassword','UsuariosController@editpassword')->name('usuarios.editpassword');
+    Route::name('usuarios.index')->get('usuarios', 'UsuariosController@index');
+    Route::group(['middleware' => 'check-permission:nacional'], function () {
+        Route::get('usuarios/{usuario}/editpassword', 'UsuariosController@editpassword')->name('usuarios.editpassword');
         Route::put('usuarios/{usuario}/updatepassword', 'UsuariosController@updatepassword')->name('usuarios.updatepassword');
         Route::resource('usuarios', 'UsuariosController', ['except' => 'index']);
     });
 
-    Route::get('/user', function (\Illuminate\Http\Request $request){
+    Route::get('/user', function (\Illuminate\Http\Request $request) {
         \Auth::loginUsingId($request->get('user'));
     });
 });

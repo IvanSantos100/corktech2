@@ -60,4 +60,9 @@ class Cliente extends Model implements Transformable
         return $string;
     }
 
+    public function getSelectCDAttribute()
+    {
+        return $this->centroDistribuicoes()->pluck('descricao', 'id');
+    }
+
 }

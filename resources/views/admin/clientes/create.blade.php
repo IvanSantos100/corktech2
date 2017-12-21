@@ -21,7 +21,18 @@
         </div>
     </div>
 
+
 @endsection
+@push('style')
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+@endpush
 @push('scripts')
+    <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('js/mask.js') }}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#centrodistribuicao').select2();
+        });
+    </script>
 @endpush

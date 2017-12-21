@@ -18,7 +18,7 @@
     @endif
     {!! Html::openFormGroup('desconto', $errors) !!}
     {!! Form::label('desconto', 'Desconto (%)', ['class' => 'control-label']) !!}
-    {!! Form::text('desconto', null, ['class' => 'form-control']) !!}
+    {!! Form::text('desconto', 0, ['class' => 'form-control']) !!}
     {!! Form::error('desconto', $errors) !!}
     {!! Html::closeFormGroup() !!}
 @endif
@@ -33,7 +33,7 @@
 
 {!! Html::openFormGroup('forma_pagamento', $errors) !!}
 {!! Form::label('forma_pagamento', 'Forma de pagamento', ['class' => 'control-label']) !!}
-{!! Form::text('forma_pagamento', null, ['class' => 'form-control']) !!}
+{!! Form::text('forma_pagamento', 'AVISTA', ['class' => 'form-control']) !!}
 {!! Form::error('forma_pagamento', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
