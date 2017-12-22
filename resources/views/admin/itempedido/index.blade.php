@@ -8,42 +8,48 @@
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
-                                <tr><th colspan="2">Dados do Pedido</th>
-                            </tr></thead>
-                            <tbody>
-                                <tr>
-                                    <td>Identificação: {{$pedido->id}}</td>
-                                    <td>Tipo: {{$pedido->tipo_nome}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Origem: {{ $pedido->origem->descricao ?? 'Fabrica' }}</td>
-                                    <td>Destino: {{ $pedido->destino->descricao ?? $pedido->cliente->nome }}</td>
-                                </tr>
-                            </tbody>
-                        </table>    
-                    </div>
-                    @if($pedido->cliente!='')
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr><th colspan="3">Dados do Cliente</th></tr>
+                            <tr>
+                                <th colspan="2">Dados do Pedido</th>
+                            </tr>
                             </thead>
                             <tbody>
+                            <tr>
+                                <td>Identificação: {{$pedido->id}}</td>
+                                <td>Tipo: {{$pedido->tipo_nome}}</td>
+                            </tr>
+                            <tr>
+                                <td>Origem: {{ $pedido->origem->descricao ?? 'Fabrica' }}</td>
+                                <td>Destino: {{ $pedido->destino->descricao ?? $pedido->cliente->nome }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    @if($pedido->cliente!='')
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th colspan="3">Dados do Cliente</th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     <td>Tipo: @if($pedido->cliente->tipo==1) Física @else Jurídica @endif</td>
                                     <td>Documento: {{$pedido->cliente->documento_formatted}}</td>
                                 </tr>
-                            </tbody>
-                        </table>    
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr><th colspan="3">Localização do Cliente</th></tr>
-                            </thead>
-                            <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
                                 <tr>
-                                    <td  colspan="2">Endereço: {{$pedido->cliente->endereco}}</td>
+                                    <th colspan="3">Localização do Cliente</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td colspan="2">Endereço: {{$pedido->cliente->endereco}}</td>
                                     <td>Bairro: {{$pedido->cliente->bairro}}</td>
                                 </tr>
                                 <tr>
@@ -51,22 +57,24 @@
                                     <td>UF:{{$pedido->cliente->uf}}</td>
                                     <td>CEP:{{$pedido->cliente->cep}}</td>
                                 </tr>
-                            </tbody>
-                        </table>    
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr><th colspan="2">Contatos do Cliente</th></tr>
-                            </thead>
-                            <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th colspan="2">Contatos do Cliente</th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     <td>Telefone: {{$pedido->cliente->fone}}</td>
                                     <td>Celular: {{$pedido->cliente->celular}}</td>
                                 </tr>
-                            </tbody>
-                        </table>    
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
                     @endif
                 </div>
                 <div class="panel-body">
@@ -135,29 +143,64 @@
                                     R$ {{ number_format(($itens_pedido->quantidade * $itens_pedido->valor_item),2, ',', '.') }}
                                 </td>
                                 <td class="col-md-2 hidden-print">
-                                    <ul class="list-inline">
-                                        <li>
-                                            <a class='btn btn-primary' href="{{ route('admin.itempedido.details',
-                                            ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id]) }}"><span
-                                                        class='glyphicon glyphicon-list-alt'></span></a>
-                                        </li>
-                                        <li>
-                                            <?php
-                                            $form = "form-$itens_pedido->id";
-                                            ?>
-                                            <a class='btn btn-danger' href="#"
-                                               onclick="event.preventDefault(); document.getElementById({{"\"$form\""}}).submit();"><span
-                                                        class='glyphicon glyphicon-trash'></span></a>
 
-                                            {!! Form::open(['route' => ['admin.itempedido.produto.delete',
-                                                'pedidoId' => $pedidoId,'itempedido' => $itens_pedido->id],
-                                                'id' => "$form",
-                                                'method' => 'DELETE', 'style' => 'display:nome']) !!}
-                                            {!! Form::close() !!}
-                                        </li>
-                                    </ul>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#editModal-{{$itens_pedido->id}}" title="Editar item">
+                                        <span class='glyphicon glyphicon-pencil'></span>
+                                    </button>
+
+                                    <a class='btn btn-primary' href="{{ route('admin.itempedido.details',
+                                    ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id]) }}"
+                                       title="Visualizar"><span
+                                                class='glyphicon glyphicon-list-alt'></span></a>
+
+                                    @php
+                                        $form = "form-$itens_pedido->id";
+                                    @endphp
+                                    <a class='btn btn-danger' href="#"
+                                       onclick="event.preventDefault(); document.getElementById({{"\"$form\""}}).submit();"
+                                       title="Deletar item"><span
+                                                class='glyphicon glyphicon-trash'></span></a>
+
+                                    {!! Form::open(['route' => ['admin.itempedido.produto.delete',
+                                        'pedidoId' => $pedidoId,'itempedido' => $itens_pedido->id],
+                                        'id' => "$form",
+                                        'method' => 'DELETE', 'style' => 'display:nome']) !!}
+                                    {!! Form::close() !!}
+
                                 </td>
                             </tr>
+                            <div class="modal fade" id="editModal-{{$itens_pedido->id}}" role="dialog">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            Editar item: <strong>{{ $itens_pedido->produto->descricao}}</strong>
+                                        </div>
+                                        <div class="modal-body">
+                                            @php
+                                                $form_edit = "form-{$itens_pedido->id}";
+                                            @endphp
+                                            {!! Form::open(['route' => ['admin.itempedido.update' , 'pedido' => $itens_pedido->id],
+                                                        'id' => $form_edit, 'method' => 'PUT']) !!}
+                                                {!! form::hidden("id", $itens_pedido->id) !!}
+                                                <div class="form-group">
+                                                    <label for="recipient-name" class="control-label">Quantidade:</label>
+                                                    {!! form::number("quantidade", $itens_pedido->quantidade, ['min' => 1, 'style' => 'width:40%']) !!}
+                                                </div>
+                                            {!! Form::close() !!}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Voltar
+                                            </button>
+                                            <button type="button" class="btn btn-primary"
+                                                    onclick="event.preventDefault(); document.getElementById({{"\"$form_edit\""}}).submit();">
+                                                Editar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                         </tbody>
                     </table>
@@ -187,3 +230,10 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+
+    </script>
+
+@endpush

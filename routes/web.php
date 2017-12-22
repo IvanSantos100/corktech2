@@ -65,6 +65,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('itempedido/{pedido}/index', 'ItemPedidoController@index')->name('itempedido.index');
     Route::get('itempedido/{pedido}/produtos', 'ItemPedidoController@listarProdutos')->name('itempedido.produtos');
     Route::post('itempedido/{pedido}/produtos', 'ItemPedidoController@addProdudo')->name('itempedido.produtos');
+    Route::put('itempedido/{pedido}/produtos', 'ItemPedidoController@update')->name('itempedido.update');
     Route::get('itempedido/{pedido}/details/{produto}', 'ItemPedidoController@details')->name('itempedido.details');
     Route::delete('itempedido/{pedidoId}/produto/{itempedido}/delete', 'ItemPedidoController@deleteProduto')->name('itempedido.produto.delete');
 

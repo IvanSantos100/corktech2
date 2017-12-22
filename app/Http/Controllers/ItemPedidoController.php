@@ -113,9 +113,12 @@ class ItemPedidoController extends Controller
         //
     }
 
-    public function updateProdudo(Request $request, $pedidoId, $produtoId)
+    public function update(Request $request, $id)
     {
-        //
+        $itemPedido = $this->repository->update(['quantidade' => $request->quantidade], $id);
+        $itemPedido = $this->repository->find($id);
+
+        return redirect()->route('admin.itempedido.index', ['pedido' => $itemPedido->pedido_id])->with('message', "Produto atualizado");
     }
 
     public function deleteProduto($pedidoId, $itempedido)

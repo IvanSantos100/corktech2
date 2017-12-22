@@ -9,12 +9,16 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de pedido</div>
                 <div class="panel-body">
-                    <div class="pull-left hidden-print">
+                    <div class="col-lg-3 col-sm-12 hidden-print">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
-                        {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
-                        {!! Form::text('search', null, ['class' => 'form-control']) !!}
+                        <div class="input-group">
+                        {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Pesquisar por...']) !!}
+                            <span class="input-group-btn">
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
-                        <br>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 hidden-print">
                         {!! Form::radio('tipo', '0'); !!}
                         {!! Form::label('Todos', 'Todos', ['class' => 'control-label']) !!}
                         {!! Form::radio('tipo', '1'); !!}
@@ -25,8 +29,7 @@
                         {!! Form::label('Saida', 'Saída', ['class' => 'control-label']) !!}
                         {!! Form::close()!!}
                     </div>
-                     
-                    <div class="pull-right hidden-print">
+                    <div class="col-lg-3 col-sm-12 hidden-print">
                         <a class="btn btn-primary" href="{{route('admin.pedidos.create')}}">Novo Pedido</a>
                         <a class='btn btn-primary' href="{{route('admin.pedidosencerrados.index',['status' => 2])}}">Encerrados</a>
                     </div>
@@ -67,18 +70,18 @@
                                     <ul class="list-inline">
                                         <li>
                                             <a class='btn btn-primary'
-                                               href="{{ route('admin.itempedido.index', ['pedido' => $pedido->id]) }}"><span
+                                               href="{{ route('admin.itempedido.index', ['pedido' => $pedido->id]) }}" title="Visualizar"><span
                                                         class='glyphicon glyphicon-list-alt'></span></a>
                                         </li>
                                         <li>
                                             <a class='btn btn-success'
-                                               href="{{ route('admin.pedidos.status', ['pedido' => $pedido->id]) }}">
+                                               href="{{ route('admin.pedidos.status', ['pedido' => $pedido->id]) }}" title="Finalizar">
                                                 <span class='glyphicon glyphicon-ok'></span></a>
                                         </li>
                                         <li>
                                             @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
                                                 <a class='btn btn-danger'
-                                                   href="{{ route('admin.pedidos.show', ['pedido' => $pedido->id]) }}"><span
+                                                   href="{{ route('admin.pedidos.show', ['pedido' => $pedido->id]) }}" title="Deletar"><span
                                                             class='glyphicon glyphicon-trash'></span></a>
                                             @else
                                                 <a class='btn btn-danger' disabled="true">Excluir</a>
