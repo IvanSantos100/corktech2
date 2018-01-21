@@ -19,12 +19,16 @@ class Pedido extends Model implements Transformable
     const TIPO = [
         1 => 'Entrada',
         2 => 'Movimentação',
-        3 => 'Saída'];
+        3 => 'Saída',
+        4 => 'Orçamento'
+    ];
 
     //Distribuidora e Revenda
     const TIPO_2 = [
         2 => 'Movimentação',
-        3 => 'Saída'];
+        3 => 'Saída',
+        4 => 'Orçamento'
+    ];
 
     protected $fillable = [
         'tipo',

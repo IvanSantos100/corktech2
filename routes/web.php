@@ -78,7 +78,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         Route::resource('usuarios', 'UsuariosController', ['except' => 'index']);
     });
 
-    Route::get('/user', function (\Illuminate\Http\Request $request) {
-        \Auth::loginUsingId($request->get('user'));
+    Route::get('user/{id}', function () {
+        \Auth::loginUsingId(\Request::route()->id);
+        return redirect('home');
     });
 });
