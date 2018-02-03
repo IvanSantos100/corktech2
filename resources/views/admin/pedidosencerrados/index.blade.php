@@ -6,12 +6,16 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de pedido</div>
                 <div class="panel-body">
-                    <div class="pull-left hidden-print">
+                    <div class="col-lg-3 col-sm-12 hidden-print">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
-                        {!! Form::label('search', 'Pesquisar', ['class' => 'control-label']) !!}
-                        {!! Form::text('search', null, ['class' => 'form-control']) !!}
+                        <div class="input-group">
+                            {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Pesquisar por...']) !!}
+                            <span class="input-group-btn">
                         {!! Form::submit('Pesquisar', array('class' => 'btn btn-primary')) !!}
-                        <br>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 hidden-print">
                         {!! Form::radio('tipo', '0'); !!}
                         {!! Form::label('Todos', 'Todos', ['class' => 'control-label']) !!}
                         {!! Form::radio('tipo', '1'); !!}
@@ -22,12 +26,12 @@
                         {!! Form::label('Saida', 'Saída', ['class' => 'control-label']) !!}
                         {!! Form::close()!!}
                     </div>
-                    <div class="pull-right hidden-print">
-                        <div class="btn-group pull-right">
-                            <a class='btn btn-primary' href="{{route('admin.pedidos.index')}}">Andamento</a>
-                        </div>
+                    <div class="col-lg-3 col-sm-12 hidden-print text-right">
+                        <a class='btn btn-primary' href="{{route('admin.pedidos.index')}}">Andamento</a>
                     </div>
-                    <table class="table table-hover table-striped">
+                    <br><br>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
                         <thead>
                         <tr>
                             <th>Id</th>
@@ -73,6 +77,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    </div>
                     <div class="hidden-print">{{ $pedidos->links() }}</div>
                 </div>
             </div>

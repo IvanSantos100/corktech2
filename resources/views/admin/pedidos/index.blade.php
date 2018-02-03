@@ -3,9 +3,6 @@
 @section('content')
     <div class="container">
         <div class="row">
-
-        </div>
-        <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Listagem de pedido</div>
                 <div class="panel-body">
@@ -34,7 +31,8 @@
                         <a class='btn btn-primary' href="{{route('admin.pedidosencerrados.index',['status' => 2])}}">Encerrados</a>
                     </div>
                     <br><br>
-                    <table class="table table-hover table-striped">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
                         <thead>
                         <tr>
                             <th>Id</th>
@@ -95,6 +93,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    </div>
                     <div class="hidden-print">{{ $pedidos->links() }}</div>
                 </div>
             </div>

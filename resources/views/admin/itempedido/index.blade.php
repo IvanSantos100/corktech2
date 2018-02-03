@@ -179,7 +179,7 @@
                                         </div>
                                         <div class="modal-body">
                                             @php
-                                                $form_edit = "form-{$itens_pedido->id}";
+                                                $form_edit = "form-alt-{$itens_pedido->id}";
                                             @endphp
                                             {!! Form::open(['route' => ['admin.itempedido.update' , 'pedido' => $itens_pedido->id],
                                                         'id' => $form_edit, 'method' => 'PUT']) !!}
