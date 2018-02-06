@@ -119,18 +119,15 @@ class PedidosController extends Controller
     public function create(Request $request)
     {
         $centroDistribuicao = $this->centroDistribuicoesRepository->pluck('descricao', 'id');
-        $centrodis = \Auth::user()->centrodistribuicao_id;
+        $centrodis = null;//\Auth::user()->centrodistribuicao_id;
         if($centrodis == 1 ){
             $clientes = $this->clientesRepository->orderBy('nome')->pluck('nome', 'id');
         }else{
-
-           /* $clientes = $this->clientesRepository->scopeQuery(function ($query) use ($centrodis){
+           $clientes = $this->clientesRepository->scopeQuery(function ($query) use ($centrodis){
                 return $query->select('id', 'nome')
-                    ->where('centrodistribuicao_id', $centrodis)
-                    ->orderBy('nome');
-            }); */
-            
-            $clientes = \DB::table('clientes')->select('id', 'nome')->where('centrodistribuicao_id', $centrodis)->orderBy('nome')->pluck('nome', 'id');
+                    ->where('centrodistribuicao_id', $centrodis);
+            })->orderBy('nome')->all()->pluck('nome', 'id');
+
         }
         //dd($clientes);
 

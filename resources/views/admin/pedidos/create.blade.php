@@ -14,7 +14,7 @@
                         <br>
                         @include('admin.pedidos._form')
                     </div>
-                    <div class="panel-footer text-center">
+                    <div class="text-center">
                         {!! Html::openFormGroup() !!}
                         {!! form::submit('Criar pedido', ['class' => 'btn btn-primary']) !!}
                         {!! Html::closeFormGroup() !!}
