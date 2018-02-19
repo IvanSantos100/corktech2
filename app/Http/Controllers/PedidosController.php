@@ -58,13 +58,16 @@ class PedidosController extends Controller
         if($tipo == 0){
 
             $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) {
-                return $query->orderBy('id', 'desc');
+                return $query->whereIn('tipo', [1, 2, 3])
+                    ->orderBy('id', 'desc');
             })->paginate(25);
 
         }else{
 
             $pedidos = $this->repository->with(['origem', 'cliente', 'destino'])->scopeQuery(function ($query) use ($tipo) {
-                return $query->where('tipo', $tipo)->orderBy('id', 'desc');
+                return $query->whereIn('tipo', [1, 2, 3])
+                    ->where('tipo', $tipo)
+                    ->orderBy('id', 'desc');
             })->paginate(25);
 
         }
@@ -100,7 +103,9 @@ class PedidosController extends Controller
         })->paginate(25);
 
         if ($itenspedido->isEmpty()) {
-            return 'vazio';
+            \Session::flash('error', 'Vazio');
+
+            return redirect('admin/pedidos');
         }
 
         return view('admin.pedidos.itempedido', compact('itenspedido', 'search', 'pedido'));

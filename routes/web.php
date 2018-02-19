@@ -43,11 +43,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
 
     Route::resource('pedidos', 'PedidosController');
-    Route::get('pedidos/orcamento', 'PedidosController@orcamento')->name('pedidos.orcamento');
     Route::get('pedidos/{pedido}/status', 'PedidosController@status')->name('pedidos.status');
     Route::get('pedidos/cliente/{cliente}', 'PedidosController@cliente')->name('pedidos.cliente');
     Route::get('pedidos/itempedido/{pedido}', 'PedidosController@itempedido')->name('pedidos.itempedido');
 
+
+    Route::resource('orcamento', 'OrcamentoController');
 
     /*
     Route::resource('pedidosencerrados', 'PedidosEncerradosController');
