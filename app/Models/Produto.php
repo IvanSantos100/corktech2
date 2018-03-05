@@ -52,4 +52,10 @@ class Produto extends Model implements Transformable
     {
         return $this->hasMany(Estoque::class, 'produto_id', 'id');  //CorkTech\Models\Produto::find(23)->estoques()->where('id',1)->all()
     }
+
+
+    public function getQuantidadeEstoqueAttribute($centro_distribuicao_id)
+    {
+        return $this->estoques->where('centrodistribuicao_id', $centro_distribuicao_id)->sum('quantidade');
+    }
 }

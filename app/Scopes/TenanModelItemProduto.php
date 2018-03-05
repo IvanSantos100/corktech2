@@ -28,13 +28,8 @@ trait TenanModelItemProduto
                 return true;
             }
 
-            if ($model->pedido->tipo == 2) {
-                $model->prazoentrega = $model->pedido->origem->prazo_nacional;
-            }
+            $model->prazoentrega = $model->pedido->origem->prazo_regional;
 
-            if ($model->pedido->tipo == 3) {
-                $model->prazoentrega = $model->pedido->origem->prazo_regional;
-            }
         });
 
         static::created(function (Model $model) {

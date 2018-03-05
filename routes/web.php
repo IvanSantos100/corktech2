@@ -49,7 +49,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
 
     Route::resource('orcamento', 'OrcamentoController');
-
+    Route::get('orcamento/additens/{orcamento}', 'OrcamentoController@addItens')->name('orcamento.additens');
+    Route::post('orcamento/additens/{orcamento}', 'OrcamentoController@storeItens')->name('orcamento.additens');
+    Route::get('orcamento/itens/{orcamento}', 'OrcamentoController@verItens')->name('orcamento.itens');
+    Route::delete('orcamento/{orcamento}/itens/{pedidoId}', 'OrcamentoController@deleteItem')->name('orcamento.itens.destroy');
+    Route::put('orcamento/{orcamento}/updateItem', 'OrcamentoController@updateItem')->name('orcamento.update.item');
     /*
     Route::resource('pedidosencerrados', 'PedidosEncerradosController');
     Route::get('pedidosencerrados/{pedido}/itempedido', 'PedidosEncerradosController@itempedido')->name('pedidosencerrados.itempedido');

@@ -9,22 +9,22 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th colspan="2">Dados do Pedido</th>
+                                <th colspan="2">Dados do orcamento</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td>Identificação: {{$pedido->id}}</td>
-                                <td>Tipo: {{$pedido->tipo_nome}}</td>
+                                <td>Identificação: {{$itens[0]->pedido->id}}</td>
+                                <td>Tipo: Orcamento</td>
                             </tr>
                             <tr>
-                                <td>Origem: {{ $pedido->origem->descricao ?? 'Fabrica' }}</td>
-                                <td>Destino: {{ $pedido->destino->descricao ?? $pedido->cliente->nome }}</td>
+                                <td>Origem: {{ $itens[0]->pedido->origem->descricao }}</td>
+                                <td>Destino: {{ $itens[0]->pedido->cliente ? $itens[0]->pedido->cliente->nome : 'Orçamento' }}</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    @if($pedido->cliente!='')
+                    @if($itens[0]->pedido->cliente!='')
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
@@ -34,8 +34,8 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Tipo: @if($pedido->cliente->tipo==1) Física @else Jurídica @endif</td>
-                                    <td>Documento: {{$pedido->cliente->documento_formatted}}</td>
+                                    <td>Tipo: @if($itens[0]->pedido->cliente->tipo==1) Física @else Jurídica @endif</td>
+                                    <td>Documento: {{$itens[0]->pedido->cliente->documento_formatted}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -49,13 +49,13 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td colspan="2">Endereço: {{$pedido->cliente->endereco}}</td>
-                                    <td>Bairro: {{$pedido->cliente->bairro}}</td>
+                                    <td colspan="2">Endereço: {{$itens[0]->pedido->cliente->endereco}}</td>
+                                    <td>Bairro: {{$itens[0]->pedido->cliente->bairro}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Cidade: {{$pedido->cliente->cidade}}</td>
-                                    <td>UF:{{$pedido->cliente->uf}}</td>
-                                    <td>CEP:{{$pedido->cliente->cep}}</td>
+                                    <td>Cidade: {{$itens[0]->pedido->cliente->cidade}}</td>
+                                    <td>UF:{{$itens[0]->pedido->cliente->uf}}</td>
+                                    <td>CEP:{{$itens[0]->pedido->cliente->cep}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -69,8 +69,8 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Telefone: {{$pedido->cliente->fone}}</td>
-                                    <td>Celular: {{$pedido->cliente->celular}}</td>
+                                    <td>Telefone: {{$itens[0]->pedido->cliente->fone}}</td>
+                                    <td>Celular: {{$itens[0]->pedido->cliente->celular}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -78,7 +78,7 @@
                     @endif
                 </div>
                 <div class="panel-body">
-                    <div class=" col-lg-4 col-sm-12 hidden-print pull-left">
+                    <div class="col-lg-4 col-sm-12 hidden-print pull-left">
                         {!! Form::model(compact('search'), ['class'=>'form-inline', 'method'=> 'GET'])!!}
                         <div class="input-group">
                             {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Pesquisar por...']) !!}
@@ -90,17 +90,10 @@
                     </div>
                     <div class="pull-right hidden-print">
                         <a class="btn btn-primary"
-                           href="{{route('admin.itempedido.produtos', ['pedidoId' => $pedidoId])}}">Adicionar
-                            Produto</a>
+                           href="{{route('admin.orcamento.additens', ['id' => $itens[0]->pedido_id])}}">Adicionar Produto
+                        </a>
 
-                        @if ($pedido->status == 1 || Auth::user()->centrodistribuicao_id==1)
-                            <a class='btn btn-warning'
-                               href="{{ route('admin.pedidos.edit', ['pedido' => $pedido->id]) }}">Editar</a>
-                        @else
-                            <a class='btn btn-warning' disabled="true">Editar</a>
-                        @endif
-
-                        <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Pedidos</a>
+                        <a class='btn btn-success' href="{{ route('admin.orcamento.index') }}">Orcamento</a>
                     </div>
                     <br><br>
                     <div class="table-responsive">
@@ -108,7 +101,6 @@
                         <thead>
                         <tr>
                             <th>Código</th>
-                            <th>Lote</th>
                             <th>Descrição</th>
                             <th>Classe</th>
                             <th>Tamanho</th>
@@ -122,75 +114,73 @@
                         @php
                             $total = 0
                         @endphp
-                        @foreach($itens_pedidos as $itens_pedido)
+                        @foreach($itens as $item)
                             <tr>
-                                <td class="col-md-1">{{ $itens_pedido->produto->codigo}}</td>
-                                <td class="col-md-1">{{ $itens_pedido->lote}}</td>
-                                <td class="col-md-2">{{ $itens_pedido->produto->descricao}}</td>
+                                <td class="col-md-1">{{ $item->produto->codigo}}</td>
+                                <td class="col-md-2">{{ $item->produto->descricao}}</td>
                                 <td class="col-md-1">
-                                    {{$itens_pedido->produto->classes->descricao}}
-                                    @if(!empty($itens_pedido))
-                                        @if(file_exists("images/thumbnail/estampa-{$itens_pedido->produto->estampas->id}.png"))
-                                            {{ HTML::image("/images/thumbnail/estampa-{$itens_pedido->produto->estampas->id}.png") }}
+                                    {{$item->produto->classes->descricao}}
+                                    @if(!empty($item))
+                                        @if(file_exists("images/thumbnail/estampa-{$item->produto->estampas->id}.png"))
+                                            {{ HTML::image("/images/thumbnail/estampa-{$item->produto->estampas->id}.png") }}
                                         @endif
                                     @endif
                                 </td>
-                                <td class="col-md-1">{{ $itens_pedido->produto->classes->tamanho}}</td>
-                                <td class="col-md-1">{{ $itens_pedido->quantidade}}</td>
+                                <td class="col-md-1">{{ $item->produto->classes->tamanho}}</td>
+                                <td class="col-md-1">{{ $item->quantidade}}</td>
                                 <td class="col-md-1">
-                                    R$ {{ number_format($itens_pedido->produto->preco,2, ',', '.') }}
+                                    R$ {{ number_format($item->produto->preco,2, ',', '.') }}
                                 </td>
                                 <td class="col-md-1">
-                                    R$ {{ number_format($itens_pedido->valor_item,2, ',', '.') }}
+                                    R$ {{ number_format($item->valor_item,2, ',', '.') }}
                                 </td>
                                 <td class="col-md-1">
-                                    R$ {{ number_format(($itens_pedido->quantidade * $itens_pedido->valor_item),2, ',', '.') }}
+                                    R$ {{ number_format(($item->quantidade * $item->valor_item),2, ',', '.') }}
                                 </td>
                                 <td class="col-md-2 hidden-print">
 
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#editModal-{{$itens_pedido->id}}" title="Editar item">
+                                            data-target="#editModal-{{$item->id}}" title="Editar item">
                                         <span class='glyphicon glyphicon-pencil'></span>
                                     </button>
 
                                     <a class='btn btn-primary' href="{{ route('admin.itempedido.details',
-                                    ['pedidoId' => $itens_pedido->pedido_id, 'produtoId' => $itens_pedido->produto_id]) }}"
+                                    ['pedidoId' => $item->pedido_id, 'produtoId' => $item->produto_id]) }}"
                                        title="Visualizar"><span
                                                 class='glyphicon glyphicon-list-alt'></span></a>
 
                                     @php
-                                        $form = "form-$itens_pedido->id";
+                                        $form = "form-$item->id";
                                     @endphp
                                     <a class='btn btn-danger' href="#"
                                        onclick="event.preventDefault(); document.getElementById({{"\"$form\""}}).submit();"
                                        title="Deletar item"><span
                                                 class='glyphicon glyphicon-trash'></span></a>
 
-                                    {!! Form::open(['route' => ['admin.itempedido.produto.delete',
-                                        'pedidoId' => $pedidoId,'itempedido' => $itens_pedido->id],
+                                    {!! Form::open(['route' => ['admin.orcamento.itens.destroy',
+                                        'orcamento' => $item->pedido_id, 'pedidoId' => $item->id],
                                         'id' => "$form",
                                         'method' => 'DELETE', 'style' => 'display:nome']) !!}
                                     {!! Form::close() !!}
-
                                 </td>
                             </tr>
-                            <div class="modal fade" id="editModal-{{$itens_pedido->id}}" role="dialog">
+                            <div class="modal fade" id="editModal-{{$item->id}}" role="dialog">
                                 <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            Editar item: <strong>{{ $itens_pedido->produto->descricao}}</strong>
+                                            Editar item: <strong>{{ $item->produto->descricao}}</strong>
                                         </div>
                                         <div class="modal-body">
                                             @php
-                                                $form_edit = "form-alt-{$itens_pedido->id}";
+                                                $form_edit = "form-alt-{$item->id}";
                                             @endphp
-                                            {!! Form::open(['route' => ['admin.itempedido.update' , 'pedido' => $itens_pedido->id],
+                                            {!! Form::open(['route' => ['admin.orcamento.update.item' , 'orcamento' => $item->id],
                                                         'id' => $form_edit, 'method' => 'PUT']) !!}
-                                                {!! form::hidden("id", $itens_pedido->id) !!}
+                                                {!! form::hidden("id", $item->id) !!}
                                                 <div class="form-group">
                                                     <label for="recipient-name" class="control-label">Quantidade:</label>
-                                                    {!! form::number("quantidade", $itens_pedido->quantidade, ['min' => 1, 'style' => 'width:40%']) !!}
+                                                    {!! form::number("quantidade", $item->quantidade, ['min' => 1, 'style' => 'width:40%']) !!}
                                                 </div>
                                             {!! Form::close() !!}
                                         </div>
@@ -213,23 +203,23 @@
                         <table>
                             <tr>
                                 <td class="col-md-2"><b>TOTAL:</b></td>
-                                <td><b>R$ {{number_format(($pedido->valor_total),2, ',', '.') }}</b></td>
+                                <td><b>R$ {{number_format(($itens[0]->pedido->valor_total),2, ',', '.') }}</b></td>
                             </tr>
-                            <tr>
+                           {{-- <tr>
                                 <td class="col-md-2"><b>DESCONTO:</b></td>
-                                <td><b>{{number_format(($pedido->desconto),2, ',', '.') }} %</b></td>
-                            </tr>
+                                <td><b>{{number_format(($itens[0]->pedido->desconto),2, ',', '.') }} %</b></td>
+                            </tr>--}}
                             <tr>
                                 <td class="col-md-2"><b>VALOR FINAL:</b></td>
-                                <td><b>R$ {{number_format($pedido->valor_final, 2, ',', '.') }}</b>
+                                <td><b>R$ {{number_format($itens[0]->pedido->valor_final, 2, ',', '.') }}</b>
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    <div class="hidden-print">{{ $itens_pedidos->links() }}</div>
+                    <div class="hidden-print">{{ $itens->links() }}</div>
                 </div>
                 <div class="panel-footer hidden-print text-center">
-                    <a class='btn btn-success' href="{{ route('admin.pedidos.index') }}">Salvar</a>
+                    <a class='btn btn-success' href="{{ route('admin.orcamento.index') }}">Salvar</a>
                 </div>
             </div>
         </div>

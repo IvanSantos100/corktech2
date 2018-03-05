@@ -25,10 +25,18 @@ class Estoque extends Model implements Transformable
     {
         return $this->belongsTo(CentroDistribuicao::class, 'centrodistribuicao_id', 'id');
     }
+
     public function produtos()
     {
         //return $this->hasMany(Produto::class, 'produto_id', 'id');
         return $this->belongsTo(Produto::class, 'produto_id', 'id');
+    }
+
+    public function getQuantidadeItemAttribute()
+    {
+        $itens = $this->pedido->valor_base == 0 ? 1 : $this->pedido->valor_base;
+
+        return $this->produto->preco * $itens;
     }
 
 }

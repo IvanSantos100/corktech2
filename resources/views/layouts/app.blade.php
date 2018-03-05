@@ -59,6 +59,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">Pedidos <span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                                <li><a href="{{ route('admin.orcamento.index') }}">Orcamentos</a></li>
                                 <li><a href="{{ route('admin.pedidos.index') }}">Pedidos</a></li>
                                 <li><a href="{{ route('admin.pedidosencerrados.index',['status' => 2]) }}">Encerrados</a></li>
                             </ul>
