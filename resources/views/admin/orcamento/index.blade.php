@@ -39,9 +39,15 @@
                             <tr>
                                 <td class="col-md-1">{{ $orcamento->id}}</td>
                                 <td class="col-md-2">{{ $orcamento->origem->descricao ?? 'Fabrica'}}</td>
-                                <td class="col-md-2">
-                                    <span>Orçamento</span>
-                                </td>
+                                @if($orcamento->cliente_id)
+                                    <td class="col-md-2">
+                                        <a class="cursor-pointer"
+                                           onclick="popupcliente('{{$orcamento->cliente->nome}}','{{$orcamento->cliente->tipo}}','{{$orcamento->cliente->fone}}')">Cliente
+                                            - {{$orcamento->cliente->nome}}</a>
+                                    </td>
+                                @else
+                                    <td class="col-md-2">Orçamento</td>
+                                @endif
                                 <td class="col-md-2">R$ {{number_format(($orcamento->valor_total),2, ',', '.') }}</td>
                                 <td class="col-md-2">R$ {{number_format(($orcamento->valor_final),2, ',', '.') }}</td>
                                 <td class="col-md-2 hidden-print text-right">
