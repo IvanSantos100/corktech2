@@ -2,6 +2,7 @@
 
 namespace CorkTech\Http\Controllers;
 
+use CorkTech\Repositories\ClientesRepository;
 use CorkTech\Repositories\EstoquesRepository;
 use CorkTech\Repositories\ItemPedidoRepository;
 use CorkTech\Repositories\PedidosRepository;
@@ -31,6 +32,10 @@ class OrcamentoController extends Controller
      * @var TipoProdutosRepository
      */
     private $tipoProdutosRepository;
+    /**
+     * @var ClientesRepository
+     */
+    private $clientesRepository;
 
     /**
      * OrcamentoController constructor.
@@ -40,7 +45,8 @@ class OrcamentoController extends Controller
         ItemPedidoRepository $itemPedidoRepository,
         EstoquesRepository $estoquesRepository,
         ProdutosRepository $produtosRepository,
-        TipoProdutosRepository $tipoProdutosRepository
+        TipoProdutosRepository $tipoProdutosRepository,
+        ClientesRepository $clientesRepository
     )
     {
         $this->pedidosRepository = $pedidosRepository;
@@ -48,6 +54,7 @@ class OrcamentoController extends Controller
         $this->estoquesRepository = $estoquesRepository;
         $this->produtosRepository = $produtosRepository;
         $this->tipoProdutosRepository = $tipoProdutosRepository;
+        $this->clientesRepository = $clientesRepository;
     }
 
     /**
@@ -87,11 +94,11 @@ class OrcamentoController extends Controller
     {
         $search = explode(':', $request->get('search'));
 
-        $tipo = $this->tipoProdutosRepository->scopeQuery(function ($query) {
+        $tipo = $this->tipoProdutosRepository->resetCriteria()->scopeQuery(function ($query) {
             return $query->orderBy('descricao', 'asc');
         })->all();
 
-        $orcamento = $this->pedidosRepository->with(['produtos'])->find($id);
+        $orcamento = $this->pedidosRepository->resetCriteria()->with(['produtos'])->find($id);
 
         $produtos = $this->produtosRepository
             ->scopeQuery(function ($query) use ($orcamento) {
@@ -127,6 +134,15 @@ class OrcamentoController extends Controller
             ->with('error', "Produto não incluido.");
     }
 
+    public function storeCliente(Request $request)
+    {
+        $this->pedidosRepository->update(
+            $request->all(), $request->pedido
+        );
+
+        return redirect()->route('admin.orcamento.itens', ['orcamento' => $request->pedido]);
+    }
+
 
     public function verItens(Request $request, $id)
     {
@@ -136,12 +152,16 @@ class OrcamentoController extends Controller
             ->scopeQuery(function ($query) use ($id) {
                 return $query->where('pedido_id', $id);
             })->paginate();
-        //dd($itens);
+        //dd($itens->all());
         if ($itens->isEmpty()) {
             return redirect()->route('admin.orcamento.additens', ['orcamento' => $id]);
         }
 
-        return view('admin.orcamento.itens', ['itens' => $itens, 'search' => $search]);
+        $clientes = $this->clientesRepository->scopeQuery(function ($query) use ($itens){
+            return $query->where('centrodistribuicao_id', $itens->first()->pedido->origem_id);
+        })->orderBy('nome')->all()->pluck('nome', 'id');
+
+        return view('admin.orcamento.itens', ['itens' => $itens, 'search' => $search, 'clientes' => $clientes]);
     }
 
     /**

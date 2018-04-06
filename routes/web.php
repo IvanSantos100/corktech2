@@ -49,6 +49,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
 
     Route::resource('orcamento', 'OrcamentoController');
+    Route::post('orcamento/addcliente', 'OrcamentoController@storeCliente')->name('orcamento.addcliente');
     Route::get('orcamento/additens/{orcamento}', 'OrcamentoController@addItens')->name('orcamento.additens');
     Route::post('orcamento/additens/{orcamento}', 'OrcamentoController@storeItens')->name('orcamento.additens');
     Route::get('orcamento/itens/{orcamento}', 'OrcamentoController@verItens')->name('orcamento.itens');
